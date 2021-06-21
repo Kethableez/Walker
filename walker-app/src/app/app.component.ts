@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'walker-app';
+  title = 'Walker';
+  clicks = 0;
+
+  onClick() {
+    this.clicks += 1;
+  }
+
+  onReset() {
+    this.clicks = 0;
+  }
 }
