@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,7 +49,7 @@ public class AuthController {
     private final String registerToken = "05da579b-cafe-4395-8eeb-88826dfd6cc9";
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginUser request){
+    public ResponseEntity<?> login(@Valid @RequestBody LoginUser request){
 
         if (!userRepository.existsByUsername(request.getUsername())) {
             return ResponseEntity
