@@ -20,6 +20,9 @@ public class TokenStorage {
 
     private String username;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private String token;
 
     private String code;
@@ -28,11 +31,15 @@ public class TokenStorage {
 
     private LocalDateTime expiredAt;
 
-    public TokenStorage(String username, String token, String code, LocalDateTime createdAt, LocalDateTime expiredAt) {
+    private boolean isConfirmed;
+
+    public TokenStorage(String username, Role role, String token, String code, LocalDateTime createdAt, LocalDateTime expiredAt, boolean isConfirmed) {
         this.username = username;
+        this.role = role;
         this.token = token;
         this.code = code;
         this.createdAt = createdAt;
         this.expiredAt = expiredAt;
+        this.isConfirmed = isConfirmed;
     }
 }

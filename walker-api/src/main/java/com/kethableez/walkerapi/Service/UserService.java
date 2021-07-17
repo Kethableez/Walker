@@ -36,6 +36,9 @@ public class UserService {
     private final PasswordEncoder encoder;
 
     public User registerUser(RegisterRequest request){
+        Random rnd = new Random();
+        int code = rnd.nextInt(999999);
+
         User newUser = new User(
                 request.getUsername(),
                 request.getEmail(),
@@ -45,17 +48,28 @@ public class UserService {
                 request.getBirthdate(),
                 "default.png",
                 request.getGender(),
-                true,
+                false,
                 request.getIsSubscribed()
         );
         Set<UserRole> roles = new HashSet<>();
         roles.add(
                 roleRepository.findByRole(Role.ROLE_USER).orElseThrow()
         );
-        roles.add(
-                roleRepository.findByRole(request.getRole()).orElseThrow()
-        );
         newUser.setRoles(roles);
+
+        Role role = (request.getRole().equals(Role.ROLE_OWNER)) ? Role.ROLE_OWNER : Role.ROLE_SITTER;
+
+        TokenStorage token = new TokenStorage(
+                request.getUsername(),
+                role,
+                UUID.randomUUID().toString(),
+                String.format("%06d", code),
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(20),
+                false
+        );
+
+        tokenStorageRepository.save(token);
         return userRepository.save(newUser);
     }
 
@@ -71,7 +85,7 @@ public class UserService {
                 request.getBirthdate(),
                 "default.png",
                 request.getGender(),
-                true,
+                false,
                 request.getIsSubscribed()
         );
         Set<UserRole> roles = new HashSet<>();
@@ -80,15 +94,17 @@ public class UserService {
         );
         newUser.setRoles(roles);
 
-        TokenStorage storage = new TokenStorage(
+        TokenStorage token = new TokenStorage(
                 request.getUsername(),
+                Role.ROLE_ADMIN,
                 UUID.randomUUID().toString(),
                 String.format("%06d", code),
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(20)
+                LocalDateTime.now().plusMinutes(20),
+                false
         );
 
-        tokenStorageRepository.save(storage);
+        tokenStorageRepository.save(token);
         return userRepository.save(newUser);
     }
 
@@ -99,6 +115,29 @@ public class UserService {
                 roleRepository.findByRole(Role.ROLE_ADMIN).orElseThrow()
         );
         admin.setRoles(roles);
+        admin.setIsActive(true);
         return userRepository.save(admin);
+    }
+
+    public User confirmOwner(TokenStorage token) {
+        User owner = userRepository.findByUsername(token.getUsername()).orElseThrow();
+        Set<UserRole> roles = owner.getRoles();
+        roles.add(
+                roleRepository.findByRole(Role.ROLE_OWNER).orElseThrow()
+        );
+        owner.setRoles(roles);
+        owner.setIsActive(true);
+        return userRepository.save(owner);
+    }
+
+    public User confirmSitter(TokenStorage token) {
+        User sitter = userRepository.findByUsername(token.getUsername()).orElseThrow();
+        Set<UserRole> roles = sitter.getRoles();
+        roles.add(
+                roleRepository.findByRole(Role.ROLE_SITTER).orElseThrow()
+        );
+        sitter.setRoles(roles);
+        sitter.setIsActive(true);
+        return userRepository.save(sitter);
     }
 }

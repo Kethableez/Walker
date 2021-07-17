@@ -2,7 +2,9 @@ package com.kethableez.walkerapi.Controller;
 
 import com.kethableez.walkerapi.Config.Jwt.JwtResponse;
 import com.kethableez.walkerapi.Config.Jwt.JwtUtils;
+import com.kethableez.walkerapi.Model.Role;
 import com.kethableez.walkerapi.Model.TokenStorage;
+import com.kethableez.walkerapi.Model.User;
 import com.kethableez.walkerapi.Repository.TokenStorageRepository;
 import com.kethableez.walkerapi.Repository.UserRepository;
 import com.kethableez.walkerapi.Request.LoginUser;
@@ -22,6 +24,7 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -50,29 +53,38 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginUser request){
-
-        if (!userRepository.existsByUsername(request.getUsername())) {
+        Optional<User> user = userRepository.findByUsername(request.getUsername());
+        if (user.isEmpty()) {
             return ResponseEntity
                     .badRequest()
                     .body("Taki użytkownik nie istnieje!");
         }
+        else {
+            if (!user.get().getIsActive()) {
+                return ResponseEntity
+                        .badRequest()
+                        .body("Konto nie jest aktywowane!!");
+            }
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+            else {
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+                );
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                String jwt = jwtUtils.generateJwtToken(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+                UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+                List<String> roles = userDetails.getAuthorities().stream()
+                        .map(item -> item.getAuthority())
+                        .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));
+                return ResponseEntity.ok(new JwtResponse(jwt,
+                        userDetails.getId(),
+                        userDetails.getUsername(),
+                        userDetails.getEmail(),
+                        roles));
+            }
+        }
     }
 
     @PostMapping("/register")
@@ -100,7 +112,6 @@ public class AuthController {
         }
     }
     @PostMapping("/register/" + registerToken)
-
     public ResponseEntity<?>  registerAdmin(@RequestBody RegisterRequest request){
         if (userRepository.existsByUsername(request.getUsername())) {
             return ResponseEntity
@@ -127,32 +138,53 @@ public class AuthController {
     }
 
     @PutMapping("/confirm/{token}")
-    public ResponseEntity<?> confirmAdmin(@PathVariable("token") String token, @RequestBody String code){
-        TokenStorage adminToken = tokenStorageRepository.findByToken(token).orElseThrow();
-
-        if (adminToken != null) {
-            if(!adminToken.getCode().equals(code)) {
-                return ResponseEntity
-                        .badRequest()
-                        .body("Zły kod!");
-            }
-
-            else {
-                if (LocalDateTime.now().isAfter(adminToken.getExpiredAt())){
-                    return ResponseEntity
-                            .badRequest()
-                            .body("Token wygasł!");
-                }
-                else {
-                    userService.confirmAdmin(adminToken);
-                    return ResponseEntity.ok("Potwierdzono pomyślnie!");
-                }
-            }
-        }
-        else {
+    public ResponseEntity<?> confirmUser(@PathVariable("token") String token, @RequestBody String code){
+        TokenStorage userToken = tokenStorageRepository.findByToken(token).orElseThrow();
+        if (userToken.isConfirmed()) {
             return ResponseEntity
                     .badRequest()
-                    .body("Zły token!");
+                    .body("Token został już potwierdzony!!");
+        }
+        else {
+            if (userToken != null) {
+                if(!userToken.getCode().equals(code)) {
+                    return ResponseEntity
+                            .badRequest()
+                            .body("Zły kod!");
+                }
+
+                else {
+                    if (LocalDateTime.now().isAfter(userToken.getExpiredAt())){
+                        return ResponseEntity
+                                .badRequest()
+                                .body("Token wygasł!");
+                    }
+                    else {
+                        Role role = userToken.getRole();
+                        switch (role){
+                            case ROLE_ADMIN:
+                                userService.confirmAdmin(userToken);
+                                break;
+
+                            case ROLE_OWNER:
+                                userService.confirmOwner(userToken);
+                                break;
+
+                            case ROLE_SITTER:
+                                userService.confirmSitter(userToken);
+                                break;
+                        }
+                        userToken.setConfirmed(true);
+                        tokenStorageRepository.save(userToken);
+                        return ResponseEntity.ok("Potwierdzono pomyślnie!");
+                    }
+                }
+            }
+            else {
+                return ResponseEntity
+                        .badRequest()
+                        .body("Zły token!");
+            }
         }
     }
 }
