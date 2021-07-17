@@ -1,0 +1,19 @@
+body {
+  background-color: #E6E6E6;
+  width: 100vw;
+  height: 100vh;
+}
+
+.home-container {
+  display: flex;
+}
+
+.page {
+  align-self: center;
+  background-color: #fff;
+  border-radius: 5px;
+  height: 87vh;
+  width: 84vw;
+  margin-inline: 8vw;
+  box-shadow: 0 3px 6px rgba($color: #000000, $alpha: .2);
+}

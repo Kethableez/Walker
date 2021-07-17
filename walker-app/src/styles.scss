@@ -1,6 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
 $text-dark: #3E403B;
 $white: #fff;
+
+html {
+  padding: 0;
+  margin: 0;
+}
 
 body {
   padding: 0;
@@ -34,8 +38,16 @@ body {
   font-size: 4rem;
   color: $text-dark;
   // font-style: italic;
-  // margin-inline: auto;
+  align-self: center;
   text-align: center;
+
+  .link {
+    text-decoration: none;
+  }
+
+  .link:hover {
+    letter-spacing: normal;
+  }
 }
 
 .app-footer {
@@ -78,17 +90,16 @@ input[type=text], input[type=password], input[type=date], select, option {
   text-align: center;
 }
 
+select, option {
+  text-align-last: center;
+}
+
 .checkbox-group {
   margin-inline: auto;
   width: 70%;
-
-  input[type=checkbox] {
-    background-color: #fff;
-    border-radius: 5px;
-    outline: none;
-    border: none;
-    box-shadow: inset 0 3px 6px rgba($color: #000000, $alpha: 0.2);
-  }
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 
@@ -109,6 +120,34 @@ input[type=text], input[type=password], input[type=date], select, option {
   box-shadow: 0 3px 6px #3e403b;
   transition: 0.3s;
   cursor: pointer;
+  user-select: none;
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0.2%;
+  padding-bottom: 0.2%;
+}
+
+.button-disabled {
+  font-family: 'Century Gothic';
+  margin-top: 3%;
+  margin-bottom: 3%;
+  margin-inline: auto;
+  width: fit-content;
+  padding-inline: 10%;
+  height: 3rem;
+  background-color: #65858c;
+  font-size: 1.5rem;
+  color: #fff;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px #3e403b;
+  transition: 0.3s;
+  opacity: .5;
+  pointer-events: none;
 
   text-align: center;
   display: flex;
@@ -125,4 +164,35 @@ input[type=text], input[type=password], input[type=date], select, option {
 
 .button:active {
   box-shadow: none;
+}
+
+.button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+.icon {
+  align-self: center;
+  fill: #fff;
+  width: 2rem;
+  height: 2rem;
+}
+
+.sidebar-button {
+  display: flex;
+  background-color: #65858C;
+  height: 2.5rem;
+  width: 3rem;
+  border-radius: 5px;
+  margin-inline: auto;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  justify-content: center;
+  transition: .2s ease;
+  cursor: pointer;
+}
+
+.sidebar-button:hover {
+  background-color: #99ACB1;
 }

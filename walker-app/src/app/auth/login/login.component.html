@@ -1,5 +1,5 @@
-<form>
-  <input type="text" placeholder="Nazwa użytkownika">
-  <input type="password" placeholder="Hasło">
-  <div class="button">Zaloguj się</div>
+<form [formGroup]="loginForm">
+  <input type="text" formControlName="username" placeholder="Nazwa użytkownika">
+  <input type="password" formControlName="password" placeholder="Hasło">
+  <div [ngClass]="loginForm.valid  ? 'button' : 'button-disabled'" (click)="loginUser()">Zaloguj się</div>
 </form>

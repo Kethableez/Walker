@@ -1,26 +1,37 @@
-<form>
-  <input type="text" placeholder="Imię">
-  <input type="text" placeholder="Nazwisko">
-  <input type="text" placeholder="Nazwa użytkownika">
-  <input type="text" placeholder="Adres e-mail">
-  <input type="password" placeholder="Hasło">
+<form [formGroup]="registerForm">
+  <input type="text" formControlName="firstName" placeholder="Imię">
+  <input type="text" formControlName="lastName" placeholder="Nazwisko">
+  <input type="text" formControlName="username" placeholder="Nazwa użytkownika">
+  <input type="text" formControlName="email" placeholder="Adres e-mail">
+  <input type="password" formControlName="password" placeholder="Hasło">
   <input type="password" placeholder="Powtórz hasło">
-  <input type="date">
+  <input type="date" formControlName="birthdate">
 
-  <select >
-    <option>Mężczyzna</option>
-    <option>Kobieta</option>
+  <select formControlName="gender">
+    <option value="" disabled selected>Wybierz płeć</option>
+    <option value="MALE">Mężczyzna</option>
+    <option value="FEMALE">Kobieta</option>
   </select>
 
-  <select>
-    <option>Właściciel</option>
-    <option>Opiekun</option>
+  <select *ngIf="!isAdminRegistration" formControlName="role">
+    <option value="" disabled selected>Jesteś właścicielem czy opiekunem?</option>
+    <option value="ROLE_OWNER">Właściciel</option>
+    <option value="ROLE_SITTER">Opiekun</option>
   </select>
+
   <div class="checkbox-group sub-text">
-    <input type="checkbox"> Akceptuję regulamin <br>
-    <input type="checkbox"> Zapisz mnie do newslettera
+    <div class="checks">
+      <div class="checkbox" [ngStyle]="{'background-color': terms ? '#65858C' : '#fff'}" id="term"
+        (click)="checkboxClicked($event)"></div> Akceptuję regulamin
+    </div>
+    <div class="checks">
+      <div class="checkbox" [ngStyle]="{'background-color': subscription ? '#65858C' : '#fff'}" id="subscription"
+        (click)="checkboxClicked($event)"></div> Zapisz mnie do newslettera
+    </div>
+
   </div>
 
+  <div [ngClass]="(terms && registerForm.valid)  ? 'button' : 'button-disabled'" (click)="registerUser()">Zarejestruj
+    się</div>
 
-  <div class="button">Zarejestruj się</div>
 </form>

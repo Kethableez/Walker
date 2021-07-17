@@ -4,20 +4,19 @@ body {
   background-image: url("http://localhost:8080/utility_images/background");
   background-size: cover;
 
-min-width: 100vw;
-height: 100vh;
+  min-width: 100vw;
+  height: 100vh;
 }
-
 
 .container {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
   align-items: center;
   height: 80%;
+  width: 100vw;
 }
 
-.description{
+.description {
   width: 33%;
   text-align: center;
 
@@ -29,7 +28,6 @@ height: 100vh;
   .sub-text {
     font-size: 1.5rem;
   }
-
 }
 
 ktbz-login {
@@ -37,5 +35,13 @@ ktbz-login {
 }
 
 ktbz-register {
+  width: 100%;
+}
+
+.widt {
   width: 40%;
+}
+
+ktbz-confirmation {
+  width: 100%;
 }

@@ -1,11 +1,12 @@
 <body>
   <div class="app-title">
-    Walker
+    <span class="link" (click)="backToStartPage()">
+      Walker
+    </span>
   </div>
 
-  <div class="container"
-  [ngStyle]="{'justify-content': !isRegisterStepActive ? 'flex-end' : 'center'}" >
-    <div class="description" *ngIf="!isRegisterStepActive">
+  <div class="container" [ngStyle]="{'justify-content': isMainViewActive ? 'flex-end' : 'center'}">
+    <div class="description" *ngIf="isMainViewActive">
       <div class="main-text">
         Drugi najlepszy przyjaciel
         twojego czworonoga!
@@ -20,9 +21,17 @@
       <span class="sub-text link" (click)="openRegisterForm()">Dołącz do nas już dziś!</span>
 
     </div>
-    <ktbz-login *ngIf="!isRegisterStepActive"></ktbz-login>
+    <ktbz-login *ngIf="isMainViewActive"></ktbz-login>
 
-    <ktbz-register *ngIf="isRegisterStepActive"></ktbz-register>
+    <div *ngIf="!isMainViewActive" class="widt">
+      <router-outlet>
+
+      </router-outlet>
+    </div>
+
+    <!-- <ktbz-register *ngIf="isRegisterStepActive"></ktbz-register> -->
+
+    <!-- <ktbz-confirmation *ngIf="isConfirmationStepActive"></ktbz-confirmation> -->
   </div>
 
   <div class="app-footer">
