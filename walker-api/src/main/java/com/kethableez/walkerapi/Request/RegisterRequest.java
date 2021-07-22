@@ -1,7 +1,7 @@
 package com.kethableez.walkerapi.Request;
 
-import com.kethableez.walkerapi.Model.Gender;
-import com.kethableez.walkerapi.Model.Role;
+import com.kethableez.walkerapi.Model.Enum.Gender;
+import com.kethableez.walkerapi.Model.Enum.Role;
 import lombok.Getter;
 import lombok.Setter;
 

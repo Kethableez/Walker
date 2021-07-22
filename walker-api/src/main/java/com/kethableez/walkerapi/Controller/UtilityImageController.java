@@ -1,7 +1,6 @@
 package com.kethableez.walkerapi.Controller;
 
-import com.kethableez.walkerapi.Model.ImageType;
-import com.kethableez.walkerapi.Repository.UtilityImageRepository;
+import com.kethableez.walkerapi.Model.Enum.ImageType;
 import com.kethableez.walkerapi.Service.UtilityImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +67,7 @@ public class UtilityImageController {
         }
         catch (Exception e){
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("Image cannot be upload!");
+            return ResponseEntity.badRequest().body("");
         }
     }
 }

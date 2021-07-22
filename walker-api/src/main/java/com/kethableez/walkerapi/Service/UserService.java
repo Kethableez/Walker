@@ -1,10 +1,10 @@
 package com.kethableez.walkerapi.Service;
 
 import com.kethableez.walkerapi.Config.Security.PasswordEncoder;
-import com.kethableez.walkerapi.Model.Role;
-import com.kethableez.walkerapi.Model.TokenStorage;
-import com.kethableez.walkerapi.Model.User;
-import com.kethableez.walkerapi.Model.UserRole;
+import com.kethableez.walkerapi.Model.Enum.Role;
+import com.kethableez.walkerapi.Model.Entity.TokenStorage;
+import com.kethableez.walkerapi.Model.Entity.User;
+import com.kethableez.walkerapi.Model.Entity.UserRole;
 import com.kethableez.walkerapi.Repository.TokenStorageRepository;
 import com.kethableez.walkerapi.Repository.UserRepository;
 import com.kethableez.walkerapi.Repository.UserRoleRepository;
@@ -28,6 +28,12 @@ public class UserService {
 
     @Autowired
     private final UserRoleRepository roleRepository;
+
+    @Autowired
+    private final OwnerService ownerService;
+
+    @Autowired
+    private final SitterService sitterService;
 
     @Autowired
     private final TokenStorageRepository tokenStorageRepository;
@@ -127,6 +133,7 @@ public class UserService {
         );
         owner.setRoles(roles);
         owner.setIsActive(true);
+        this.ownerService.createOwner(owner);
         return userRepository.save(owner);
     }
 
@@ -138,6 +145,7 @@ public class UserService {
         );
         sitter.setRoles(roles);
         sitter.setIsActive(true);
+        this.sitterService.createSitter(sitter);
         return userRepository.save(sitter);
     }
 }

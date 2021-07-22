@@ -1,7 +1,7 @@
 package com.kethableez.walkerapi.Service;
 
-import com.kethableez.walkerapi.Model.ImageType;
-import com.kethableez.walkerapi.Model.UtilityImage;
+import com.kethableez.walkerapi.Model.Enum.ImageType;
+import com.kethableez.walkerapi.Model.Entity.UtilityImage;
 import com.kethableez.walkerapi.Repository.UtilityImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

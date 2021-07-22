@@ -1,6 +1,6 @@
 package com.kethableez.walkerapi.Service;
 
-import com.kethableez.walkerapi.Model.User;
+import com.kethableez.walkerapi.Model.Entity.User;
 import com.kethableez.walkerapi.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

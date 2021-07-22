@@ -1,6 +1,6 @@
 package com.kethableez.walkerapi.Repository;
 
-import com.kethableez.walkerapi.Model.User;
+import com.kethableez.walkerapi.Model.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

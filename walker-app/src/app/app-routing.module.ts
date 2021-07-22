@@ -1,43 +1,49 @@
+import { HomePageComponent } from './main/home-page/home-page.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfirmationComponent } from './auth/confirmation/confirmation.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { HomeComponent } from './home/home.component';
-import { StartComponent } from './start/start.component';
+import { LandingPageComponent } from './main/landing-page/landing-page.component';
+import { RegisterComponent } from './main/landing-page/register/register.component';
+import { ConfirmationComponent } from './main/landing-page/confirmation/confirmation.component';
+import { PageNotFoundComponent } from './main/shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
     path: 'start',
-    component: StartComponent,
+    component: LandingPageComponent,
     children: [
       {
         path: 'register',
-        component: RegisterComponent
+        component: RegisterComponent,
       },
       {
         path: 'register/:token',
-        component: RegisterComponent
+        component: RegisterComponent,
       },
       {
         path: 'confirmation/:token',
-        component: ConfirmationComponent
+        component: ConfirmationComponent,
+      },
+      {
+        path: '**',
+        component: PageNotFoundComponent
+      }
+    ],
+  },
+  { path: 'home',
+    component: HomePageComponent,
+    children: [
+      {
+        path: 'sadbitch',
+        component: PageNotFoundComponent
       }
     ]
+
   },
-  {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
-    path: '**',
-    redirectTo: 'start'
-  }
+  { path: '**', redirectTo: 'start' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
-
-export const appRoutingModule = RouterModule.forRoot(routes, { useHash: true });
+export class AppRoutingModule {}

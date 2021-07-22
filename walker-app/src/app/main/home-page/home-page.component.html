@@ -1,0 +1,18 @@
+<body>
+  <div class="home-container">
+    <ktbz-sidebar [roles]="currentUser.roles">
+
+    </ktbz-sidebar>
+    <div class="page">
+      <router-outlet>
+
+      </router-outlet>
+    </div>
+  </div>
+
+  <ktbz-box-message
+  [response]="response">
+
+
+  </ktbz-box-message>
+</body>

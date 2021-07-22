@@ -1,7 +1,7 @@
 package com.kethableez.walkerapi.Repository;
 
-import com.kethableez.walkerapi.Model.Role;
-import com.kethableez.walkerapi.Model.UserRole;
+import com.kethableez.walkerapi.Model.Enum.Role;
+import com.kethableez.walkerapi.Model.Entity.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

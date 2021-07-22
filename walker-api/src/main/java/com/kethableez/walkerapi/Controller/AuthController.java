@@ -2,17 +2,18 @@ package com.kethableez.walkerapi.Controller;
 
 import com.kethableez.walkerapi.Config.Jwt.JwtResponse;
 import com.kethableez.walkerapi.Config.Jwt.JwtUtils;
-import com.kethableez.walkerapi.Model.Role;
-import com.kethableez.walkerapi.Model.TokenStorage;
-import com.kethableez.walkerapi.Model.User;
+import com.kethableez.walkerapi.Model.Enum.Role;
+import com.kethableez.walkerapi.Model.Entity.TokenStorage;
+import com.kethableez.walkerapi.Model.Entity.User;
 import com.kethableez.walkerapi.Repository.TokenStorageRepository;
 import com.kethableez.walkerapi.Repository.UserRepository;
-import com.kethableez.walkerapi.Request.LoginUser;
+import com.kethableez.walkerapi.Request.LoginRequest;
 import com.kethableez.walkerapi.Request.RegisterRequest;
 import com.kethableez.walkerapi.Service.UserDetailsImpl;
 import com.kethableez.walkerapi.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,7 +53,7 @@ public class AuthController {
     private final String registerToken = "05da579b-cafe-4395-8eeb-88826dfd6cc9";
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginUser request){
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request){
         Optional<User> user = userRepository.findByUsername(request.getUsername());
         if (user.isEmpty()) {
             return ResponseEntity
@@ -108,7 +109,7 @@ public class AuthController {
         }
         else {
             userService.registerUser(request);
-            return ResponseEntity.ok("Zarejestrowano pomyślnie!");
+            return ResponseEntity.status(HttpStatus.OK).body("Zarejestrowano pomyślnie!");
         }
     }
     @PostMapping("/register/" + registerToken)

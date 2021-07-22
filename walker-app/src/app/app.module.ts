@@ -1,40 +1,45 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { StartComponent } from './start/start.component';
-import { ConfirmationComponent } from './auth/confirmation/confirmation.component';
-import { HomeComponent } from './home/home.component';
-import { SidebarComponent } from './home/shared/sidebar/sidebar.component';
-import { SidebarOwnerButtonsComponent } from './home/shared/sidebar-owner-buttons/sidebar-owner-buttons.component';
-import { SidebarSitterButtonsComponent } from './home/shared/sidebar-sitter-buttons/sidebar-sitter-buttons.component';
-import { SidebarAdminButtonsComponent } from './home/shared/sidebar-admin-buttons/sidebar-admin-buttons.component';
+import { LoginComponent } from './main/landing-page/login/login.component';
+import { RegisterComponent } from './main/landing-page/register/register.component';
+import { ConfirmationComponent } from './main/landing-page/confirmation/confirmation.component';
+import { LandingPageComponent } from './main/landing-page/landing-page.component';
+import { HomePageComponent } from './main/home-page/home-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BoxMessageComponent } from './main/shared/box-message/box-message.component';
+import { SidebarComponent } from './main/home-page/sidebar/sidebar.component';
+import { SitterButtonsComponent } from './main/home-page/sidebar/sitter-buttons/sitter-buttons.component';
+import { OwnerButtonsComponent } from './main/home-page/sidebar/owner-buttons/owner-buttons.component';
+import { AdminButtonsComponent } from './main/home-page/sidebar/admin-buttons/admin-buttons.component';
+import { PageNotFoundComponent } from './main/shared/page-not-found/page-not-found.component';
+import { HttpClientModule } from '@angular/common/http';
+import { authInterceptorProviders } from './core/helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    StartComponent,
     ConfirmationComponent,
-    HomeComponent,
+    LandingPageComponent,
+    HomePageComponent,
+    BoxMessageComponent,
     SidebarComponent,
-    SidebarOwnerButtonsComponent,
-    SidebarSitterButtonsComponent,
-    SidebarAdminButtonsComponent
+    SitterButtonsComponent,
+    OwnerButtonsComponent,
+    AdminButtonsComponent,
+    PageNotFoundComponent,
   ],
   imports: [
-    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
