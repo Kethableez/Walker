@@ -3,6 +3,8 @@ import { ServerResponse } from '../../models/server-response.model';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
 import { UserService } from 'src/app/core/services/models/user.service';
 import { User } from 'src/app/models/user.model';
+import { Owner } from 'src/app/models/owner.model';
+import { Sitter } from 'src/app/models/sitter.model';
 
 @Component({
   selector: 'ktbz-home-page',
@@ -13,7 +15,7 @@ export class HomePageComponent implements OnInit {
 
   isLoggedIn = false;
   currentUser: any;
-  userData?: User;
+  userData?: User | Owner | Sitter;
   response: ServerResponse = {
     'message': ' ',
     'code': 200
@@ -28,10 +30,8 @@ export class HomePageComponent implements OnInit {
       this.currentUser = this.token.getUser();
 
       this.userService.getUserData().subscribe(
-        (response: any) => {
-          this.userData = response.user;
-          this.response.message = response.user.username;
-          console.log(this.response)
+        (response: User | Owner | Sitter) => {
+          this.userData = response;
           console.log(this.userData);
         }
       )

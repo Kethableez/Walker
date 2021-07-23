@@ -1,5 +1,5 @@
 <div class="sidebar-buttons">
-  <div class="sidebar-button tooltip">
+  <div class="sidebar-button tooltip" id='dashboard' (click)="navigator('dashboard')">
     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path d="M0 0h24v24H0V0z" fill="none" />
       <path
@@ -8,7 +8,7 @@
     <span class="tooltiptext">Dashboard</span>
   </div>
 
-  <div class="sidebar-button tooltip">
+  <div class="sidebar-button tooltip" id='system' (click)="navigator('system')">
     <svg class="icon" id="pets_black_24dp_1_" data-name="pets_black_24dp (1)" xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24">
       <path id="Path_79" data-name="Path 79" d="M0,0H24V24H0Z" fill="none" />
@@ -19,7 +19,7 @@
     <span class="tooltiptext">System</span>
   </div>
 
-  <div class="sidebar-button tooltip">
+  <div class="sidebar-button tooltip" id='reports' (click)="navigator('reports')">
     <svg class="icon" id="chat_bubble_black_24dp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <g id="Group_34" data-name="Group 34">
         <rect id="Rectangle_449" data-name="Rectangle 449" width="24" height="24" fill="none" />
@@ -43,7 +43,7 @@
   </div>
 
 
-  <div class="sidebar-button tooltip">
+  <div class="sidebar-button tooltip" id='users' (click)="navigator('users')">
     <svg class="icon" id="event_black_24dp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path id="Path_81" data-name="Path 81" d="M0,0H24V24H0Z" fill="none" />
       <path id="Path_82" data-name="Path 82"
@@ -54,7 +54,7 @@
   </div>
 
 
-  <div class="sidebar-button tooltip">
+  <div class="sidebar-button tooltip" id='user_dogs' (click)="navigator('user_dogs')">
     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48.173 29.968">
       <g id="pets_black_24dp_1_" data-name="pets_black_24dp (1)"
         transform="matrix(0.995, -0.105, 0.105, 0.995, 0, 4.304)">
@@ -88,7 +88,7 @@
     <span class="tooltiptext">Zwierzęta</span>
   </div>
 
-  <div class="sidebar-button tooltip">
+  <div class="sidebar-button tooltip" id='history' (click)="navigator('history')">
     <svg class="icon" id="history_black_24dp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path id="Path_37" data-name="Path 37" d="M0,0H24V24H0Z" fill="none" />
       <path id="Path_38" data-name="Path 38"
@@ -97,7 +97,7 @@
     </svg>
     <span class="tooltiptext">Historia</span>
   </div>
-  <div class="sidebar-button tooltip">
+  <div class="sidebar-button tooltip" id='profile' (click)="navigator('profile')">
     <svg class="icon" id="person_black_24dp_2_" data-name="person_black_24dp (2)" xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24">
       <path id="Path_77" data-name="Path 77" d="M0,0H24V24H0Z" fill="none" />
