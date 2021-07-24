@@ -64,18 +64,19 @@ public class UserService {
         newUser.setRoles(roles);
 
         Role role = (request.getRole().equals(Role.ROLE_OWNER)) ? Role.ROLE_OWNER : Role.ROLE_SITTER;
+        String token = UUID.randomUUID().toString();
 
-        TokenStorage token = new TokenStorage(
+        TokenStorage userToken = new TokenStorage(
                 request.getUsername(),
                 role,
-                UUID.randomUUID().toString(),
+                token,
                 String.format("%06d", code),
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(20),
                 false
         );
 
-        tokenStorageRepository.save(token);
+        tokenStorageRepository.save(userToken);
         return userRepository.save(newUser);
     }
 

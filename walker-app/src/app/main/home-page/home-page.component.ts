@@ -16,10 +16,7 @@ export class HomePageComponent implements OnInit {
   isLoggedIn = false;
   currentUser: any;
   userData?: User | Owner | Sitter;
-  response: ServerResponse = {
-    'message': ' ',
-    'code': 200
-  }
+  response?: ServerResponse;
 
   constructor(private token: TokenStorageService,
     private userService: UserService) { }
@@ -37,6 +34,4 @@ export class HomePageComponent implements OnInit {
       )
     }
   }
-
-
 }

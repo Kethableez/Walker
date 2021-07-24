@@ -1,9 +1,9 @@
 <div
   class="box"
-  [ngClass]="response.code == 200 ? 'success' : 'error'"
+  [ngClass]="response?.isSuccess ? 'success' : 'error'"
 >
   <div class="message">
-    {{ response.message }}
+    {{ response?.message }}
   </div>
   <div class="icon" (click)="close()">
     <svg class="icon"

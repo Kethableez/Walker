@@ -16,7 +16,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  registerUser(registerData: any, token: string | null) {
+  registerUser(registerData: any, token: string | null): Observable<any> {
     if (token != null) return this.http.post<any>(this.serviceUrl + '/register/' + token, registerData);
     else return this.http.post<any>(this.serviceUrl + '/register/', registerData);
   }

@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
+import { ServerResponse } from 'src/app/models/server-response.model';
 
 @Component({
   selector: 'ktbz-login',
@@ -12,8 +13,9 @@ export class LoginComponent implements OnInit {
 
   isLoggedIn = false;
   isLoginFailed = false;
-  errorMessage = 'Eror';
   roles: string[] = [];
+  response?: ServerResponse;
+  isMessageBoxVisible = false;
 
   constructor(
     private authService: AuthService,
@@ -53,11 +55,16 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['home/dashboard']);
       },
       err => {
-        console.log('failure')
-        this.errorMessage = err.error;
-        this.isLoginFailed = true;
-        console.log(this.errorMessage)
+        this.response = {
+          'message': err.error,
+          'isSuccess': false
+        }
+        this.isMessageBoxVisible = true;
       }
     );
+  }
+
+  closeMessageBox(event: boolean) {
+    this.isMessageBoxVisible = false;
   }
 }

@@ -2,6 +2,7 @@ package com.kethableez.walkerapi.Controller;
 
 import com.kethableez.walkerapi.Config.Jwt.JwtResponse;
 import com.kethableez.walkerapi.Config.Jwt.JwtUtils;
+import com.kethableez.walkerapi.Config.Security.PasswordEncoder;
 import com.kethableez.walkerapi.Model.Enum.Role;
 import com.kethableez.walkerapi.Model.Entity.TokenStorage;
 import com.kethableez.walkerapi.Model.Entity.User;
@@ -9,11 +10,11 @@ import com.kethableez.walkerapi.Repository.TokenStorageRepository;
 import com.kethableez.walkerapi.Repository.UserRepository;
 import com.kethableez.walkerapi.Request.LoginRequest;
 import com.kethableez.walkerapi.Request.RegisterRequest;
+import com.kethableez.walkerapi.Response.MessageResponse;
 import com.kethableez.walkerapi.Service.UserDetailsImpl;
 import com.kethableez.walkerapi.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,6 +36,9 @@ import java.util.stream.Collectors;
 public class AuthController {
 
     @Autowired
+    private final PasswordEncoder encoder;
+
+    @Autowired
     private final AuthenticationManager authenticationManager;
 
     @Autowired
@@ -49,120 +53,93 @@ public class AuthController {
     @Autowired
     private final JwtUtils jwtUtils;
 
-
     private final String registerToken = "05da579b-cafe-4395-8eeb-88826dfd6cc9";
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request){
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         Optional<User> user = userRepository.findByUsername(request.getUsername());
         if (user.isEmpty()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Taki użytkownik nie istnieje!");
-        }
-        else {
+            return ResponseEntity.badRequest().body("Taki użytkownik nie istnieje!");
+        } else {
             if (!user.get().getIsActive()) {
-                return ResponseEntity
-                        .badRequest()
-                        .body("Konto nie jest aktywowane!!");
-            }
+                return ResponseEntity.badRequest().body("Konto nie jest aktywowane!!");
+            } else {
+                if (encoder.bCryptPasswordEncoder().matches(request.getPassword(), user.get().getPassword())) {
+                    Authentication authentication = authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    String jwt = jwtUtils.generateJwtToken(authentication);
 
-            else {
-                Authentication authentication = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-                );
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                String jwt = jwtUtils.generateJwtToken(authentication);
+                    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+                    List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+                            .collect(Collectors.toList());
 
-                UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-                List<String> roles = userDetails.getAuthorities().stream()
-                        .map(item -> item.getAuthority())
-                        .collect(Collectors.toList());
-
-                return ResponseEntity.ok(new JwtResponse(jwt,
-                        userDetails.getId(),
-                        userDetails.getUsername(),
-                        userDetails.getEmail(),
-                        roles));
+                    return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(),
+                            userDetails.getEmail(), roles));
+                } else {
+                    return ResponseEntity.badRequest().body("Nazwa użytkownika lub hasło jest niepoprawne");
+                }
             }
         }
     }
 
+    // TODO: Better response handling!
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Użytkownik o takiej nazwie już istnieje");
+            return ResponseEntity.badRequest().body("Użytkownik o takiej nazwie już istnieje");
         }
 
         else if (userRepository.existsByEmail(request.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Użytkownik o takim adresie e-mail już istnieje");
+            return ResponseEntity.badRequest().body("Użytkownik o takim adresie e-mail już istnieje");
         }
 
-        else if(request.getBirthdate().isAfter(LocalDate.now())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Zła data urodzin!");
-        }
-        else {
+        else if (request.getBirthdate().isAfter(LocalDate.now())) {
+            return ResponseEntity.badRequest().body("Zła data urodzin!");
+        } else {
             userService.registerUser(request);
-            return ResponseEntity.status(HttpStatus.OK).body("Zarejestrowano pomyślnie!");
+            return ResponseEntity.ok(new MessageResponse("Zarejestrowano pomyślnie"));
+            // return ResponseEntity.status(HttpStatus.OK).body("Zarejestrowano
+            // pomyślnie!");
         }
     }
+
     @PostMapping("/register/" + registerToken)
-    public ResponseEntity<?>  registerAdmin(@RequestBody RegisterRequest request){
+    public ResponseEntity<?> registerAdmin(@RequestBody RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Użytkownik o takiej nazwie już istnieje");
+            return ResponseEntity.badRequest().body("Użytkownik o takiej nazwie już istnieje");
         }
 
         else if (userRepository.existsByEmail(request.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Użytkownik o takim adresie e-mail już istnieje");
+            return ResponseEntity.badRequest().body("Użytkownik o takim adresie e-mail już istnieje");
         }
 
-        else if(request.getBirthdate().isAfter(LocalDate.now())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Zła data urodzin!");
+        else if (request.getBirthdate().isAfter(LocalDate.now())) {
+            return ResponseEntity.badRequest().body("Zła data urodzin!");
         }
 
         else {
             userService.registerAdmin(request);
-            return ResponseEntity.ok("Zarejestrowano pomyślnie!");
+            return ResponseEntity.ok(new MessageResponse("Zarejestrowano pomyślnie"));
         }
     }
 
     @PutMapping("/confirm/{token}")
-    public ResponseEntity<?> confirmUser(@PathVariable("token") String token, @RequestBody String code){
-        TokenStorage userToken = tokenStorageRepository.findByToken(token).orElseThrow();
-        if (userToken.isConfirmed()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Token został już potwierdzony!!");
-        }
-        else {
-            if (userToken != null) {
-                if(!userToken.getCode().equals(code)) {
-                    return ResponseEntity
-                            .badRequest()
-                            .body("Zły kod!");
-                }
+    public ResponseEntity<?> confirmUser(@PathVariable("token") String token, @RequestBody String code) {
+        TokenStorage userToken = tokenStorageRepository.findByToken(token);
 
-                else {
-                    if (LocalDateTime.now().isAfter(userToken.getExpiredAt())){
-                        return ResponseEntity
-                                .badRequest()
-                                .body("Token wygasł!");
-                    }
-                    else {
+        if (userToken != null) {
+            if (userToken.isConfirmed()) {
+                return ResponseEntity.badRequest().body("Token został już potwierdzony!!");
+            } else {
+                if (!userToken.getCode().equals(code)) {
+                    return ResponseEntity.badRequest().body("Zły kod!");
+                } else {
+                    if (LocalDateTime.now().isAfter(userToken.getExpiredAt())) {
+                        return ResponseEntity.badRequest().body("Token wygasł!");
+                    } else {
                         Role role = userToken.getRole();
-                        switch (role){
+                        switch (role) {
                             case ROLE_ADMIN:
                                 userService.confirmAdmin(userToken);
                                 break;
@@ -174,18 +151,17 @@ public class AuthController {
                             case ROLE_SITTER:
                                 userService.confirmSitter(userToken);
                                 break;
+                            default:
+                                return ResponseEntity.badRequest().body("Serwer napotkał problem");
                         }
                         userToken.setConfirmed(true);
                         tokenStorageRepository.save(userToken);
-                        return ResponseEntity.ok("Potwierdzono pomyślnie!");
+                        return ResponseEntity.ok(new MessageResponse("Potwierdzono konto"));
                     }
                 }
             }
-            else {
-                return ResponseEntity
-                        .badRequest()
-                        .body("Zły token!");
-            }
+        } else {
+            return ResponseEntity.badRequest().body("Zły token!");
         }
     }
 }

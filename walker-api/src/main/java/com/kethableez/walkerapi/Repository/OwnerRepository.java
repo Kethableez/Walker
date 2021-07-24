@@ -12,4 +12,10 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
             nativeQuery = true
     )
     Owner findByUserId(Long userId);
+
+    @Query(
+        value = "select * from walker.owners where user_id = (select id from walker.users where username = ?1)",
+        nativeQuery = true
+    )
+    Owner findByUsername(String username);
 }

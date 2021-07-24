@@ -21,10 +21,7 @@ export class RegisterComponent implements OnInit {
   subscription: boolean = false;
   isAdminRegistration: boolean = false;
   isMessageBoxVisible = false;
-  response: ServerResponse = {
-    'message': 'asdasdas',
-    'code': -1
-  };
+  response?: ServerResponse;
 
   registerForm = this.builder.group({
     firstName: ['', Validators.required],
@@ -72,16 +69,20 @@ export class RegisterComponent implements OnInit {
   registerUser(): void {
     this.auth.registerUser(this.registerForm.value, this.token).subscribe(
       res => {
-        const respone = {
-          'message': res.statusText,
-          'code': res.status
+        this.response = {
+          'message': res.message,
+          'isSuccess': true
         }
-        console.log(this.response);
-        this.response = respone;
         this.isMessageBoxVisible = true;
-        console.log(this.response);
+        this.registerForm.reset();
       },
-      err => console.log(err)
+      err => {
+        this.response = {
+          'message': err.error,
+          'isSuccess': false
+        }
+        this.isMessageBoxVisible = true;
+      }
     )
   }
 

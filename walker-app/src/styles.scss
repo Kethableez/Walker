@@ -180,6 +180,10 @@ ktbz-register {
   .button:hover {
     background-color: $primaryBrass;
   }
+
+  .button-disabled {
+    background-color: $primaryBrass;
+  }
 }
 
 ktbz-page-not-found {

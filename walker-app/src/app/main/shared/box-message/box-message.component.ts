@@ -8,10 +8,7 @@ import { ServerResponse } from './../../../models/server-response.model';
 export class BoxMessageComponent implements OnInit {
 
   @Input()
-  response: ServerResponse = {
-    'message': '',
-    'code': -1
-  };
+  response?: ServerResponse;
 
   @Output()
   closeMessageBox = new EventEmitter<boolean>();
@@ -22,7 +19,6 @@ export class BoxMessageComponent implements OnInit {
   }
 
   close() {
-    console.log('click!')
     this.closeMessageBox.emit(true);
   }
 
