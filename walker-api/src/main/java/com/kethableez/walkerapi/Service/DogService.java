@@ -7,7 +7,7 @@ import com.kethableez.walkerapi.Model.Entity.Dog;
 import com.kethableez.walkerapi.Model.Entity.Owner;
 import com.kethableez.walkerapi.Repository.DogRepository;
 import com.kethableez.walkerapi.Repository.OwnerRepository;
-import com.kethableez.walkerapi.Repository.UserRepository;
+// import com.kethableez.walkerapi.Repository.UserRepository;
 import com.kethableez.walkerapi.Request.DogRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class DogService {
     @Autowired
     private final DogRepository dogRepository;
 
-    @Autowired
-    private final UserRepository userRepository;
+    // @Autowired
+    // private final UserRepository userRepository;
 
     @Autowired
     private final OwnerRepository ownerRepository;
@@ -52,5 +52,13 @@ public class DogService {
 
     public List<Dog> getUserDogs(UsernamePasswordAuthenticationToken token) {
         return dogRepository.findByUserId(token.getName());
+    }
+
+    public void deleteDog(Long dogId) {
+        this.dogRepository.deleteById(dogId);
+    }
+
+    public void deleteDogFromOnwer(Long dogId) {
+        this.dogRepository.deleteFromOwnerDogs(dogId);
     }
 }

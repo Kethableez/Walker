@@ -30,7 +30,7 @@ public class Walk {
     private Long Id;
 
     @JoinColumn(name = "dog_id")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Dog dog;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd kk:mm:ss")

@@ -44,4 +44,12 @@ public class WalkService {
         return walkRepository.findAll();
     }
 
+    public void deleteWalk(Long walkId) {
+        this.walkRepository.deleteWalk(walkId);
+    }
+
+    public void deleteWalkByDogId(Long dogId) {
+        this.walkRepository.deleteWalkByDogId(dogId);
+    }
+
 }

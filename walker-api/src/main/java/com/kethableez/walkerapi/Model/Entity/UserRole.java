@@ -29,12 +29,4 @@ public class UserRole {
         Id = id;
         this.role = role;
     }
-
-    @Override
-    public String toString() {
-        return "UserRole{" +
-                "Id=" + Id +
-                ", role=" + role +
-                '}';
-    }
 }

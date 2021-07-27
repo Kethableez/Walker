@@ -5,12 +5,11 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -35,7 +34,7 @@ public class Owner {
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "owner_dogs",
             joinColumns = @JoinColumn(name = "owner_id"),
             inverseJoinColumns = @JoinColumn(name = "dog_id"))
