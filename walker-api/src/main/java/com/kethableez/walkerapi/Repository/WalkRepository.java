@@ -1,33 +1,24 @@
 package com.kethableez.walkerapi.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
-import com.kethableez.walkerapi.Model.Entity.Sitter;
 import com.kethableez.walkerapi.Model.Entity.Walk;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WalkRepository extends JpaRepository<Walk, Long>{
-    
-    @Modifying
-    @Transactional
-    @Query(value = "delete from walker.walks where id = ?1", nativeQuery = true)
-    void deleteWalk(Long walkId);
+public interface WalkRepository extends MongoRepository<Walk, String>{
 
-    @Modifying
-    @Transactional
-    @Query(value = "delete from walker.walks where dog_id = ?1", nativeQuery = true)
-    void deleteWalkByDogId(Long dogId);
+    @Query("{'dog.owner_id': '?0'}")
+    List<Walk> findByOwnerId(String ownerId);
 
-    @Query(value = "select * from walker.walks where dog_id = ?1", nativeQuery = true)
-    List<Walk> selectWallksByDogId(Long dogId);
+    @Query("{'dog._id': ObjectId('?0')}")
+    List<Walk> findBydogId(String dogId);
 
-    @Query(value = "select sitter_id from walker.sitter_walks where walk_id = ?1", nativeQuery = true)
-    Long getSitter(Long walkId);
+    List<Walk> findByWalkDateTimeGreaterThanAndIsBooked(LocalDateTime currentTime, Boolean val);
+
+    List<Walk> findByWalkDateTimeLessThanAndSitterId(LocalDateTime currentTime, String sitterId);
 }

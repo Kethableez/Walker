@@ -1,26 +1,28 @@
 package com.kethableez.walkerapi.Model.Entity;
 
+import java.time.LocalDateTime;
+
 import com.kethableez.walkerapi.Model.Enum.Role;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "token_storage")
+@Document(collection = "token_storage")
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class TokenStorage {
-    @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+
+    @Id
+    private String id;
 
     private String username;
 
-    @Enumerated(EnumType.STRING)
+    // @Enumerated(EnumType.STRING)
     private Role role;
 
     private String token;

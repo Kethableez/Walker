@@ -1,8 +1,10 @@
 package com.kethableez.walkerapi.Model.Entity;
 
-import javax.persistence.*;
-
 import com.kethableez.walkerapi.Model.Enum.Role;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,21 +14,20 @@ import lombok.Setter;
 //INSERT INTO roles(role) VALUES('ROLE_SITTER');
 //INSERT INTO roles(role) VALUES('ROLE_OWNER');
 
-@Entity
-@Table(name = "roles")
+@Document(collection = "user_roles")
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class UserRole {
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private String id;
 
-    @Enumerated(EnumType.STRING)
+    // @Enumerated(EnumType.STRING)
     private Role role;
 
-    public UserRole(Long id, Role role) {
-        Id = id;
+    public UserRole(Role role) {
         this.role = role;
     }
 }

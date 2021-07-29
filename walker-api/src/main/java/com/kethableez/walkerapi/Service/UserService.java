@@ -1,28 +1,27 @@
 package com.kethableez.walkerapi.Service;
 
-import com.kethableez.walkerapi.Config.Security.PasswordEncoder;
-import com.kethableez.walkerapi.Model.Enum.Role;
-import com.kethableez.walkerapi.Model.Entity.TokenStorage;
-import com.kethableez.walkerapi.Model.Entity.User;
-import com.kethableez.walkerapi.Model.Entity.UserRole;
-import com.kethableez.walkerapi.Repository.TokenStorageRepository;
-import com.kethableez.walkerapi.Repository.UserRepository;
-import com.kethableez.walkerapi.Repository.UserRoleRepository;
-import com.kethableez.walkerapi.Request.RegisterRequest;
-import com.kethableez.walkerapi.Request.UserDataRequest;
-import com.kethableez.walkerapi.Request.UserPasswordRequest;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+
+import com.kethableez.walkerapi.Config.Security.PasswordEncoder;
+import com.kethableez.walkerapi.Model.Entity.TokenStorage;
+import com.kethableez.walkerapi.Model.Entity.User;
+import com.kethableez.walkerapi.Model.Entity.UserRole;
+import com.kethableez.walkerapi.Model.Enum.Role;
+import com.kethableez.walkerapi.Repository.TokenStorageRepository;
+import com.kethableez.walkerapi.Repository.UserRepository;
+import com.kethableez.walkerapi.Repository.UserRoleRepository;
+import com.kethableez.walkerapi.Request.RegisterRequest;
+import com.kethableez.walkerapi.Request.UserDataRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -124,6 +123,13 @@ public class UserService {
                 user.setLastName(request.getLastName());
                 user.setBirthdate(request.getBirthdate());
                 user.setIsSubscribed(request.getIsSubscribed());
+
+                if (user.getRoles().stream().anyMatch(r -> r.getRole().equals(Role.ROLE_OWNER))) {
+                        this.ownerService.changeData(user);
+                }
+                else if (user.getRoles().stream().anyMatch(r -> r.getRole().equals(Role.ROLE_SITTER))){
+                        this.sitterService.changeData(user);
+                }
                 this.userRepository.save(user);
         }
 }

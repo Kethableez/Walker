@@ -5,8 +5,10 @@ import java.util.Set;
 
 import com.kethableez.walkerapi.Model.Entity.Dog;
 import com.kethableez.walkerapi.Model.Entity.Owner;
+import com.kethableez.walkerapi.Model.Entity.Walk;
 import com.kethableez.walkerapi.Repository.DogRepository;
 import com.kethableez.walkerapi.Repository.OwnerRepository;
+import com.kethableez.walkerapi.Repository.WalkRepository;
 // import com.kethableez.walkerapi.Repository.UserRepository;
 import com.kethableez.walkerapi.Request.DogRequest;
 
@@ -23,16 +25,16 @@ public class DogService {
     @Autowired
     private final DogRepository dogRepository;
 
-    // @Autowired
-    // private final UserRepository userRepository;
+    @Autowired
+    private final WalkRepository walkRepository;
 
     @Autowired
     private final OwnerRepository ownerRepository;
 
     public void createDog(UsernamePasswordAuthenticationToken token, DogRequest request) {
-        Owner owner = ownerRepository.findByUsername(token.getName());
+        Owner owner = ownerRepository.findByUsername(token.getName()).orElseThrow();
         Dog dog = new Dog(
-            owner.getUser().getUsername(),
+            owner.getId(),
             request.getName(),
             request.getDogBreed(),
             request.getDogType(),
@@ -44,6 +46,7 @@ public class DogService {
         );
 
         dogRepository.save(dog);
+        
         Set<Dog> dogs = owner.getDogs();
         dogs.add(dog);
         owner.setDogs(dogs);
@@ -51,14 +54,20 @@ public class DogService {
     }
 
     public List<Dog> getUserDogs(UsernamePasswordAuthenticationToken token) {
-        return dogRepository.findByUserId(token.getName());
+        return dogRepository.findByOwnerId(ownerRepository.findByUsername(token.getName()).orElseThrow().getId());
     }
 
-    public void deleteDog(Long dogId) {
-        this.dogRepository.deleteById(dogId);
-    }
+    public void deleteDog(String dogId, UsernamePasswordAuthenticationToken token) {
+        Owner owner = ownerRepository.findByUsername(token.getName()).orElseThrow();
+        Dog dog = dogRepository.findById(dogId).orElseThrow();
+        
+        owner.getDogs().removeIf(d -> (d.equals(dog)));
 
-    public void deleteDogFromOnwer(Long dogId) {
-        this.dogRepository.deleteFromOwnerDogs(dogId);
+        ownerRepository.save(owner);
+
+        for (Walk w : walkRepository.findBydogId(dogId)) {
+            walkRepository.delete(w);
+        }
+        dogRepository.deleteById(dogId);
     }
 }

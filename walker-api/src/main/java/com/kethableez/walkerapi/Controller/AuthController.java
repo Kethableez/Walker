@@ -99,8 +99,6 @@ public class AuthController {
         } else {
             userService.registerUser(request);
             return ResponseEntity.ok(new MessageResponse("Zarejestrowano pomyślnie"));
-            // return ResponseEntity.status(HttpStatus.OK).body("Zarejestrowano
-            // pomyślnie!");
         }
     }
 

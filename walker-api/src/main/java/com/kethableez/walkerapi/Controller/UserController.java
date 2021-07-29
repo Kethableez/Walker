@@ -67,14 +67,13 @@ public class UserController {
             else if (authority.getAuthority().equals(Role.ROLE_SITTER.toString()))
                 mainRole = Role.ROLE_SITTER;
         }
-
         switch (mainRole) {
             case ROLE_OWNER:
-                Owner owner = ownerService.getData(user.getId());
+                Owner owner = ownerService.getData(user.getUsername());
                 return new ResponseEntity<>(owner, HttpStatus.OK);
 
             case ROLE_SITTER:
-                Sitter sitter = sitterService.getData(user.getId());
+                Sitter sitter = sitterService.getData(user.getUsername());
                 return new ResponseEntity<>(sitter, HttpStatus.OK);
 
             default:
@@ -96,6 +95,11 @@ public class UserController {
 
         if (encoder.bCryptPasswordEncoder().matches(request.getOldPassword(), user.getPassword())) {
             user.setPassword(encoder.bCryptPasswordEncoder().encode(request.getNewPassword()));
+            if (user.getRoles().stream().anyMatch(r -> r.getRole().equals(Role.ROLE_OWNER))) {
+                this.ownerService.changeData(user);
+            } else if (user.getRoles().stream().anyMatch(r -> r.getRole().equals(Role.ROLE_SITTER))) {
+                this.sitterService.changeData(user);
+            }
             userRepository.save(user);
             return ResponseEntity.ok(new MessageResponse("Zmieniono dane pomyślnie"));
         } else {

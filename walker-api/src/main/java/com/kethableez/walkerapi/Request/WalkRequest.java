@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WalkRequest {
-    private Long dogId;
+    private String dogId;
     @DateTimeFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     private LocalDateTime walkDateTime;
     private String city;

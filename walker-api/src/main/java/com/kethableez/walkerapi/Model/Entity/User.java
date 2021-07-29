@@ -1,29 +1,30 @@
 package com.kethableez.walkerapi.Model.Entity;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.kethableez.walkerapi.Model.Enum.Gender;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "users")
+@Document(collection = "users")
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private String id;
 
     @NotBlank
     @Size(max = 20)
@@ -48,22 +49,18 @@ public class User {
     @NotBlank
     private LocalDate birthdate;
 
-    @NotBlank
-    @Transient
-    private Integer age;
+    // @NotBlank
+    // // @Transient
+    // private Integer age;
 
     @NotBlank
     private String avatar;
 
     @NotBlank
     @Size(max = 20)
-    @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @DBRef
     private Set<UserRole> roles = new HashSet<>();
 
     @NotBlank
@@ -72,7 +69,8 @@ public class User {
     @NotBlank
     private Boolean isSubscribed;
 
-    public User(String username, String email, String password, String firstName, String lastName, LocalDate birthdate, String avatar, Gender gender, Boolean isActive, Boolean isSubscribed) {
+    public User(String username, String email, String password, String firstName, String lastName, LocalDate birthdate,
+            String avatar, Gender gender, Boolean isActive, Boolean isSubscribed) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -85,11 +83,11 @@ public class User {
         this.isSubscribed = isSubscribed;
     }
 
-    public Integer getAge() {
-        return Period.between(this.birthdate, LocalDate.now()).getYears();
-    }
+    // public Integer getAge() {
+    // return Period.between(this.birthdate, LocalDate.now()).getYears();
+    // }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+    // public void setAge(int age) {
+    // this.age = age;
+    // }
 }

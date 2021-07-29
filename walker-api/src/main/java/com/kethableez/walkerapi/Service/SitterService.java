@@ -7,6 +7,7 @@ import com.kethableez.walkerapi.Model.Entity.Dog;
 import com.kethableez.walkerapi.Model.Entity.Sitter;
 import com.kethableez.walkerapi.Model.Entity.User;
 import com.kethableez.walkerapi.Model.Entity.Walk;
+import com.kethableez.walkerapi.Repository.DogRepository;
 import com.kethableez.walkerapi.Repository.SitterRepository;
 import com.kethableez.walkerapi.Repository.WalkRepository;
 
@@ -25,42 +26,62 @@ public class SitterService {
     @Autowired
     private final WalkRepository walkRepository;
 
+    @Autowired
+    private final DogRepository dogRepository;
+
     public Sitter createSitter(User user) {
-        Sitter newSitter = new Sitter(
-                user
-        );
+        Sitter newSitter = new Sitter(user);
         return sitterRepository.save(newSitter);
     }
 
-    public Sitter getData(Long userId){
-        return this.sitterRepository.findByUserId(userId);
+    public Sitter getData(String username) {
+        return this.sitterRepository.findByUsername(username).orElseThrow();
     }
 
-    public Sitter enrollToWalk(UsernamePasswordAuthenticationToken token, Long walkId) {
-        Sitter sitter = sitterRepository.findByUsername(token.getName());
-        Walk walk = walkRepository.getById(walkId);
+    public void enrollToWalk(UsernamePasswordAuthenticationToken token, String walkId) {
+        Sitter sitter = sitterRepository.findByUsername(token.getName()).orElseThrow();
+        Walk walk = walkRepository.findById(walkId).orElseThrow();
+        sitter.getWalks().add(walk);
 
         walk.setBooked(true);
-        sitter.getWalks().add(walk);
+        walk.setSitterId(sitter.getId());
         walkRepository.save(walk);
-        return sitterRepository.save(sitter);
+        sitterRepository.save(sitter);
     }
 
-    public Sitter disenrollFromWalk(UsernamePasswordAuthenticationToken token, Long walkId) {
-        Sitter sitter = sitterRepository.findByUsername(token.getName());
-        Walk walk = walkRepository.getById(walkId);
+    public void disenrollFromWalk(UsernamePasswordAuthenticationToken token, String walkId) {
+        Sitter sitter = sitterRepository.findByUsername(token.getName()).orElseThrow();
+        Walk walk = walkRepository.findById(walkId).orElseThrow();
 
-        sitter.getWalks().remove(walk);
+        sitter.getWalks().removeIf(w -> (w.equals(walk)));
+
         walk.setBooked(false);
+        walk.setSitterId("");
         walkRepository.save(walk);
-        return sitterRepository.save(sitter);
+        sitterRepository.save(sitter);
+    }
+
+    public Set<Walk> test(UsernamePasswordAuthenticationToken token) {
+        Sitter sitter = sitterRepository.findByUsername(token.getName()).orElseThrow();
+        Set<Walk> walks = sitter.getWalks();
+        return walks;
+    }
+
+    public void changeData(User updatedUser) {
+        Sitter sitter = sitterRepository.findByUsername(updatedUser.getUsername()).orElseThrow();
+        sitter.setUser(updatedUser);
+        sitterRepository.save(sitter);
     }
 
     public Set<Dog> getDogs(UsernamePasswordAuthenticationToken token) {
-        Sitter sitter = sitterRepository.findByUsername(token.getName());
-        Set<Dog> dogs = new HashSet<>();
+        Sitter sitter = sitterRepository.findByUsername(token.getName()).orElseThrow();
+        Set<String> dogIds = new HashSet<>();
         for (Walk w : sitter.getWalks()) {
-            dogs.add(w.getDog());
+            dogIds.add(w.getDog().getId());
+        }
+        Set<Dog> dogs = new HashSet<>();
+        for (String id : dogIds) {
+            dogs.add(dogRepository.findById(id).get());
         }
 
         return dogs;
