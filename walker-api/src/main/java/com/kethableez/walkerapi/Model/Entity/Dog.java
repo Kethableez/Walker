@@ -1,7 +1,5 @@
 package com.kethableez.walkerapi.Model.Entity;
 
-import java.time.LocalTime;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -9,7 +7,6 @@ import com.kethableez.walkerapi.Model.Enum.DogType;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +35,7 @@ public class Dog {
     private DogType dogType;
 
     @NotBlank
-    @DateTimeFormat(pattern = "kk:mm:ss")
-    private LocalTime walkDuration;
+    private String walkDuration;
 
     @NotBlank
     @Size(max = 250)
@@ -55,7 +51,7 @@ public class Dog {
     @NotBlank
     private String dogPhoto;
 
-    public Dog(String owner_id, String name, String dogBreed, DogType dogType, LocalTime walkDuration, String characteristic, String walkIntensity, String walkDescription, String dogPhoto) {
+    public Dog(String owner_id, String name, String dogBreed, DogType dogType, String walkDuration, String characteristic, String walkIntensity, String walkDescription, String dogPhoto) {
         this.owner_id = owner_id;
         this.name = name;
         this.dogBreed = dogBreed;
