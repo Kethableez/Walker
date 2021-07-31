@@ -7,15 +7,18 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.kethableez.walkerapi.Config.Security.PasswordEncoder;
+import com.kethableez.walkerapi.Model.DTO.UserInfo;
 import com.kethableez.walkerapi.Model.Entity.TokenStorage;
 import com.kethableez.walkerapi.Model.Entity.User;
 import com.kethableez.walkerapi.Model.Entity.UserRole;
 import com.kethableez.walkerapi.Model.Enum.Role;
+import com.kethableez.walkerapi.Model.Request.RegisterRequest;
+import com.kethableez.walkerapi.Model.Request.UserDataRequest;
+import com.kethableez.walkerapi.Model.Request.UserPasswordRequest;
+import com.kethableez.walkerapi.Model.Response.ActionResponse;
 import com.kethableez.walkerapi.Repository.TokenStorageRepository;
 import com.kethableez.walkerapi.Repository.UserRepository;
 import com.kethableez.walkerapi.Repository.UserRoleRepository;
-import com.kethableez.walkerapi.Request.RegisterRequest;
-import com.kethableez.walkerapi.Request.UserDataRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,12 +35,6 @@ public class UserService {
 
         @Autowired
         private final UserRoleRepository roleRepository;
-
-        @Autowired
-        private final OwnerService ownerService;
-
-        @Autowired
-        private final SitterService sitterService;
 
         @Autowired
         private final TokenStorageRepository tokenStorageRepository;
@@ -102,7 +99,7 @@ public class UserService {
                 roles.add(roleRepository.findByRole(Role.ROLE_OWNER).orElseThrow());
                 owner.setRoles(roles);
                 owner.setIsActive(true);
-                this.ownerService.createOwner(owner);
+
                 return userRepository.save(owner);
         }
 
@@ -112,24 +109,44 @@ public class UserService {
                 roles.add(roleRepository.findByRole(Role.ROLE_SITTER).orElseThrow());
                 sitter.setRoles(roles);
                 sitter.setIsActive(true);
-                this.sitterService.createSitter(sitter);
                 return userRepository.save(sitter);
         }
 
         // TODO: WALIDACJE!!!!
-        public void changeData(UsernamePasswordAuthenticationToken token, UserDataRequest request) {
-                User user = userRepository.findByUsername(token.getName()).get();
-                user.setFirstName(request.getFirstName());
-                user.setLastName(request.getLastName());
-                user.setBirthdate(request.getBirthdate());
-                user.setIsSubscribed(request.getIsSubscribed());
+        public ActionResponse changeData(String userId, UserDataRequest request) {
+                if (userRepository.findById(userId).isPresent()) {
+                        User user = userRepository.findById(userId).get();
+                        user.setFirstName(request.getFirstName());
+                        user.setLastName(request.getLastName());
+                        user.setBirthdate(request.getBirthdate());
+                        user.setIsSubscribed(request.getIsSubscribed());
+                        this.userRepository.save(user);
+                        return new ActionResponse(true, "Zmieniono dane.");
 
-                if (user.getRoles().stream().anyMatch(r -> r.getRole().equals(Role.ROLE_OWNER))) {
-                        this.ownerService.changeData(user);
-                }
-                else if (user.getRoles().stream().anyMatch(r -> r.getRole().equals(Role.ROLE_SITTER))){
-                        this.sitterService.changeData(user);
-                }
-                this.userRepository.save(user);
+                } else
+                        return new ActionResponse(false, "Nie znaleziono takiego użytkownika");
+
         }
+
+        public ActionResponse changePassword(String userId, UserPasswordRequest request) {
+                if (userRepository.findById(userId).isPresent()) {
+                        User user = userRepository.findById(userId).get();
+                        if (encoder.bCryptPasswordEncoder().matches(request.getOldPassword(), user.getPassword())) {
+                                user.setPassword(encoder.bCryptPasswordEncoder().encode(request.getNewPassword()));
+                                userRepository.save(user);
+                                return new ActionResponse(true, "Zmieniono hasło,");
+                        } else
+                                return new ActionResponse(false, "Złe hasło.");
+                } else
+                        return new ActionResponse(false, "Nie znaleziono takiego użytkownika");
+        }
+
+        public String getIdFromToken(UsernamePasswordAuthenticationToken token) {
+                return ((UserDetailsImpl) token.getPrincipal()).getId();
+        }
+
+        public UserInfo getUserInfo(String userId) {
+                User user = userRepository.findById(userId).orElseThrow();
+                return new UserInfo(user.getFirstName(), user.getLastName(), user.getUsername(), user.getAvatar());
+        }       
 }

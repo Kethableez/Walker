@@ -1,4 +1,4 @@
-package com.kethableez.walkerapi.Request;
+package com.kethableez.walkerapi.Model.Request;
 
 import com.kethableez.walkerapi.Model.Enum.DogType;
 

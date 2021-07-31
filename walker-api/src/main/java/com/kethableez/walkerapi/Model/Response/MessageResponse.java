@@ -1,4 +1,4 @@
-package com.kethableez.walkerapi.Response;
+package com.kethableez.walkerapi.Model.Response;
 
 import lombok.Getter;
 import lombok.Setter;

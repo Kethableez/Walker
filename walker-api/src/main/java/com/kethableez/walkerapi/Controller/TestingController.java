@@ -4,22 +4,21 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.kethableez.walkerapi.Model.Entity.Owner;
-import com.kethableez.walkerapi.Model.Entity.Sitter;
 import com.kethableez.walkerapi.Model.Entity.User;
 import com.kethableez.walkerapi.Model.Entity.UserRole;
 import com.kethableez.walkerapi.Model.Enum.Gender;
 import com.kethableez.walkerapi.Model.Enum.Role;
-import com.kethableez.walkerapi.Repository.OwnerRepository;
-import com.kethableez.walkerapi.Repository.SitterRepository;
+import com.kethableez.walkerapi.Model.Response.MessageResponse;
 import com.kethableez.walkerapi.Repository.UserRepository;
 import com.kethableez.walkerapi.Repository.UserRoleRepository;
-import com.kethableez.walkerapi.Response.MessageResponse;
+import com.kethableez.walkerapi.Service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,10 +41,7 @@ public class TestingController {
     private final UserRepository userRepository;
 
     @Autowired
-    private final OwnerRepository ownerRepository;
-
-    @Autowired
-    private final SitterRepository sitterRepository;
+    private final UserService userService;
 
     @PostMapping("/add_roles")
     public ResponseEntity<?> insertRoles() {
@@ -73,8 +69,6 @@ public class TestingController {
         user1.setRoles(roles);
         userRepository.save(user1);
         roles.clear();
-        Owner owner = new Owner(user1);
-        ownerRepository.save(owner);
 
         roles.add(roleRepository.findByRole(Role.ROLE_USER).orElseThrow());
         roles.add(roleRepository.findByRole(Role.ROLE_SITTER).orElseThrow());
@@ -83,8 +77,6 @@ public class TestingController {
         user2.setRoles(roles);
         userRepository.save(user2);
         roles.clear();
-        Sitter sitter = new Sitter(user2);
-        sitterRepository.save(sitter);
 
         roles.add(roleRepository.findByRole(Role.ROLE_USER).orElseThrow());
         roles.add(roleRepository.findByRole(Role.ROLE_ADMIN).orElseThrow());
@@ -97,4 +89,9 @@ public class TestingController {
         return ResponseEntity.ok().body(new MessageResponse("Dodano testowych użytkowników"));
     }
 
+    @GetMapping("/checkout")
+    public String getSomething(UsernamePasswordAuthenticationToken token) {
+        String id = userService.getIdFromToken(token);
+        return id;
+    }   
 }

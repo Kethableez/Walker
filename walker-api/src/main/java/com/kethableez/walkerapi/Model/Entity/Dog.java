@@ -21,7 +21,7 @@ public class Dog {
 
     @NotBlank
     @Size(max = 20)
-    private String owner_id;
+    private String ownerId;
     
     @NotBlank
     @Size(max = 20)
@@ -51,8 +51,8 @@ public class Dog {
     @NotBlank
     private String dogPhoto;
 
-    public Dog(String owner_id, String name, String dogBreed, DogType dogType, String walkDuration, String characteristic, String walkIntensity, String walkDescription, String dogPhoto) {
-        this.owner_id = owner_id;
+    public Dog(String ownerId, String name, String dogBreed, DogType dogType, String walkDuration, String characteristic, String walkIntensity, String walkDescription, String dogPhoto) {
+        this.ownerId = ownerId;
         this.name = name;
         this.dogBreed = dogBreed;
         this.dogType = dogType;

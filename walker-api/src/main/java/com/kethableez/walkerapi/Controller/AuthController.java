@@ -1,33 +1,42 @@
 package com.kethableez.walkerapi.Controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
+
 import com.kethableez.walkerapi.Config.Jwt.JwtResponse;
 import com.kethableez.walkerapi.Config.Jwt.JwtUtils;
 import com.kethableez.walkerapi.Config.Security.PasswordEncoder;
-import com.kethableez.walkerapi.Model.Enum.Role;
 import com.kethableez.walkerapi.Model.Entity.TokenStorage;
 import com.kethableez.walkerapi.Model.Entity.User;
+import com.kethableez.walkerapi.Model.Enum.Role;
+import com.kethableez.walkerapi.Model.Request.LoginRequest;
+import com.kethableez.walkerapi.Model.Request.RegisterRequest;
+import com.kethableez.walkerapi.Model.Response.MessageResponse;
 import com.kethableez.walkerapi.Repository.TokenStorageRepository;
 import com.kethableez.walkerapi.Repository.UserRepository;
-import com.kethableez.walkerapi.Request.LoginRequest;
-import com.kethableez.walkerapi.Request.RegisterRequest;
-import com.kethableez.walkerapi.Response.MessageResponse;
 import com.kethableez.walkerapi.Service.UserDetailsImpl;
 import com.kethableez.walkerapi.Service.UserService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

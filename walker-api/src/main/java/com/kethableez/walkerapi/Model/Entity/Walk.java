@@ -20,7 +20,9 @@ public class Walk {
     @Id
     private String id;
 
-    private Dog dog;
+    private String dogId;
+
+    private String ownerId;
 
     private LocalDateTime walkDateTime;
 
@@ -44,9 +46,10 @@ public class Walk {
 
     private String sitterId;
 
-    public Walk(Dog dog, LocalDateTime walkDateTime, String city, String address, Float walkLat, Float walkLon,
+    public Walk(String dogId, String ownerId, LocalDateTime walkDateTime, String city, String address, Float walkLat, Float walkLon,
             String walkDescription, boolean isBooked) {
-        this.dog = dog;
+        this.dogId = dogId;
+        this.ownerId = ownerId;
         this.walkDateTime = walkDateTime;
         this.city = city;
         this.address = address;

@@ -2,13 +2,15 @@ package com.kethableez.walkerapi.Controller;
 
 import java.util.List;
 
-import com.kethableez.walkerapi.Model.Entity.Dog;
-import com.kethableez.walkerapi.Model.Entity.Sitter;
+import com.kethableez.walkerapi.Model.DTO.DogCard;
+import com.kethableez.walkerapi.Model.DTO.UserInfo;
 import com.kethableez.walkerapi.Model.Entity.Walk;
-import com.kethableez.walkerapi.Request.DogRequest;
-import com.kethableez.walkerapi.Request.WalkRequest;
-import com.kethableez.walkerapi.Response.MessageResponse;
+import com.kethableez.walkerapi.Model.Request.DogRequest;
+import com.kethableez.walkerapi.Model.Request.WalkRequest;
+import com.kethableez.walkerapi.Model.Response.ActionResponse;
+import com.kethableez.walkerapi.Model.Response.MessageResponse;
 import com.kethableez.walkerapi.Service.DogService;
+import com.kethableez.walkerapi.Service.UserService;
 import com.kethableez.walkerapi.Service.WalkService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 
-
-//TODO: Validation!
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/owner")
@@ -40,51 +40,56 @@ public class OwnerController {
     @Autowired
     private final WalkService walkService;
 
+    @Autowired
+    private final UserService userService;
+
     @GetMapping("/dogs")
-    public ResponseEntity<List<Dog>> getDogs(UsernamePasswordAuthenticationToken token) {
-        List<Dog> dogs = this.dogService.getUserDogs(token);
-        return new ResponseEntity<>(dogs, HttpStatus.OK);
+    public ResponseEntity<List<DogCard>> getDogs(UsernamePasswordAuthenticationToken token) {
+        List<DogCard> dogCards = this.dogService.getOwnerDogs(userService.getIdFromToken(token));
+        return new ResponseEntity<>(dogCards, HttpStatus.OK);
     }
 
     @GetMapping("/walks")
     public ResponseEntity<List<Walk>> getWalks(UsernamePasswordAuthenticationToken token) {
-        List<Walk> walks = this.walkService.getOwnerWalks(token);
+        List<Walk> walks = this.walkService.getOwnerWalks(userService.getIdFromToken(token));
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 
     @GetMapping("/sitters")
-    public ResponseEntity<List<Sitter>> getSitters(UsernamePasswordAuthenticationToken token) {
-        List<Sitter> sitters = this.walkService.getSitters(token);
+    public ResponseEntity<List<UserInfo>> getSitters(UsernamePasswordAuthenticationToken token) {
+        List<UserInfo> sitters = this.walkService.getSitters(userService.getIdFromToken(token));
         return new ResponseEntity<>(sitters, HttpStatus.OK);
-    }
-
-    @GetMapping("/walks/{id}")
-    public ResponseEntity<List<Walk>> getDogWalks(@PathVariable("id") String dogId) {
-        List<Walk> walks = this.walkService.getDogWalks(dogId);
-        return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 
     @PostMapping("/create_dog")
     public ResponseEntity<?> createDog(@RequestBody DogRequest request, UsernamePasswordAuthenticationToken token) {
-        this.dogService.createDog(token, request);
-        return ResponseEntity.ok(new MessageResponse("Dodano zwierzaka!"));
+        ActionResponse response = this.dogService.createDog(token, request);
+
+        if (response.isSuccess()) return ResponseEntity.ok(new MessageResponse(response.getMessage()));
+        else return ResponseEntity.badRequest().body(response.getMessage());
     }
 
     @PostMapping("/create_walk")
-    public ResponseEntity<?> createWalk(@RequestBody WalkRequest request) {
-        walkService.createWalk(request);
-        return ResponseEntity.ok(new MessageResponse("Stworzono spacer!"));
+    public ResponseEntity<?> createWalk(@RequestBody WalkRequest request, UsernamePasswordAuthenticationToken token) {
+        ActionResponse response = walkService.createWalk(token, request);
+
+        if (response.isSuccess()) return ResponseEntity.ok(new MessageResponse(response.getMessage()));
+        else return ResponseEntity.badRequest().body(response.getMessage());
     }
 
     @DeleteMapping("/delete_dog/{id}")
     public ResponseEntity<?> deleteDog(@PathVariable("id") String dogId, UsernamePasswordAuthenticationToken token) {
-        dogService.deleteDog(dogId, token);
-        return ResponseEntity.ok(new MessageResponse("Usunięto zwierzaka!"));
+        ActionResponse response = dogService.deleteDog(dogId, userService.getIdFromToken(token));
+
+        if (response.isSuccess()) return ResponseEntity.ok(new MessageResponse(response.getMessage()));
+        else return ResponseEntity.badRequest().body(response.getMessage());
     }
 
     @DeleteMapping("/delete_walk/{id}")
-    public ResponseEntity<?> deleteWalk(@PathVariable("id") String walkId) {
-        walkService.deleteWalk(walkId);
-        return ResponseEntity.ok(new MessageResponse("Usunięto spacer!"));
+    public ResponseEntity<?> deleteWalk(@PathVariable("id") String walkId, UsernamePasswordAuthenticationToken token) {
+        ActionResponse response = walkService.deleteWalk(walkId, userService.getIdFromToken(token));
+
+        if (response.isSuccess()) return ResponseEntity.ok(new MessageResponse(response.getMessage()));
+        else return ResponseEntity.badRequest().body(response.getMessage());
     }
 }
