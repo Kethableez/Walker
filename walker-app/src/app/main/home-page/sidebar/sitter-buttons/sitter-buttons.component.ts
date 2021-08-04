@@ -22,5 +22,4 @@ export class SitterButtonsComponent extends ButtonDirective implements OnInit {
         this.previousPath = this.activeRoute;
     }
   }
-
 }

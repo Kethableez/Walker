@@ -1,1 +1,47 @@
-<p>planner works!</p>
+<div class="container">
+  <div class="button" (click)="changeView()">
+    ???
+  </div>
+
+  <div class="page-header">Kreator pupila</div>
+  <div class="calendar" *ngIf="fullView">
+    <div *ngFor="let week of calendar">
+      <div class="weeks">
+        <div *ngFor="let day of week">
+          <div
+            [ngClass]="{ 'today': day == currentDay.getDay(), 'day': day > currentDay.getDay(), 'past-day': day < currentDay.getDay() }"
+            *ngIf="day != -1">
+            <div class="date">
+              {{day}}.{{currentDay.getMonth()}}
+            </div>
+            <div class="walks">
+              {{doSomething(day)}}
+            </div>
+          </div>
+          <div *ngIf="day == -1">
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="week-view" *ngIf="!fullView">
+    <div *ngFor="let day of calendar[currentWeek]">
+      <div
+        [ngClass]="{ 'today': day == currentDay.getDay(), 'day': day > currentDay.getDay(), 'past-day': day < currentDay.getDay() }"
+        *ngIf="day != -1">
+        <div class="date">
+          {{day}}.{{currentDay.getMonth()}}
+        </div>
+        <div class="walks">
+
+        </div>
+      </div>
+      <div *ngIf="day == -1">
+
+      </div>
+    </div>
+  </div>
+</div>

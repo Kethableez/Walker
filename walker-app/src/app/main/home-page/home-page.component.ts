@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerResponse } from '../../models/server-response.model';
+import { ActionResponse } from '../../models/action-response.model';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
 import { UserService } from 'src/app/core/services/models/user.service';
 import { RegularUser } from 'src/app/models/users/regular-user.model';
@@ -16,7 +16,7 @@ export class HomePageComponent implements OnInit {
   isLoggedIn = false;
   currentUser: any;
   userData?: User | RegularUser;
-  response?: ServerResponse;
+  response?: ActionResponse;
 
   constructor(private token: TokenStorageService,
     private userService: UserService) { }

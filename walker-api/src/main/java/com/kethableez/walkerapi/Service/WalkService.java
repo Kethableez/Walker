@@ -64,11 +64,25 @@ public class WalkService {
     }
 
     public List<Walk> getSitterWalks(String sitterId) {
-        return walkRepository.findBySitterId(sitterId);
+        return walkRepository.findByWalkDateTimeGreaterThanAndSitterId(LocalDateTime.now(), sitterId);
     }
 
     public List<Walk> getSitterHistoryWalk(String sitterId) {
         return walkRepository.findByWalkDateTimeLessThanAndSitterId(LocalDateTime.now(), sitterId);
+    }
+
+    public List<WalkCard> getSitterWalkCards(String sitterId) {
+        List<WalkCard> walks = new ArrayList<>();
+        for(Walk w : walkRepository.findByWalkDateTimeGreaterThanAndSitterId(LocalDateTime.now(), sitterId)) walks.add(createCard(w));
+
+        return walks;
+    }
+
+    public List<WalkCard> getSitterHistoryWalkCards(String sitterId) {
+        List<WalkCard> walks = new ArrayList<>();
+        for(Walk w :  walkRepository.findByWalkDateTimeLessThanAndSitterId(LocalDateTime.now(), sitterId)) walks.add(createCard(w));
+
+        return walks;
     }
 
     public List<Walk> getDogFutureWalks(String dogId) {

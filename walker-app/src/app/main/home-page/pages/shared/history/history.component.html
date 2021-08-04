@@ -1,1 +1,4 @@
-<p>history works!</p>
+<div class="page-header">Historia spacerów</div>
+<div *ngFor="let walkCard of walkHistory">
+  {{walkCard.dog.name}} {{walkCard.walk.walkDateTime | date:'dd/MM/yyyyr'}}
+</div>

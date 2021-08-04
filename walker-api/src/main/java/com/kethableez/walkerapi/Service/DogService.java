@@ -84,6 +84,16 @@ public class DogService {
         return dogs;
     }
 
+    public List<DogCard> getSitterDogCards(String sitterId) {
+        Set<String> dogIds = new HashSet<>();
+        for (Walk w : walkRepository.findBySitterId(sitterId)) dogIds.add(w.getDogId());
+
+        List<DogCard> dogs = new ArrayList<>();
+        for (String id : dogIds) dogs.add(this.createDogCard(this.getDogFromId(id)));
+
+        return dogs;
+    }
+
     public ActionResponse deleteDog(String dogId, String ownerId) {
         if (dogRepository.findByDogIdAndOwnerId(dogId, ownerId).isPresent()) {
             for (Walk w : walkRepository.findByDogId(dogId)) System.out.println(w.getId());

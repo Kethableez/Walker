@@ -2,10 +2,8 @@ package com.kethableez.walkerapi.Controller;
 
 import java.util.List;
 
-import com.kethableez.walkerapi.Model.Entity.Dog;
-import com.kethableez.walkerapi.Model.Entity.Walk;
-import com.kethableez.walkerapi.Model.Response.ActionResponse;
-import com.kethableez.walkerapi.Model.Response.MessageResponse;
+import com.kethableez.walkerapi.Model.DTO.DogCard;
+import com.kethableez.walkerapi.Model.DTO.WalkCard;
 import com.kethableez.walkerapi.Service.DogService;
 import com.kethableez.walkerapi.Service.UserService;
 import com.kethableez.walkerapi.Service.WalkService;
@@ -16,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,41 +34,21 @@ public class SitterController {
     @Autowired
     private final UserService userService;
 
-    @PostMapping("/enroll/{id}")
-    public ResponseEntity<?> enroll(@PathVariable("id") String walkId, UsernamePasswordAuthenticationToken token) {
-        ActionResponse response = walkService.walkEnroll(token, walkId);
-
-        if (response.isSuccess())
-            return ResponseEntity.ok(new MessageResponse(response.getMessage()));
-        else
-            return ResponseEntity.badRequest().body(response.getMessage());
-    }
-
-    @PostMapping("/disenroll/{id}")
-    public ResponseEntity<?> disenroll(@PathVariable("id") String walkId, UsernamePasswordAuthenticationToken token) {
-        ActionResponse response = walkService.walkDisenroll(token, walkId);
-
-        if (response.isSuccess())
-            return ResponseEntity.ok(new MessageResponse(response.getMessage()));
-        else
-            return ResponseEntity.badRequest().body(response.getMessage());
-    }
-
     @GetMapping("/dogs")
-    public ResponseEntity<List<Dog>> getSitterDogs(UsernamePasswordAuthenticationToken token) {
-        List<Dog> dogs = this.dogService.getSitterDogs(userService.getIdFromToken(token));
+    public ResponseEntity<List<DogCard>> getSitterDogs(UsernamePasswordAuthenticationToken token) {
+        List<DogCard> dogs = this.dogService.getSitterDogCards(userService.getIdFromToken(token));
         return new ResponseEntity<>(dogs, HttpStatus.OK);
     }
 
     @GetMapping("/walks")
-    public ResponseEntity<List<Walk>> getSitterWalks(UsernamePasswordAuthenticationToken token) {
-        List<Walk> walks = this.walkService.getSitterWalks(userService.getIdFromToken(token));
+    public ResponseEntity<List<WalkCard>> getSitterWalks(UsernamePasswordAuthenticationToken token) {
+        List<WalkCard> walks = this.walkService.getSitterWalkCards(userService.getIdFromToken(token));
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 
     @GetMapping("/history")
-    public ResponseEntity<List<Walk>> getWalkHistory(UsernamePasswordAuthenticationToken token) {
-        List<Walk> walks = walkService.getSitterHistoryWalk(userService.getIdFromToken(token));
+    public ResponseEntity<List<WalkCard>> getWalkHistory(UsernamePasswordAuthenticationToken token) {
+        List<WalkCard> walks = walkService.getSitterHistoryWalkCards(userService.getIdFromToken(token));
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 }

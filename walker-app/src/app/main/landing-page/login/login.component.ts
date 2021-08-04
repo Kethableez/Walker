@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
-import { ServerResponse } from 'src/app/models/server-response.model';
+import { ActionResponse } from 'src/app/models/action-response.model';
 
 @Component({
   selector: 'ktbz-login',
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   roles: string[] = [];
-  response?: ServerResponse;
+  response?: ActionResponse;
   isMessageBoxVisible = false;
 
   constructor(

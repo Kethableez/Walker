@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ServerResponse } from './../../../models/server-response.model';
+import { ActionResponse } from '../../../models/action-response.model';
 
 @Component({
   selector: 'ktbz-box-message',
@@ -8,7 +8,7 @@ import { ServerResponse } from './../../../models/server-response.model';
 export class BoxMessageComponent implements OnInit {
 
   @Input()
-  response?: ServerResponse;
+  response?: ActionResponse;
 
   @Output()
   closeMessageBox = new EventEmitter<boolean>();

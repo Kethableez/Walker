@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { ServerResponse } from 'src/app/models/server-response.model';
+import { ActionResponse } from 'src/app/models/action-response.model';
 
 @Component({
   selector: 'ktbz-confirmation',
@@ -12,7 +12,7 @@ export class ConfirmationComponent implements OnInit {
 
   token!: string;
   isMessageBoxVisible = false;
-  response?: ServerResponse;
+  response?: ActionResponse;
 
   constructor(private route: ActivatedRoute,
     private authService: AuthService) { }

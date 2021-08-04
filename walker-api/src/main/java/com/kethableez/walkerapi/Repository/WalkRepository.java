@@ -30,5 +30,7 @@ public interface WalkRepository extends MongoRepository<Walk, String>{
 
     List<Walk> findByWalkDateTimeLessThanAndSitterId(LocalDateTime currentTime, String sitterId);
 
+    List<Walk> findByWalkDateTimeGreaterThanAndSitterId(LocalDateTime currentTime, String sitterId);
+
     List<Walk> findByWalkDateTimeGreaterThanAndDogIdOrderByWalkDateTimeAsc(LocalDateTime currentTime, String dogId, Pageable page);
 }

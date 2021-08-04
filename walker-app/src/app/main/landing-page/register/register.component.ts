@@ -1,4 +1,4 @@
-import { ServerResponse } from './../../../models/server-response.model';
+import { ActionResponse } from '../../../models/action-response.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   subscription: boolean = false;
   isAdminRegistration: boolean = false;
   isMessageBoxVisible = false;
-  response?: ServerResponse;
+  response?: ActionResponse;
 
   registerForm = this.builder.group({
     firstName: ['', Validators.required],

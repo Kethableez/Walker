@@ -27,6 +27,7 @@ $shadow: 0 3px 6px
 $fontMain: "Century Gothic";
 $fontHeaders: "FuturaClassicW01-Bold";
 
+// Body
 html body {
   padding: 0;
   margin: 0;
@@ -88,7 +89,7 @@ html body {
   }
 }
 
-// Forms
+// FORMS
 form {
   width: 100%;
   display: flex;
@@ -96,12 +97,13 @@ form {
   justify-content: center;
 }
 
-// Inputs
+// INPUTS
 input[type="text"],
 input[type="password"],
 input[type="date"],
 input[type="file"],
 input[type="time"],
+input[type="datetime-local"],
 select,
 option,
 textarea {
@@ -219,33 +221,6 @@ option {
   background-color: $secondaryTeal;
 }
 
-ktbz-register {
-  .button {
-    background-color: $primaryBrass;
-  }
-
-  .button:hover {
-    background-color: $primaryBrass;
-  }
-
-  .button-disabled {
-    background-color: $primaryBrass;
-  }
-}
-
-ktbz-page-not-found {
-  .code {
-    font-weight: bolder;
-    font-size: 10rem;
-    color: $primaryDark;
-  }
-
-  .message {
-    font-size: 3rem;
-    color: $primaryDark;
-  }
-}
-
 .button:active {
   box-shadow: none;
 }
@@ -289,6 +264,22 @@ ktbz-page-not-found {
   background-color: $secondaryLight;
 }
 
+// LANDING
+ktbz-register {
+  .button {
+    background-color: $primaryBrass;
+  }
+
+  .button:hover {
+    background-color: $primaryBrass;
+  }
+
+  .button-disabled {
+    background-color: $primaryBrass;
+  }
+}
+
+// SIDEBAR
 .icon {
   align-self: center;
   fill: $primaryLight;
@@ -333,6 +324,53 @@ ktbz-page-not-found {
 .logout-button:hover {
   background-color: #e2cec2;
   box-shadow: $shadow;
+}
+
+.tooltip {
+  position: relative;
+  .tooltiptext {
+    font-family: "Century Gothic";
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    width: max-content;
+    background-color: $primaryDark;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 0.5rem 0.5rem;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 0.125rem;
+    left: 3.7rem;
+  }
+}
+
+.tooltiptext {
+  transition: opacity 0.2s ease;
+}
+.tooltip:hover {
+  .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// SHARED
+.page-header {
+  font-weight: bold;
+  font-size: 2rem;
+  padding: 1rem;
+  border-bottom: 1px solid $primaryDark;
+}
+
+.form-header {
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid $primaryDark;
 }
 
 ktbz-box-message {
@@ -384,63 +422,84 @@ ktbz-box-message {
   }
 }
 
-.tooltip {
-  position: relative;
-  .tooltiptext {
-    font-family: "Century Gothic";
-    color: #fff;
-    visibility: hidden;
-    opacity: 0;
-    width: max-content;
-    background-color: $primaryDark;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 0.5rem 0.5rem;
+ktbz-page-not-found {
+  .code {
+    font-weight: bolder;
+    font-size: 10rem;
+    color: $primaryDark;
+  }
 
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    top: 0.125rem;
-    left: 3.7rem;
+  .message {
+    font-size: 3rem;
+    color: $primaryDark;
   }
 }
 
-.tooltiptext {
-  transition: opacity 0.2s ease;
-}
-.tooltip:hover {
-  .tooltiptext {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-.page-header {
-  font-weight: bold;
-  font-size: 2rem;
-  padding: 1rem;
-  border-bottom: 1px solid $primaryDark;
-}
-
-.form-header {
-  font-weight: bold;
-  font-size: 1rem;
-  padding: 0.5rem;
-  border-bottom: 1px solid $primaryDark;
+.container {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  height: 100%;
 }
 
 ktbz-dashboard {
 }
 
-ktbz-dog-creator {
-  .container {
+ktbz-profile {
+  .main-container {
+    flex-grow: 1;
+    margin: 1rem;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+  }
+
+  .user-info {
+    width: 15.6rem;
+    height: 100%;
+    background-color: $primaryLight;
+    box-shadow: $shadow;
+    border-radius: 5px;
+
+    .header {
+      text-align: center;
+      background-color: $primaryBrass;
+      box-shadow: $shadow;
+      border-radius: 5px 5px 0 0 ;
+      color: $primaryLight;
+      font-weight: bold;
+      font-size: 2rem;
+      padding: 1rem .5rem;
+    }
+    .user-photo {
+      width: 15.6rem;
+      height: 15.6rem;
+      background-color: $primaryDark;
+      box-shadow: $shadow;
+      border-radius: 0 0 5px 5px;
+    }
+  }
+
+  .container-2 {
+    height: 100%;
+    flex-grow: .98;
+    border-radius: 5px;
     display: flex;
     flex-flow: column;
-    width: 100%;
-    height: 100%;
-    background-color: $secondaryLight;
+
+    .container-3 {
+      flex-grow: 1;
+
+      .page-header {
+        font-size: 1.5rem;
+        padding: .5rem;
+      }
+    }
   }
+}
+
+// OWNER
+ktbz-dog-creator {
 
   .main-container {
     flex-grow: 1;
@@ -461,12 +520,14 @@ ktbz-dog-creator {
 
     .page-header {
       font-size: 1rem;
-      padding: .5rem;
+      padding: 0.5rem;
     }
 
     input[type="text"],
     input[type="file"],
-    input[type="time"] {
+    input[type="time"],
+    select,
+    option {
       width: 100%;
       height: 2rem;
       font-size: 1rem;
@@ -495,8 +556,12 @@ ktbz-dog-creator {
       background-color: $primaryBrass;
     }
 
+    .button-disabled {
+      background-color: rgba($primaryBrass, 0.7);
+    }
+
     .button:hover {
-      background-color: rgba($primaryBrass, .5);
+      background-color: rgba($primaryBrass, 0.5);
     }
   }
 
@@ -528,14 +593,18 @@ ktbz-dog-creator {
       text-align: center;
       margin-bottom: 5rem;
       min-height: 4rem;
+      border-radius: 5px;
+      box-shadow: $shadow;
     }
     .text-1 {
       font-weight: bold;
       margin: 1rem 2rem;
+      min-height: 1.5rem;
       font-size: 1.5rem;
     }
     .text-2 {
       margin-inline: 2rem;
+      min-height: 1rem;
       font-size: 1rem;
     }
     .icon {
@@ -544,38 +613,320 @@ ktbz-dog-creator {
   }
 }
 
-ktbz-profile {
-  .main-container {
-    display: flex;
+ktbz-walk-planner {
+  .container {
+    width: 40%;
     margin-inline: auto;
-    width: 97%;
-    height: 48.5rem;
-    align-content: center;
-    align-items: center;
-  }
 
-  .profile-info {
-    width: 15.5rem;
-    height: 95%;
-    background-color: $primaryLight;
-    box-shadow: $shadow;
-    border-radius: 5px;
-
-    .user-name {
-      border-radius: 5px 5px 0 0;
-      background-color: $primaryBrass;
-      color: $primaryLight;
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.5rem;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
+    .page-header {
+      font-size: 1rem;
+      padding: 0.5rem;
     }
 
-    .user-avatar {
-      width: 15.5rem;
-      height: 15.5rem;
-      background-color: #000000;
+    .map {
+      width: 100.5%;
+      background-color: $primaryLight;
+      border-radius: 5px;
+      box-shadow: $shadow;
+      height: 12rem;
+    }
+  }
+
+  .dog-container {
+    display: flex;
+    flex-flow: row;
+  }
+
+  input[type="text"],
+  input[type="datetime-local"] {
+    width: 100%;
+    height: 2rem;
+    font-size: 1rem;
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
+    box-shadow: $shadow;
+  }
+
+  textarea {
+    width: 100%;
+    height: 5rem;
+    font-size: 1rem;
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
+    box-shadow: $shadow;
+  }
+
+  .button {
+    background-color: $primaryBrass;
+  }
+
+  .button-disabled {
+    background-color: rgba($primaryBrass, 0.7);
+  }
+
+  .button:hover {
+    background-color: rgba($primaryBrass, 0.5);
+  }
+
+  .dog {
+    margin: 0.25rem;
+    width: 4rem;
+    height: 4rem;
+    background-color: rgba($primaryBrass, 0.7);
+    border-radius: 6rem;
+    cursor: pointer;
+    transition: 0.5s ease;
+  }
+  .dog:hover {
+    background-color: rgba($primaryBrass, 1);
+  }
+
+  .dog-selected {
+    margin: 0.25rem;
+    width: 4rem;
+    height: 4rem;
+    background-color: rgba($primaryBrass, 1);
+    border-radius: 6rem;
+    cursor: pointer;
+    transition: 0.5s ease;
+  }
+}
+
+// SITTER
+ktbz-dog-walks {
+  .container {
+    position: relative;
+    .button {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      margin: 0;
+      // width: 1%;
+      height: 2.5rem;
+      padding: 0 .5rem;
+    }
+  }
+
+  .all-view,
+  .incoming-view {
+    flex-grow: 1;
+    margin: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    overflow-y: auto;
+    justify-content: space-around;
+  }
+
+  .all-view::-webkit-scrollbar {
+    width: 0.2rem;
+  }
+
+  .all-view::-webkit-scrollbar-thumb {
+    background-color: $primaryDark;
+    border-radius: 1rem;
+  }
+
+  .incoming-view::-webkit-scrollbar {
+    width: 0.2rem;
+  }
+
+  .incoming-view::-webkit-scrollbar-thumb {
+    background-color: $primaryDark;
+    border-radius: 1rem;
+  }
+
+  .dog-card {
+    position: relative;
+    margin: 0.5rem;
+    width: 30rem;
+    background-color: $primaryLight;
+    border-radius: 5px;
+    box-shadow: $shadow;
+
+    .dog-photo {
+      position: absolute;
+      width: 6rem;
+      height: 6rem;
+      background-color: #1d861f;
+      left: 0.5rem;
+      top: 0.5rem;
+      border-radius: 10rem;
+    }
+
+    .header {
+      background-color: $primaryBrass;
+      padding: 1rem 0.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: $primaryLight;
+      font-weight: bold;
+      font-size: 2rem;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .text-1 {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 0.25rem 0.5rem;
+    }
+
+    .text-2 {
+      margin: 0.25rem 0.5rem;
+      text-align: justify;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      padding-bottom: 0.5rem;
+
+      .icon {
+        cursor: pointer;
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+
+    .icon {
+      fill: $primaryDark;
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
 }
+
+ktbz-planner {
+
+  .container {
+    position: relative;
+    .button {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      margin: 0;
+      // width: 1%;
+      height: 2.5rem;
+      padding: 0 .5rem;
+    }
+  }
+
+
+  .calendar {
+    flex-grow: 1;
+    margin: 1rem;
+    display: grid;
+  }
+
+  .weeks {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  .week-view {
+    flex-grow: 1;
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+    .date {
+      width: 100%;
+      background-color: $primaryBrass;
+      color: $primaryLight;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .day {
+      height: auto;
+      display: flex;
+      margin: 0.5rem;
+      flex-flow: column;
+      box-shadow: $shadow;
+      border-radius: 5px;
+    }
+
+    .today {
+      margin: 0.5rem;
+      box-shadow: $shadow;
+      border-radius: 5px;
+
+      .date {
+        background-color: $primaryTeal;
+      }
+    }
+
+    .past-day {
+      margin: 0.5rem;
+      box-shadow: $shadow;
+      opacity: 0.5;
+      border-radius: 5px;
+    }
+
+    .walks {
+      flex-grow: 1;
+    }
+  }
+
+  .dog-photo {
+    width: 3rem;
+    height: 3rem;
+    margin: 0.2rem;
+    background-color: #3e403b;
+    border-radius: 4rem;
+  }
+
+  .date {
+    background-color: $primaryBrass;
+    color: $primaryLight;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+  }
+
+  .walks {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    overflow-x: auto;
+    justify-content: center;
+    background-color: $primaryLight;
+    height: 5rem;
+    border-radius: 0 0 5px 5px;
+  }
+
+  .walks::-webkit-scrollbar {
+    height: 0.2rem;
+  }
+
+  .walks::-webkit-scrollbar-thumb {
+    background-color: $primaryDark;
+    border-radius: 1rem;
+  }
+
+  .day {
+    margin: 0.5rem;
+    box-shadow: $shadow;
+    border-radius: 5px;
+  }
+
+  .today {
+    margin: 0.5rem;
+    box-shadow: $shadow;
+    border-radius: 5px;
+
+    .date {
+      background-color: $primaryTeal;
+    }
+  }
+
+  .past-day {
+    margin: 0.5rem;
+    box-shadow: $shadow;
+    opacity: 0.5;
+    border-radius: 5px;
+  }
+}
+
+// ADMIN

@@ -1,1 +1,36 @@
-<p>walk-planner works!</p>
+<div class="page-header">Planer spaceru</div>
+
+<div class="container">
+  <div class="page-header">Wybierz psa</div>
+  <form [formGroup]="walkForm">
+    <div class="dog-container">
+      <div *ngFor="let dog of ownerDogs">
+        <div [ngClass]="dog.dog.id === walkForm.get('dogId')?.value ? 'dog-selected' : 'dog'"  (click)="selectDog(dog.dog.id)">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">Dodaj informacje</div>
+    <input type="datetime-local" formControlName="walkDateTime">
+    <input type="text" formControlName="address" placeholder="Wpisz adres spotkania">
+    <input type="text" formControlName="city" placeholder="Wpisz miasto spotkania">
+
+    <div class="map">
+
+    </div>
+    * zaznacz na mapie miejsce spotkania
+
+    <textarea formControlName="walkDescription" placeholder="Dodaj opcjonalny opis"></textarea>
+
+    <div [ngClass]="walkForm.valid ? 'button' : 'button-disabled'" (click)="createWalk()">
+    Dodaj
+  </div>
+  </form>
+</div>
+
+<ktbz-box-message
+  *ngIf="isMessageBoxVisible"
+  [response]="response"
+  (closeMessageBox)="closeMessageBox($event)">
+</ktbz-box-message>
