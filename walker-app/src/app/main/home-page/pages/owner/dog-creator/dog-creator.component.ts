@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, Validator, Validators } from '@angular/forms';
 
 @Component({
   selector: 'ktbz-dog-creator',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DogCreatorComponent implements OnInit {
 
-  constructor() { }
+  constructor(private builder: FormBuilder,
+    private ref: ChangeDetectorRef) { }
+
+  dogForm = this.builder.group({
+    name: ['', Validators.required],
+    dogBreed: ['', Validators.required],
+    dogType: ['', Validators.required],
+    characteristic: ['', Validators.required],
+    walkDuration: ['', Validators.required],
+    walkIntensity: ['', Validators.required],
+    walkDescription: ['', Validators.required]
+  })
+
+  get name() {
+    return this.dogForm.get('name');
+  }
+
+  dogName: string = '';
 
   ngOnInit(): void {
+    this.ref.detectChanges();
   }
 
 }

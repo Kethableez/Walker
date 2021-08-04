@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ServerResponse } from '../../models/server-response.model';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
 import { UserService } from 'src/app/core/services/models/user.service';
-import { User } from 'src/app/models/user.model';
-import { Owner } from 'src/app/models/owner.model';
-import { Sitter } from 'src/app/models/sitter.model';
+import { RegularUser } from 'src/app/models/users/regular-user.model';
+import { User } from 'src/app/models/users/user.model';
+
 
 @Component({
   selector: 'ktbz-home-page',
@@ -15,7 +15,7 @@ export class HomePageComponent implements OnInit {
 
   isLoggedIn = false;
   currentUser: any;
-  userData?: User | Owner | Sitter;
+  userData?: User | RegularUser;
   response?: ServerResponse;
 
   constructor(private token: TokenStorageService,
@@ -27,7 +27,7 @@ export class HomePageComponent implements OnInit {
       this.currentUser = this.token.getUser();
 
       this.userService.getUserData().subscribe(
-        (response: User | Owner | Sitter) => {
+        (response: User | RegularUser) => {
           this.userData = response;
           console.log(this.userData);
         }

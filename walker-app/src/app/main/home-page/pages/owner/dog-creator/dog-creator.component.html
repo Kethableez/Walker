@@ -1,1 +1,79 @@
-<p>dog-creator works!</p>
+<div class="container">
+  <div class="page-header">
+    Kreator pupila
+  </div>
+
+  <div class="main-container">
+    <div class="creator-form">
+      <form [formGroup]="dogForm">
+        <div class="page-header">
+          Opis twojego zwierzaka
+        </div>
+        <input type="file">
+        <input type="text" [ngModel]="dogName" formControlName="name" placeholder="Wpisz imię psa">
+        <input type="text" formControlName="dogBreed" placeholder="Wpisz rasę psa">
+        <input type="text" formControlName="dogType" placeholder="Wybierz wielkość psa">
+
+        <textarea formControlName="characteristic" placeholder="Dodaj opis charakteru"></textarea>
+
+        <div class="page-header">
+          Opis twojego zwierzaka
+        </div>
+        <input type="time" min="00:30" max="05:00" formControlName="walkDuration" placeholder="Długość spaceru">
+        <input type="text" formControlName="walkIntensity" placeholder="Intensywność spaceru">
+
+        <textarea formControlName="walkDescription" placeholder="Dodatkowe wymagania"></textarea>
+        <div class="button">
+          Dodaj
+        </div>
+
+      </form>
+
+
+    </div>
+
+    <div class="dog-card">
+      <div class="dog-photo">
+
+      </div>
+      <div class="dog-header">
+        {{dogName}}
+      </div>
+      <div class="text-1">
+        Charakter
+      </div>
+      <div class="text-2">
+        Barker to spokojny i przyjacielski pies. Jest wytresowany i lubi zabawy na świeżym powietrzu.
+      </div>
+      <div style="display: flex; margin: .5rem 2rem;">
+        <svg class="icon" id="schedule_black_24dp" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+          <path id="Path_63" data-name="Path 63" d="M0,0H32V32H0Z" fill="none"/>
+          <path id="Path_64" data-name="Path 64" d="M15.32,2A13.333,13.333,0,1,0,28.667,15.333,13.327,13.327,0,0,0,15.32,2Zm.013,24A10.667,10.667,0,1,1,26,15.333,10.664,10.664,0,0,1,15.333,26ZM15.04,8.667h-.08a.956.956,0,0,0-.96.96V15.92a1.32,1.32,0,0,0,.653,1.147l5.533,3.32a.954.954,0,1,0,.973-1.64L16,15.68V9.627a.956.956,0,0,0-.96-.96Z" transform="translate(0.667 0.667)"/>
+        </svg>
+        <div class="text-2">
+          1.5h
+        </div>
+      </div>
+
+      <div style="display: flex; margin: .5rem 2rem;">
+        <svg id="signal_cellular_alt_black_24dp" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+          <path id="Path_65" data-name="Path 65" d="M0,0H32V32H0Z" fill="none"/>
+          <path id="Path_66" data-name="Path 66" d="M23,4a2,2,0,0,1,2,2V23.333a2,2,0,0,1-4,0V6A2,2,0,0,1,23,4ZM7,17.333a2,2,0,0,1,2,2v4a2,2,0,1,1-4,0v-4A2,2,0,0,1,7,17.333Zm8-6.667a2,2,0,0,1,2,2V23.333a2,2,0,0,1-4,0V12.667A2,2,0,0,1,15,10.667Z" transform="translate(1.667 1.333)"/>
+        </svg>
+        <div class="text-2">
+          Umiarkowana
+        </div>
+      </div>
+
+
+      <div class="text-1">
+        Spacer
+      </div>
+      <div class="text-2">
+        Opis tego jak powinien wyglądać spacer, co należy ze sobą zabrać a co będzie udostępnione itd.
+      </div>
+
+
+    </div>
+  </div>
+</div>

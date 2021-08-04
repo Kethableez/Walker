@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/models/user.model';
+import { RegularUser } from 'src/app/models/users/regular-user.model';
+import { User } from 'src/app/models/users/user.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUserData(): Observable<User> {
-    return this.http.get<User>(this.serviceUrl + '/getData');
+  getUserData(): Observable<User | RegularUser> {
+    return this.http.get<User | RegularUser>(this.serviceUrl + '/get_data');
   }
 }
