@@ -1,62 +1,66 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SitterService } from 'src/app/core/services/models/sitter.service';
 import { WalkCard } from 'src/app/models/walks/walk-card.model';
 import { DateService } from './../../../../../core/services/utility/date.service';
 
-export interface WalkDate {
-  WalkCard: WalkCard;
-  day: Number;
+export interface WalkCardMapper {
+  day: number;
+  walkCard: WalkCard[];
 }
 
 @Component({
   selector: 'ktbz-planner',
   templateUrl: './planner.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlannerComponent implements OnInit {
-
   currentDay: Date = new Date(Date.now());
   currentWeek: number = -1;
-  calendar: number[][] = [];
-  dogs: WalkCard[] = [];
-  walkDate: WalkDate[] = [];
+  calendar: WalkCardMapper[][] = [];
   fullView = true;
 
-  constructor(private dateService: DateService,
-    private sitterService: SitterService) { }
+  constructor(
+    private dateService: DateService,
+    private sitterService: SitterService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.calendar = this.dateService.listOfDays(this.currentDay.getFullYear(), this.currentDay.getMonth());
+    this.calendar = this.dateService.listOfDays(
+      this.currentDay.getFullYear(),
+      this.currentDay.getMonth()
+    );
     this.currentWeek = this.findWeek();
-    this.sitterService.getWalks().subscribe(res =>  {
-      this.dogs = res;
-
-      this.dogs.forEach(dog => {
-        let walk: WalkDate = {
-          WalkCard: dog,
-          day: new Date(dog.walk.walkDateTime).getDate()
-        }
-        this.walkDate.push(walk);
-      })
-
-
-      console.log(this.walkDate)
+    this.sitterService.getWalks().subscribe((res) => {
+      this.mapWithDay(res, this.calendar);
     });
   }
 
+  mapWithDay(walkCards: WalkCard[], calendar: WalkCardMapper[][]): void {
+    walkCards
+      .filter(
+        (walkCard) =>
+          new Date(walkCard.walk.walkDateTime).getMonth() == this.currentDay.getMonth()
+      )
+      .forEach(dog => {
+        let walkDate = new Date(dog.walk.walkDateTime);
+        calendar.forEach((week) => {
+          week.find((day) => day.day == walkDate.getDate())?.walkCard.push(dog);
+        });
+      });
+  }
 
   findWeek() {
-    return this.calendar.findIndex(week => week.includes(this.currentDay.getDate()));
+    return this.calendar.findIndex((week) => week.find((m) => m.day == this.currentDay.getDate()));
   }
 
   changeView() {
-    this.fullView ? this.fullView = false : this.fullView = true;
+    this.fullView ? (this.fullView = false) : (this.fullView = true);
   }
 
-  doSomething(day: number) : string  {
-    console.log('call')
-    let index = this.walkDate.findIndex(walk => walk.day == day);
-    if (index != -1) return this.walkDate[index].WalkCard.dog.name;
-    else return '';
+  dogProfile(dogId: string) {
+    console.log(this.router.navigate(['/dog/' + dogId], {relativeTo: this.route}))
+    this.router.navigate(['dog/' + dogId], {relativeTo: this.route});
   }
 }

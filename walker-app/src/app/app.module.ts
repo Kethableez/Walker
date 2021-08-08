@@ -32,6 +32,9 @@ import { DogWalksComponent } from './main/home-page/pages/sitter/dog-walks/dog-w
 import { FavouriteComponent } from './main/home-page/pages/sitter/favourite/favourite.component';
 import { PlannerComponent } from './main/home-page/pages/sitter/planner/planner.component';
 import { ButtonDirective } from './main/home-page/sidebar/button.directive';
+import { DogComponent } from './main/home-page/pages/shared/dog/dog.component';
+import { WalkComponent } from './main/home-page/pages/shared/walk/walk.component';
+import { DogCardComponent } from './main/home-page/components/shared/dog-card/dog-card.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,9 @@ import { ButtonDirective } from './main/home-page/sidebar/button.directive';
     FavouriteComponent,
     PlannerComponent,
     ButtonDirective,
+    DogComponent,
+    WalkComponent,
+    DogCardComponent,
   ],
   imports: [
     BrowserModule,

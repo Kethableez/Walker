@@ -7,19 +7,18 @@
   <div class="calendar" *ngIf="fullView">
     <div *ngFor="let week of calendar">
       <div class="weeks">
-        <div *ngFor="let day of week">
+        <div *ngFor="let walkCard of week">
           <div
-            [ngClass]="{ 'today': day == currentDay.getDay(), 'day': day > currentDay.getDay(), 'past-day': day < currentDay.getDay() }"
-            *ngIf="day != -1">
+            [ngClass]="{ 'today': walkCard.day == currentDay.getDay(), 'day': walkCard.day > currentDay.getDay(), 'past-day': walkCard.day < currentDay.getDay() }"
+            *ngIf="walkCard.day != -1">
             <div class="date">
-              {{day}}.{{currentDay.getMonth()}}
+              {{walkCard.day | number: '2.0-0'}}
             </div>
             <div class="walks">
-              {{doSomething(day)}}
+              <div class="dog-photo" *ngFor="let dog of walkCard.walkCard" [routerLink]="['/home/dog', dog.dog.id]">
+                <!-- {{dog.dog.name}} -->
+              </div>
             </div>
-          </div>
-          <div *ngIf="day == -1">
-
           </div>
         </div>
       </div>
@@ -28,19 +27,20 @@
   </div>
 
   <div class="week-view" *ngIf="!fullView">
-    <div *ngFor="let day of calendar[currentWeek]">
+    <div *ngFor="let walkCard of calendar[currentWeek]">
       <div
-        [ngClass]="{ 'today': day == currentDay.getDay(), 'day': day > currentDay.getDay(), 'past-day': day < currentDay.getDay() }"
-        *ngIf="day != -1">
+        [ngClass]="{ 'today': walkCard.day == currentDay.getDay(), 'day': walkCard.day > currentDay.getDay(), 'past-day': walkCard.day < currentDay.getDay() }"
+        *ngIf="walkCard.day != -1">
         <div class="date">
-          {{day}}.{{currentDay.getMonth()}}
+          {{walkCard.day | number: '2.0-0'}}
         </div>
         <div class="walks">
+          <div *ngFor="let dog of walkCard.walkCard">
+            {{dog.dog.name}}
+          </div>
 
+          <!-- {{walkCard.walkCard[0]?.dog?.name}} -->
         </div>
-      </div>
-      <div *ngIf="day == -1">
-
       </div>
     </div>
   </div>

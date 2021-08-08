@@ -69,5 +69,8 @@ public class Dog {
         return id.equals(w.getId());
     }
     
-
+    public String getDogPhoto() {
+        // http://localhost:8080/image/222333/beagle.jpg
+        return "http://localhost:8080/image/" + this.id + "/" + this.dogPhoto;
+    }
 }

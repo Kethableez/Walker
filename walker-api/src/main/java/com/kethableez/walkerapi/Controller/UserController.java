@@ -1,11 +1,12 @@
 package com.kethableez.walkerapi.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.kethableez.walkerapi.Config.Security.PasswordEncoder;
 import com.kethableez.walkerapi.Model.DTO.UserInfo;
 import com.kethableez.walkerapi.Model.Entity.User;
-import com.kethableez.walkerapi.Model.Enum.Role;
+import com.kethableez.walkerapi.Model.Entity.UserRole;
 import com.kethableez.walkerapi.Model.Request.UserDataRequest;
 import com.kethableez.walkerapi.Model.Request.UserPasswordRequest;
 import com.kethableez.walkerapi.Model.Response.ActionResponse;
@@ -60,21 +61,23 @@ public class UserController {
     public ResponseEntity<?> getData(UsernamePasswordAuthenticationToken token) {
         User user = userRepository.findByUsername(token.getName()).orElseThrow();
 
-        Role mainRole = Role.ROLE_USER;
-        if (user.getRoles().stream().anyMatch(r -> r.getRole().equals(Role.ROLE_OWNER)))
-            mainRole = Role.ROLE_OWNER;
-        else if (user.getRoles().stream().anyMatch(r -> r.getRole().equals(Role.ROLE_SITTER)))
-            mainRole = Role.ROLE_SITTER;
-        switch (mainRole) {
-            case ROLE_OWNER:
-                return new ResponseEntity<>(ownerService.getData(userService.getIdFromToken(token)), HttpStatus.OK);
+         Optional<UserRole> mainRole = userService.getRole(user);
 
-            case ROLE_SITTER:
-                return new ResponseEntity<>(sitterService.getData(userService.getIdFromToken(token)), HttpStatus.OK);
+         if (mainRole.isPresent()) {
+             System.out.println(mainRole.get().getRole());
+             switch(mainRole.get().getRole()){
+                case ROLE_OWNER:
+                    return new ResponseEntity<>(ownerService.getData(userService.getIdFromToken(token)), HttpStatus.OK);
 
-            default:
-                return new ResponseEntity<>(user, HttpStatus.OK);
-        }
+                case ROLE_SITTER:
+                    return new ResponseEntity<>(sitterService.getData(userService.getIdFromToken(token)), HttpStatus.OK);
+
+                default:
+                    return new ResponseEntity<>(user, HttpStatus.OK);
+             }
+         }
+         else return ResponseEntity.badRequest().body(new MessageResponse("jesteś nikim"));
+
     }
 
     @GetMapping("/{id}")

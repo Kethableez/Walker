@@ -1,3 +1,4 @@
+import { WalkCardMapper } from './../../../main/home-page/pages/sitter/planner/planner.component';
 import { Injectable } from "@angular/core";
 
 @Injectable({
@@ -5,21 +6,27 @@ import { Injectable } from "@angular/core";
 })
 export class DateService {
 
-  listOfDays(year: number, month: number): number[][] {
+  listOfDays(year: number, month: number): WalkCardMapper[][] {
     let daysNumber = this.daysOfMonth(year, month + 1);
 
-    let week: number[] = [];
-    let x: number[][] = [];
+    let week: WalkCardMapper[] = [];
+    let x: WalkCardMapper[][] = [];
     let day = 1;
 
     if (this.dayOfWeek(year, month, day) != 1) {
       for (let i = 1; i < this.dayOfWeek(year, month, day); i++) {
-        week.push(-1);
+        week.push({
+          'day': -1,
+          'walkCard': []
+        });
       }
     }
 
     while (day <= daysNumber) {
-      week.push(day);
+      week.push({
+        'day': day,
+        'walkCard': []
+      });
       if (this.dayOfWeek(year, month, day) == 7) {
         x.push(week);
         week = [];

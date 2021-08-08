@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ktbz-bug-report',
-  templateUrl: './bug-report.component.html',
-  styleUrls: ['./bug-report.component.scss']
+  templateUrl: './bug-report.component.html'
 })
 export class BugReportComponent implements OnInit {
 

@@ -1,13 +1,14 @@
+<div class="container">
 <div class="page-header">Planer spaceru</div>
 
-<div class="container">
+<div class="main-container">
+
+
   <div class="page-header">Wybierz psa</div>
   <form [formGroup]="walkForm">
     <div class="dog-container">
       <div *ngFor="let dog of ownerDogs">
-        <div [ngClass]="dog.dog.id === walkForm.get('dogId')?.value ? 'dog-selected' : 'dog'"  (click)="selectDog(dog.dog.id)">
-
-        </div>
+        <img [ngClass]="dog.dog.id === walkForm.get('dogId')?.value ? 'dog-selected' : 'dog'" [src]="dog.dog.dogPhoto" (click)="selectDog(dog.dog.id)">
       </div>
     </div>
 
@@ -27,6 +28,7 @@
     Dodaj
   </div>
   </form>
+</div>
 </div>
 
 <ktbz-box-message

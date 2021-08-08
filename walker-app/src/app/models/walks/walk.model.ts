@@ -8,6 +8,6 @@ export interface Walk {
   walkLat: number;
   walkLon: number;
   walkDescription: string;
-  isBooked: boolean;
+  booked: boolean;
   sitterId: string | null;
 }

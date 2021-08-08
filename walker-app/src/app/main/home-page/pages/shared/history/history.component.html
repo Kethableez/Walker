@@ -1,4 +1,10 @@
-<div class="page-header">Historia spacerów</div>
-<div *ngFor="let walkCard of walkHistory">
-  {{walkCard.dog.name}} {{walkCard.walk.walkDateTime | date:'dd/MM/yyyyr'}}
+<div class="container">
+  <div class="page-header">Historia spacerów</div>
+
+  <div class="main-container">
+    <div *ngFor="let walkCard of walkHistory">
+      {{walkCard.dog.name}} {{walkCard.walk.walkDateTime | date:'dd/MM/yyyyr'}}
+    </div>
+  </div>
 </div>
+

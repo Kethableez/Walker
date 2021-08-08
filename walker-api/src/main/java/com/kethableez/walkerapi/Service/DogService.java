@@ -56,7 +56,7 @@ public class DogService {
                     request.getDogPhoto()
                 );
                 dogRepository.save(dog);
-                return new ActionResponse(true, "Dodano nowego zwierzaka.");
+                return new ActionResponse(true, dog.getId());
             }
             else return new ActionResponse(false, "Nie posiadasz uprawnień aby wykonać tą akcję.");
         }

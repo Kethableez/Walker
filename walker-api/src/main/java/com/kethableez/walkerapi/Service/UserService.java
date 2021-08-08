@@ -2,6 +2,7 @@ package com.kethableez.walkerapi.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
@@ -149,4 +150,8 @@ public class UserService {
                 User user = userRepository.findById(userId).orElseThrow();
                 return new UserInfo(user.getFirstName(), user.getLastName(), user.getUsername(), user.getAvatar());
         }       
+
+        public Optional<UserRole> getRole (User user) {
+                return user.getRoles().stream().filter(r -> r.getRole() != Role.ROLE_USER).findFirst();
+        }
 }

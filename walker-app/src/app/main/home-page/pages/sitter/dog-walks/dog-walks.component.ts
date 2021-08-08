@@ -27,44 +27,6 @@ export class DogWalksComponent implements OnInit {
     this.sitterService.getWalks().subscribe((res) => (this.sitterWalks = res));
   }
 
-  enroll(id: string) {
-    this.walkService.enroll(id).subscribe(
-      (res: any) => {
-        this.response = {
-          message: res.message,
-          isSuccess: true,
-        };
-        this.isMessageBoxVisible = true;
-      },
-      (err) => {
-        (this.response = {
-          message: err.error,
-          isSuccess: false,
-        }),
-          (this.isMessageBoxVisible = true);
-      }
-    );
-  }
-
-  disenroll(id: string) {
-    this.walkService.disenroll(id).subscribe(
-      (res: any) => {
-        this.response = {
-          message: res.message,
-          isSuccess: true,
-        };
-        this.isMessageBoxVisible = true;
-      },
-      (err) => {
-        (this.response = {
-          message: err.error,
-          isSuccess: false,
-        }),
-          (this.isMessageBoxVisible = true);
-      }
-    );
-  }
-
   closeMessageBox(event: boolean) {
     this.isMessageBoxVisible = false;
   }

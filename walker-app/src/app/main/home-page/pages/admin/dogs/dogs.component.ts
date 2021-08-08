@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ktbz-dogs',
-  templateUrl: './dogs.component.html',
-  styleUrls: ['./dogs.component.scss']
+  templateUrl: './dogs.component.html'
 })
 export class DogsComponent implements OnInit {
 

@@ -49,7 +49,11 @@ export class WalkPlannerComponent implements OnInit {
           isSuccess: true,
         };
         this.isMessageBoxVisible = true;
-        this.walkForm.reset();
+        this.walkForm.get('address')?.reset()
+        this.walkForm.get('city')?.reset()
+        this.walkForm.get('dogId')?.reset()
+        this.walkForm.get('walkDateTime')?.reset()
+        this.walkForm.get('walkDescription')?.reset()
       },
       (err) => {
         (this.response = {

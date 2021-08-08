@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ktbz-system',
-  templateUrl: './system.component.html',
-  styleUrls: ['./system.component.scss']
+  templateUrl: './system.component.html'
 })
 export class SystemComponent implements OnInit {
 

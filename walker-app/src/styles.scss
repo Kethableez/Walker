@@ -23,6 +23,7 @@ $shadow: 0 3px 6px
     $alpha: 0.2,
   );
 
+$shadowText: 0 0 6px $primaryDark;
 // Fonts
 $fontMain: "Century Gothic";
 $fontHeaders: "FuturaClassicW01-Bold";
@@ -86,6 +87,50 @@ html body {
     align-self: center;
     text-align: center;
     font-style: italic;
+  }
+}
+
+ktbz-landing-page {
+  body {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("./assets/walker-background.png");
+    background-size: cover;
+    // background-color: #e6e6e6;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 80%;
+    width: 100vw;
+  }
+
+  .description {
+    width: 33%;
+    text-align: center;
+
+    .main-text {
+      margin-bottom: 3rem;
+      font-size: 2.5rem;
+    }
+
+    .sub-text {
+      font-size: 1.5rem;
+    }
+  }
+
+  ktbz-login {
+    width: 33%;
+  }
+
+  .width-50 {
+    width: 40%;
+  }
+
+  ktbz-confirmation {
+    width: 100%;
   }
 }
 
@@ -280,6 +325,61 @@ ktbz-register {
 }
 
 // SIDEBAR
+ktbz-sidebar {
+  .sidebar {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 0.2fr 1fr;
+    width: 4.5rem;
+    height: 99.5vh;
+    background-color: #65858c;
+    padding-top: 0.25vh;
+    padding-bottom: 0.25vh;
+
+    hr {
+      border: 1px solid #99acb1;
+    }
+  }
+
+  .logo {
+    background: url("./assets/walker-logo.png");
+    background-size: cover;
+    margin-inline: 0.25rem;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .avatar {
+    margin-inline: 0.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: aliceblue;
+  }
+
+  .logout-button {
+    display: flex;
+    background-color: #bf9d8a;
+    height: 2.5rem;
+    width: 3rem;
+    border-radius: 5px;
+    margin-inline: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+    transition: 0.2s ease;
+    cursor: pointer;
+  }
+
+  .logout-button:hover {
+    background-color: #e2cec2;
+  }
+
+  .repo {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
+
 .icon {
   align-self: center;
   fill: $primaryLight;
@@ -358,7 +458,32 @@ ktbz-register {
   }
 }
 
+//
+
+ktbz-home-page {
+  body {
+    background-color: #e6e6e6;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .home-container {
+    display: flex;
+  }
+
+  .page {
+    align-self: center;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    height: 87vh;
+    width: 84vw;
+    margin-inline: 8vw;
+    box-shadow: 0 3px 6px rgba($color: #000000, $alpha: 0.2);
+  }
+}
+
 // SHARED
+
 .page-header {
   font-weight: bold;
   font-size: 2rem;
@@ -465,11 +590,11 @@ ktbz-profile {
       text-align: center;
       background-color: $primaryBrass;
       box-shadow: $shadow;
-      border-radius: 5px 5px 0 0 ;
+      border-radius: 5px 5px 0 0;
       color: $primaryLight;
       font-weight: bold;
       font-size: 2rem;
-      padding: 1rem .5rem;
+      padding: 1rem 0.5rem;
     }
     .user-photo {
       width: 15.6rem;
@@ -482,7 +607,7 @@ ktbz-profile {
 
   .container-2 {
     height: 100%;
-    flex-grow: .98;
+    flex-grow: 0.98;
     border-radius: 5px;
     display: flex;
     flex-flow: column;
@@ -492,7 +617,7 @@ ktbz-profile {
 
       .page-header {
         font-size: 1.5rem;
-        padding: .5rem;
+        padding: 0.5rem;
       }
     }
   }
@@ -500,7 +625,6 @@ ktbz-profile {
 
 // OWNER
 ktbz-dog-creator {
-
   .main-container {
     flex-grow: 1;
     margin: 1rem;
@@ -511,10 +635,9 @@ ktbz-dog-creator {
 
   .creator-form {
     width: 45%;
-    margin: 1rem;
 
     form {
-      width: 60%;
+      width: 80%;
       margin-inline: auto;
     }
 
@@ -563,58 +686,39 @@ ktbz-dog-creator {
     .button:hover {
       background-color: rgba($primaryBrass, 0.5);
     }
-  }
-
-  .dog-card {
-    background-color: $primaryLight;
-    position: relative;
-    box-shadow: $shadow;
-    border-radius: 5px;
-    width: 45%;
-    margin: 1rem;
 
     .dog-photo {
-      position: absolute;
-      width: 10rem;
-      height: 10rem;
-      background-color: #3e403b;
-      border-radius: 100rem;
-      left: 2rem;
-      top: 2rem;
-    }
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.7rem;
+      margin-bottom: 0.7rem;
 
-    .dog-header {
-      background-color: $primaryBrass;
-      color: $primaryLight;
-      font-weight: bold;
-      font-size: 3rem;
-      padding-top: 2rem;
-      padding-bottom: 2rem;
-      text-align: center;
-      margin-bottom: 5rem;
-      min-height: 4rem;
-      border-radius: 5px;
-      box-shadow: $shadow;
-    }
-    .text-1 {
-      font-weight: bold;
-      margin: 1rem 2rem;
-      min-height: 1.5rem;
-      font-size: 1.5rem;
-    }
-    .text-2 {
-      margin-inline: 2rem;
-      min-height: 1rem;
-      font-size: 1rem;
-    }
-    .icon {
-      fill: $primaryDark;
+      input[type="file"] {
+        align-self: center;
+        margin-inline: 0;
+        width: 80%;
+      }
+
+      .avatar {
+        height: 5rem;
+        width: 5rem;
+        background-color: $primaryLight;
+        border-radius: 5px;
+        box-shadow: $shadow;
+      }
+
+      .photo {
+        height: 5rem;
+        width: 5rem;
+        border-radius: 5px;
+        object-fit: cover;
+      }
     }
   }
 }
 
 ktbz-walk-planner {
-  .container {
+  .main-container {
     width: 40%;
     margin-inline: auto;
 
@@ -676,9 +780,11 @@ ktbz-walk-planner {
     border-radius: 6rem;
     cursor: pointer;
     transition: 0.5s ease;
+    object-fit: cover;
+    opacity: .7;
   }
   .dog:hover {
-    background-color: rgba($primaryBrass, 1);
+    opacity: 1;
   }
 
   .dog-selected {
@@ -689,13 +795,17 @@ ktbz-walk-planner {
     border-radius: 6rem;
     cursor: pointer;
     transition: 0.5s ease;
+    opacity: 1;
+    object-fit: cover;
   }
+
 }
 
 // SITTER
 ktbz-dog-walks {
   .container {
     position: relative;
+
     .button {
       position: absolute;
       right: 1rem;
@@ -703,12 +813,13 @@ ktbz-dog-walks {
       margin: 0;
       // width: 1%;
       height: 2.5rem;
-      padding: 0 .5rem;
+      padding: 0 0.5rem;
     }
   }
 
   .all-view,
   .incoming-view {
+    // width: 65rem;
     flex-grow: 1;
     margin: 1rem;
     display: flex;
@@ -734,57 +845,92 @@ ktbz-dog-walks {
     background-color: $primaryDark;
     border-radius: 1rem;
   }
+}
 
+ktbz-dog-card {
   .dog-card {
     position: relative;
     margin: 0.5rem;
-    width: 30rem;
-    background-color: $primaryLight;
+    width: 20rem;
+    height: 25rem;
     border-radius: 5px;
     box-shadow: $shadow;
 
     .dog-photo {
-      position: absolute;
-      width: 6rem;
-      height: 6rem;
-      background-color: #1d861f;
-      left: 0.5rem;
-      top: 0.5rem;
-      border-radius: 10rem;
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      object-fit: cover;
+      box-shadow: $shadow;
     }
 
-    .header {
-      background-color: $primaryBrass;
-      padding: 1rem 0.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      color: $primaryLight;
-      font-weight: bold;
-      font-size: 2rem;
-      border-radius: 5px 5px 0 0;
+    .dog-info {
+      position: absolute;
+      bottom: 2rem;
+      left: 0.5rem;
     }
 
     .text-1 {
       font-weight: bold;
-      font-size: 1.2rem;
-      margin: 0.25rem 0.5rem;
+      font-size: 2rem;
+      color: $primaryLight;
+      text-shadow: $shadowText;
     }
 
     .text-2 {
-      margin: 0.25rem 0.5rem;
-      text-align: justify;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: $primaryLight;
+      text-shadow: $shadowText;
     }
 
-    .buttons {
+    .text-3 {
+      font-weight: bold;
+      font-size: 1rem;
+      color: $primaryLight;
+      text-shadow: $shadowText;
+    }
+
+    .buttons-blur {
+      filter: blur(6px);
+      width: 70%;
+      margin-inline: 15%;
+      position: absolute;
+      bottom: 0;
       display: flex;
       flex-direction: row;
       justify-content: space-evenly;
-      padding-bottom: 0.5rem;
 
       .icon {
+        fill: $primaryDark;
+        outline: none;
         cursor: pointer;
-        width: 2rem;
-        height: 2rem;
+        width: 1.7rem;
+        height: 1.7rem;
+        transition: 0.2s ease;
+      }
+    }
+
+    .buttons {
+      width: 70%;
+      margin-inline: 15%;
+      position: absolute;
+      bottom: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+
+      .icon {
+        fill: $primaryLight;
+        outline: none;
+        cursor: pointer;
+        width: 1.7rem;
+        height: 1.7rem;
+        transition: 0.2s ease;
+      }
+
+      .icon:hover {
+        fill: $secodnaryDark;
       }
     }
 
@@ -796,8 +942,8 @@ ktbz-dog-walks {
   }
 }
 
+// PLANNER
 ktbz-planner {
-
   .container {
     position: relative;
     .button {
@@ -807,10 +953,9 @@ ktbz-planner {
       margin: 0;
       // width: 1%;
       height: 2.5rem;
-      padding: 0 .5rem;
+      padding: 0 0.5rem;
     }
   }
-
 
   .calendar {
     flex-grow: 1;
@@ -839,7 +984,8 @@ ktbz-planner {
     }
 
     .day {
-      height: auto;
+      height: 97%;
+      // flex-grow: 1;
       display: flex;
       margin: 0.5rem;
       flex-flow: column;
@@ -848,7 +994,10 @@ ktbz-planner {
     }
 
     .today {
+      height: 97%;
+      display: flex;
       margin: 0.5rem;
+      flex-flow: column;
       box-shadow: $shadow;
       border-radius: 5px;
 
@@ -858,9 +1007,11 @@ ktbz-planner {
     }
 
     .past-day {
+      height: 97%;
+      display: flex;
       margin: 0.5rem;
+      flex-flow: column;
       box-shadow: $shadow;
-      opacity: 0.5;
       border-radius: 5px;
     }
 

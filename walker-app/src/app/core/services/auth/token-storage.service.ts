@@ -33,6 +33,9 @@ export class TokenStorageService {
   }
 
   public getRole(): string[] {
-    return JSON.parse(sessionStorage.getItem(USER_KEY) as string).roles;
+
+      return JSON.parse(sessionStorage.getItem(USER_KEY) as string).roles;
+
+
   }
 }

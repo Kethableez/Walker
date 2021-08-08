@@ -7,11 +7,15 @@ import { environment } from 'src/environments/environment';
 })
 export class ImageService {
 
-  private serviceUrl = environment.apiBaseUrl + '/utility_images';
+  private serviceUrl = environment.apiBaseUrl + '/image';
 
   constructor(private http: HttpClient) { }
 
   getBackground() {
     return this.http.get<any>(this.serviceUrl + '/background');
+  }
+
+  uploadDogPhoto(dogPhoto: FormData, dogId: string) {
+    return this.http.post<any>(this.serviceUrl + '/upload/' + dogId, dogPhoto);
   }
 }

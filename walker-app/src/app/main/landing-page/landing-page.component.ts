@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'ktbz-landing-page',
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss']
+  templateUrl: './landing-page.component.html'
 })
 export class LandingPageComponent implements OnInit {
 

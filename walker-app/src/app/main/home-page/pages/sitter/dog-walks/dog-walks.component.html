@@ -7,144 +7,21 @@
     Spacery
   </div>
 
-  <div class="all-view" *ngIf="allView">
-    <div *ngFor="let walkCard of allWalks">
-      <div class="dog-card">
-        <div class="dog-photo"></div>
-        <div class="header">
-          {{ walkCard.dog.name }}
-        </div>
-        <div class="text-1">Charakter</div>
-        <div class="text-2">
-          <!-- {{ walkCard.dog.characteristic }} -->
-          Whether it is Snapchat, Twitter, Facebook, Yelp or just a note to
-          co-workers or business officials, the number of actual characters
-          matters. What you say may not be as important as how you say it. And
-          how many characters you use.
-        </div>
-        <div style="display: flex; margin: 0.25rem 0.5rem">
-          <svg class="icon" id="schedule_black_24dp" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-            viewBox="0 0 32 32">
-            <path id="Path_63" data-name="Path 63" d="M0,0H32V32H0Z" fill="none" />
-            <path id="Path_64" data-name="Path 64"
-              d="M15.32,2A13.333,13.333,0,1,0,28.667,15.333,13.327,13.327,0,0,0,15.32,2Zm.013,24A10.667,10.667,0,1,1,26,15.333,10.664,10.664,0,0,1,15.333,26ZM15.04,8.667h-.08a.956.956,0,0,0-.96.96V15.92a1.32,1.32,0,0,0,.653,1.147l5.533,3.32a.954.954,0,1,0,.973-1.64L16,15.68V9.627a.956.956,0,0,0-.96-.96Z"
-              transform="translate(0.667 0.667)" />
-          </svg>
-          <div class="text-2">
-            {{ walkCard.dog.walkDuration }}
-          </div>
-        </div>
 
-        <div style="display: flex; margin: 0.25rem 0.5rem">
-          <svg class="icon" id="signal_cellular_alt_black_24dp" xmlns="http://www.w3.org/2000/svg" width="32"
-            height="32" viewBox="0 0 32 32">
-            <path id="Path_65" data-name="Path 65" d="M0,0H32V32H0Z" fill="none" />
-            <path id="Path_66" data-name="Path 66"
-              d="M23,4a2,2,0,0,1,2,2V23.333a2,2,0,0,1-4,0V6A2,2,0,0,1,23,4ZM7,17.333a2,2,0,0,1,2,2v4a2,2,0,1,1-4,0v-4A2,2,0,0,1,7,17.333Zm8-6.667a2,2,0,0,1,2,2V23.333a2,2,0,0,1-4,0V12.667A2,2,0,0,1,15,10.667Z"
-              transform="translate(1.667 1.333)" />
-          </svg>
-          <div class="text-2">
-            {{ walkCard.dog.walkIntensity }}
-          </div>
-        </div>
+    <div class="all-view" *ngIf="allView">
+      <div *ngFor="let walkCard of allWalks">
+        <ktbz-dog-card [walkCard]="walkCard">
 
-        <div class="text-1">Spacer</div>
-        <div class="text-2">
-          <!-- {{ walkCard.dog.walkDescription }} -->
-          Whether it is Snapchat, Twitter, Facebook, Yelp or just a note to
-          co-workers or business officials, the number of actual characters
-          matters. What you say may not be as important as how you say it. And
-          how many characters you use.
-        </div>
+        </ktbz-dog-card>
 
-        <div class="buttons">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24">
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1s1 .45 1 1v4c0 .55-.45 1-1 1zm1-8h-2V7h2v2z" />
-          </svg>
+      </div>
+    </div>
 
-          <svg (click)="enroll(walkCard.walk.id)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24">
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4 11h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V8c0-.55.45-1 1-1s1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1z" />
-          </svg>
+    <div class="incoming-view" *ngIf="!allView">
+      <div *ngFor="let walkCard of sitterWalks">
+        <ktbz-dog-card [walkCard]="walkCard">
 
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24">
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M19.66 3.99c-2.64-1.8-5.9-.96-7.66 1.1-1.76-2.06-5.02-2.91-7.66-1.1-1.4.96-2.28 2.58-2.34 4.29-.14 3.88 3.3 6.99 8.55 11.76l.1.09c.76.69 1.93.69 2.69-.01l.11-.1c5.25-4.76 8.68-7.87 8.55-11.75-.06-1.7-.94-3.32-2.34-4.28zM12.1 18.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z" />
-          </svg>
-        </div>
+        </ktbz-dog-card>
       </div>
     </div>
   </div>
-
-  <div class="incoming-view" *ngIf="!allView">
-    <div *ngFor="let walkCard of sitterWalks">
-      <div class="dog-card">
-        <div class="header">
-          {{ walkCard.dog.name }}
-        </div>
-        <div class="text-1">Charakter</div>
-        <div class="text-2">
-          {{ walkCard.dog.characteristic }}
-        </div>
-        <div style="display: flex; margin: 0.25rem 0.5rem">
-          <svg class="icon" id="schedule_black_24dp" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-            viewBox="0 0 32 32">
-            <path id="Path_63" data-name="Path 63" d="M0,0H32V32H0Z" fill="none" />
-            <path id="Path_64" data-name="Path 64"
-              d="M15.32,2A13.333,13.333,0,1,0,28.667,15.333,13.327,13.327,0,0,0,15.32,2Zm.013,24A10.667,10.667,0,1,1,26,15.333,10.664,10.664,0,0,1,15.333,26ZM15.04,8.667h-.08a.956.956,0,0,0-.96.96V15.92a1.32,1.32,0,0,0,.653,1.147l5.533,3.32a.954.954,0,1,0,.973-1.64L16,15.68V9.627a.956.956,0,0,0-.96-.96Z"
-              transform="translate(0.667 0.667)" />
-          </svg>
-          <div class="text-2">
-            {{ walkCard.dog.walkDuration }}
-          </div>
-        </div>
-
-        <div style="display: flex; margin: 0.25rem 0.5rem">
-          <svg class="icon" id="signal_cellular_alt_black_24dp" xmlns="http://www.w3.org/2000/svg" width="32"
-            height="32" viewBox="0 0 32 32">
-            <path id="Path_65" data-name="Path 65" d="M0,0H32V32H0Z" fill="none" />
-            <path id="Path_66" data-name="Path 66"
-              d="M23,4a2,2,0,0,1,2,2V23.333a2,2,0,0,1-4,0V6A2,2,0,0,1,23,4ZM7,17.333a2,2,0,0,1,2,2v4a2,2,0,1,1-4,0v-4A2,2,0,0,1,7,17.333Zm8-6.667a2,2,0,0,1,2,2V23.333a2,2,0,0,1-4,0V12.667A2,2,0,0,1,15,10.667Z"
-              transform="translate(1.667 1.333)" />
-          </svg>
-          <div class="text-2">
-            {{ walkCard.dog.walkIntensity }}
-          </div>
-        </div>
-
-        <div class="text-1">Spacer</div>
-        <div class="text-2">
-          {{ walkCard.dog.walkDescription }}
-        </div>
-
-        <div class="buttons">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24">
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1s1 .45 1 1v4c0 .55-.45 1-1 1zm1-8h-2V7h2v2z" />
-          </svg>
-
-          <svg (click)="disenroll(walkCard.walk.id)" xmlns="http://www.w3.org/2000/svg" class="icon"
-            viewBox="0 0 24 24">
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4 11h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V8c0-.55.45-1 1-1s1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1z" />
-          </svg>
-
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24">
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M19.66 3.99c-2.64-1.8-5.9-.96-7.66 1.1-1.76-2.06-5.02-2.91-7.66-1.1-1.4.96-2.28 2.58-2.34 4.29-.14 3.88 3.3 6.99 8.55 11.76l.1.09c.76.69 1.93.69 2.69-.01l.11-.1c5.25-4.76 8.68-7.87 8.55-11.75-.06-1.7-.94-3.32-2.34-4.28zM12.1 18.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z" />
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <ktbz-box-message *ngIf="isMessageBoxVisible" [response]="response" (closeMessageBox)="closeMessageBox($event)">
-  </ktbz-box-message>
-</div>

@@ -1,3 +1,5 @@
+import { WalkComponent } from './main/home-page/pages/shared/walk/walk.component';
+import { DogComponent } from './main/home-page/pages/shared/dog/dog.component';
 import { HomePageComponent } from './main/home-page/home-page.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -55,6 +57,8 @@ const routes: Routes = [
       { path: 'history', component: HistoryComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
       { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
       { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+      { path: 'walk/:id', component: WalkComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+      { path: 'dog/:id', component: DogComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
       { path: 'error404', component: PageNotFoundComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
       { path: '**', redirectTo: 'error404'}
     ]
