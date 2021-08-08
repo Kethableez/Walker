@@ -23,12 +23,10 @@ export class HistoryComponent implements OnInit {
       else if (role === 'ROLE_SITTER') this.roleView = Role.ROLE_SITTER;
     });
 
-    console.log(this.roleView);
 
     if (this.roleView === Role.ROLE_SITTER) {
       this.SitterService.getHistory().subscribe(
-        (res) => (this.walkHistory = res),
-        (err) => console.log(err.error)
+        (res) => (this.walkHistory = res)
       );
     }
   }

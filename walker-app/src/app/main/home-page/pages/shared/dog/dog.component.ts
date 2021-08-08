@@ -22,7 +22,6 @@ export class DogComponent implements OnInit {
     if(this.dogId != null) {
       this.dogService.getDog(this.dogId).subscribe(
         (response: DogCard) => {this.dogCard = response;
-        console.log(this.dogCard);
       }
       )
     }

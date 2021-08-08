@@ -27,6 +27,7 @@ export class PlannerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.currentDay)
     this.calendar = this.dateService.listOfDays(
       this.currentDay.getFullYear(),
       this.currentDay.getMonth()
@@ -45,6 +46,8 @@ export class PlannerComponent implements OnInit {
       )
       .forEach(dog => {
         let walkDate = new Date(dog.walk.walkDateTime);
+        console.log(dog.walk.walkDateTime)
+        console.log(walkDate.getDate())
         calendar.forEach((week) => {
           week.find((day) => day.day == walkDate.getDate())?.walkCard.push(dog);
         });
@@ -60,7 +63,6 @@ export class PlannerComponent implements OnInit {
   }
 
   dogProfile(dogId: string) {
-    console.log(this.router.navigate(['/dog/' + dogId], {relativeTo: this.route}))
     this.router.navigate(['dog/' + dogId], {relativeTo: this.route});
   }
 }

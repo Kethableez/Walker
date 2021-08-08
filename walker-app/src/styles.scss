@@ -1004,6 +1004,59 @@ ktbz-planner {
       .date {
         background-color: $primaryTeal;
       }
+
+      .walks {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .walk-card {
+          background-color: $secondaryLight;
+          margin: .5rem;
+          padding: .5rem;
+          border-radius: 5px;
+          box-shadow: $shadow;
+
+          .header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+          }
+
+          .photo {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 3rem;
+            object-fit: cover;
+          }
+
+          .text-1 {
+            margin: 0 auto;
+            font-size: 1.2rem;
+            align-self: center;
+            font-weight: bold;
+          }
+
+          .text {
+            margin: 0 1rem;
+          }
+
+          .text-2 {
+            margin: .25rem .5rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+          }
+
+          .icon {
+            outline: none;
+            cursor: pointer;
+            margin: 0 auto;
+            width: 1.7rem;
+            height: 1.7rem;
+          }
+        }
+      }
     }
 
     .past-day {
@@ -1024,8 +1077,16 @@ ktbz-planner {
     width: 3rem;
     height: 3rem;
     margin: 0.2rem;
-    background-color: #3e403b;
+    background-color: $primaryLight;
     border-radius: 4rem;
+    cursor: pointer;
+  }
+
+  .photo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 4rem;
+    object-fit: cover;
   }
 
   .date {

@@ -96,7 +96,7 @@ public class DogService {
 
     public ActionResponse deleteDog(String dogId, String ownerId) {
         if (dogRepository.findByDogIdAndOwnerId(dogId, ownerId).isPresent()) {
-            for (Walk w : walkRepository.findByDogId(dogId)) System.out.println(w.getId());
+            for (Walk w : walkRepository.findByDogId(dogId)) walkRepository.deleteById(w.getId());
             dogRepository.deleteById(dogId);
             return new ActionResponse(true, "Usunięto zwierzaka.");
         }

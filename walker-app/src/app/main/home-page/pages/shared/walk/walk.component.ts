@@ -24,7 +24,6 @@ export class WalkComponent implements OnInit {
     if(this.walkId != null) {
       this.walkService.getWalk(this.walkId).subscribe(
         (response: WalkCard) => {this.walkCard = response;
-        console.log(this.walkCard);
       }
       )
     }

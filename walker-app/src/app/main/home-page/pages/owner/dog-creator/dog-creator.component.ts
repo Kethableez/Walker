@@ -55,20 +55,27 @@ export class DogCreatorComponent implements OnInit {
   createDog() {
     this.dogService.createDog(this.dogForm.value).subscribe(
       (res) => {
+        this.response = {
+          message: res.message,
+          isSuccess: true,
+        };
+
         let dogId = res.message;
         let dogPhoto = new FormData();
         dogPhoto.append('imageFile', this.selectedFile);
         this.imageService.uploadDogPhoto(dogPhoto, dogId).subscribe(
-          res => console.log(res),
-          err => console.log(err.error)
+          res => {
+            this.isMessageBoxVisible = true;
+            this.dogForm.reset();
+          },
+          err => {
+            (this.response = {
+              message: err.error,
+              isSuccess: true,
+            }),
+              (this.isMessageBoxVisible = true);
+          }
         )
-        // this.response = {
-        //   message: res.message,
-        //   isSuccess: true,
-        // };
-        // this.isMessageBoxVisible = true;
-        // this.dogForm.reset();
-
       },
       (err) => {
         (this.response = {

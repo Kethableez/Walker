@@ -64,7 +64,6 @@ public class UserController {
          Optional<UserRole> mainRole = userService.getRole(user);
 
          if (mainRole.isPresent()) {
-             System.out.println(mainRole.get().getRole());
              switch(mainRole.get().getRole()){
                 case ROLE_OWNER:
                     return new ResponseEntity<>(ownerService.getData(userService.getIdFromToken(token)), HttpStatus.OK);

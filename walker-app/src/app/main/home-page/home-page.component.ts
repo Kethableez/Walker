@@ -28,7 +28,6 @@ export class HomePageComponent implements OnInit {
       this.userService.getUserData().subscribe(
         (response: User | RegularUser) => {
           this.userData = response;
-          console.log(this.userData);
         }
       )
     }
