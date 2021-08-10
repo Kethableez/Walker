@@ -4,5 +4,5 @@ import { Dog } from './dog.model';
 export interface DogCard {
   dog: Dog;
   owner: UserInfo;
-  incomingWalks: Walk;
+  incomingWalks: Walk[];
 }

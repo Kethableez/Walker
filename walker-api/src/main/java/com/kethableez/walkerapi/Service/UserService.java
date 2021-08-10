@@ -148,7 +148,7 @@ public class UserService {
 
         public UserInfo getUserInfo(String userId) {
                 User user = userRepository.findById(userId).orElseThrow();
-                return new UserInfo(user.getFirstName(), user.getLastName(), user.getUsername(), user.getAvatar());
+                return new UserInfo(user.getId(), user.getFirstName(), user.getLastName(), user.getUsername(), user.getAvatar());
         }       
 
         public Optional<UserRole> getRole (User user) {

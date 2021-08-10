@@ -6,7 +6,9 @@
   <div class="page-header">
     Spacery
   </div>
-
+  <div class="main-container">
+    <div class="menu" *ngIf="allView">
+    </div>
 
     <div class="all-view" *ngIf="allView">
       <div *ngFor="let walkCard of allWalks">
@@ -25,3 +27,4 @@
       </div>
     </div>
   </div>
+</div>

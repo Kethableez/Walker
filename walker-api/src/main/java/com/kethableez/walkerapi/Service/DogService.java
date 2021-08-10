@@ -105,7 +105,7 @@ public class DogService {
 
     public DogCard createDogCard(Dog dog) {
         User owner = userRepository.findById(dog.getOwnerId()).orElseThrow();
-        UserInfo ownerInfo = new UserInfo(owner.getFirstName(), owner.getLastName(), owner.getUsername(), owner.getAvatar());
+        UserInfo ownerInfo = new UserInfo(owner.getId(), owner.getFirstName(), owner.getLastName(), owner.getUsername(), owner.getAvatar());
         List<Walk> incomingWalks = walkService.getDogFutureWalks(dog.getId());
         return new DogCard(dog, ownerInfo, incomingWalks);
     }

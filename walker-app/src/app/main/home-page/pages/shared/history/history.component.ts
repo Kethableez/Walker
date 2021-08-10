@@ -3,6 +3,8 @@ import { SitterService } from './../../../../../core/services/models/sitter.serv
 import { Role } from './../../../../../models/enums/role.model';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
 import { Component, OnInit } from '@angular/core';
+import { OwnerService } from 'src/app/core/services/models/owner.service';
+import { PastWalkCard } from 'src/app/models/walks/past-walk-card.model';
 
 @Component({
   selector: 'ktbz-history',
@@ -11,11 +13,13 @@ import { Component, OnInit } from '@angular/core';
 export class HistoryComponent implements OnInit {
   constructor(
     private tokenService: TokenStorageService,
-    private SitterService: SitterService
+    private sitterService: SitterService,
+    private ownerService: OwnerService
   ) {}
 
   roleView: Role = Role.ROLE_USER;
   walkHistory: WalkCard[] = [];
+    ownerWalkHistory: PastWalkCard[] = [];
 
   ngOnInit(): void {
     this.tokenService.getRole().forEach((role) => {
@@ -25,9 +29,15 @@ export class HistoryComponent implements OnInit {
 
 
     if (this.roleView === Role.ROLE_SITTER) {
-      this.SitterService.getHistory().subscribe(
+      this.sitterService.getHistory().subscribe(
         (res) => (this.walkHistory = res)
       );
+    }
+
+    else if (this.roleView === Role.ROLE_OWNER) {
+      this.ownerService.getHistory().subscribe(
+        (res) => this.ownerWalkHistory = res
+      )
     }
   }
 }

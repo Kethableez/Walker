@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.kethableez.walkerapi.Model.DTO.PastWalkCard;
 import com.kethableez.walkerapi.Model.DTO.UserInfo;
 import com.kethableez.walkerapi.Model.DTO.WalkCard;
 import com.kethableez.walkerapi.Model.Entity.Dog;
@@ -77,6 +78,19 @@ public class WalkService {
 
         return walks;
     }
+
+    public List<Walk> getOwnerHistoryWalk(String ownerId) {
+        return walkRepository.findByWalkDateTimeLessThanAndOwnerId(LocalDateTime.now(), ownerId);
+    }
+
+    public List<PastWalkCard> getOwnerHistory(String ownerId) {
+        List<PastWalkCard> walks = new ArrayList<>();
+        for(Walk w : walkRepository.findByWalkDateTimeLessThanAndOwnerId(LocalDateTime.now(), ownerId)) walks.add(createPastWalkCard(w));
+
+        return walks;
+    }
+
+
 
     public List<WalkCard> getSitterHistoryWalkCards(String sitterId) {
         List<WalkCard> walks = new ArrayList<>();
@@ -160,6 +174,14 @@ public class WalkService {
         return this.walkRepository.findByWalkDateTimeGreaterThanAndIsBooked(LocalDateTime.now(), false);
     }
 
+    public PastWalkCard createPastWalkCard(Walk walk) {
+        User sitter = userRepository.findById(walk.getSitterId()).orElseThrow();
+        Dog dog = dogRepository.findById(walk.getDogId()).orElseThrow();
+        UserInfo sitterInfo = new UserInfo(sitter.getId(), sitter.getFirstName(), sitter.getLastName(), sitter.getUsername(), sitter.getAvatar());
+
+        return new PastWalkCard(walk.getId(), walk.getWalkDateTime(), dog.getName(), dog.getDogPhoto(), sitterInfo);
+    }
+
     public List<WalkCard> getWalkCards() {
         List<WalkCard> walkCards = new ArrayList<>();
         for (Walk w : this.getWalks()) {
@@ -173,7 +195,7 @@ public class WalkService {
     public WalkCard createCard(Walk walk) {
         Dog dog = dogRepository.findById(walk.getDogId()).orElseThrow();
         User owner = userRepository.findById(walk.getOwnerId()).orElseThrow();
-        UserInfo ownerInfo = new UserInfo(owner.getFirstName(), owner.getLastName(), owner.getUsername(),
+        UserInfo ownerInfo = new UserInfo(owner.getId(), owner.getFirstName(), owner.getLastName(), owner.getUsername(),
                 owner.getAvatar());
 
         return new WalkCard(walk, dog, ownerInfo);

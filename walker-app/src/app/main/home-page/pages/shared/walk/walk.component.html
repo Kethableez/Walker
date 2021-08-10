@@ -1,7 +1,63 @@
 <div class="container">
-  <div class="page-header">{{walkCard?.dog?.name}}</div>
+  <div class="walk-header">{{walkCard?.dog?.name}}</div>
+
+  <img class="dog-photo" [src]="walkCard?.dog?.dogPhoto">
 
   <div class="main-container">
-    {{walkCard | json}}
+    <div class="column">
+      <div class="page-header">Charakter</div>
+      <div class="text-2 height">{{walkCard?.dog?.characteristic}}</div>
+
+      <div class="page-header">Spacer</div>
+
+      <div class="text-1">
+        <svg class="icon" id="schedule_black_24dp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+          <path id="Path_63" data-name="Path 63" d="M0,0H32V32H0Z" fill="none"/>
+          <path id="Path_64" data-name="Path 64" d="M15.32,2A13.333,13.333,0,1,0,28.667,15.333,13.327,13.327,0,0,0,15.32,2Zm.013,24A10.667,10.667,0,1,1,26,15.333,10.664,10.664,0,0,1,15.333,26ZM15.04,8.667h-.08a.956.956,0,0,0-.96.96V15.92a1.32,1.32,0,0,0,.653,1.147l5.533,3.32a.954.954,0,1,0,.973-1.64L16,15.68V9.627a.956.956,0,0,0-.96-.96Z" transform="translate(0.667 0.667)"/>
+        </svg>
+
+        <div class="text-2"> {{walkCard?.dog?.walkDuration}} </div>
+      </div>
+
+      <div class="text-1">
+        <svg class="icon" id="signal_cellular_alt_black_24dp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+          <path id="Path_65" data-name="Path 65" d="M0,0H32V32H0Z" fill="none"/>
+          <path id="Path_66" data-name="Path 66" d="M23,4a2,2,0,0,1,2,2V23.333a2,2,0,0,1-4,0V6A2,2,0,0,1,23,4ZM7,17.333a2,2,0,0,1,2,2v4a2,2,0,1,1-4,0v-4A2,2,0,0,1,7,17.333Zm8-6.667a2,2,0,0,1,2,2V23.333a2,2,0,0,1-4,0V12.667A2,2,0,0,1,15,10.667Z" transform="translate(1.667 1.333)"/>
+        </svg>
+
+        <div class="text-2"> {{walkCard?.dog?.walkIntensity}} </div>
+      </div>
+      <div class="text-2 height">
+        {{walkCard?.dog?.walkDescription}}
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="page-header">Miejsce i czas spotkania</div>
+      <div class="map" style="height: 15rem;"></div>
+      <div class="text-1">
+        <svg id="fmd_good_black_24dp" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 32 32">
+          <g id="Group_28" data-name="Group 28">
+            <path id="Path_67" data-name="Path 67" d="M0,0H32V32H0Z" fill="none"/>
+          </g>
+          <g id="Group_29" data-name="Group 29" transform="translate(5.333 2.667)">
+            <path id="Path_68" data-name="Path 68" d="M14.667,2A10.606,10.606,0,0,0,4,12.933q0,6.36,9.787,14.973a1.356,1.356,0,0,0,1.773,0q9.76-8.62,9.773-14.973A10.606,10.606,0,0,0,14.667,2Zm0,13.333a2.667,2.667,0,1,1,2.667-2.667A2.675,2.675,0,0,1,14.667,15.333Z" transform="translate(-4 -2)" fill="#3e403b"/>
+          </g>
+        </svg>
+
+        <div class="text-2">{{walkCard?.walk?.city}}, {{walkCard?.walk?.address}}</div>
+      </div>
+
+      <div class="text-1">
+        <svg id="calendar_today_black_24dp_1_" data-name="calendar_today_black_24dp (1)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 32 32">
+          <path id="Path_69" data-name="Path 69" d="M0,0H32V32H0Z" fill="none"/>
+          <path id="Path_70" data-name="Path 70" d="M26,3.667H24.667V2.333a1.333,1.333,0,0,0-2.667,0V3.667H8.667V2.333A1.333,1.333,0,1,0,6,2.333V3.667H4.667A2.675,2.675,0,0,0,2,6.333V27.667a2.675,2.675,0,0,0,2.667,2.667H26a2.675,2.675,0,0,0,2.667-2.667V6.333A2.675,2.675,0,0,0,26,3.667Zm-1.333,24H6a1.337,1.337,0,0,1-1.333-1.333v-16H26v16A1.337,1.337,0,0,1,24.667,27.667Z" transform="translate(0.667 0.333)" fill="#3e403b"/>
+        </svg>
+
+        <div class="text-2">{{walkCard?.walk?.walkDateTime | date:'dd.MM.yyyyr, HH:mm'}}</div>
+    </div>
+
+    <div class="page-header" *ngIf="walkCard?.walk?.walkDescription">Dodatkowe informacje</div>
+    <div class="text-2 height" *ngIf="walkCard?.walk?.walkDescription" >{{walkCard?.walk?.walkDescription}}</div>
   </div>
 </div>

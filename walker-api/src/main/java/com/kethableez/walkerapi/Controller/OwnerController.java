@@ -3,6 +3,7 @@ package com.kethableez.walkerapi.Controller;
 import java.util.List;
 
 import com.kethableez.walkerapi.Model.DTO.DogCard;
+import com.kethableez.walkerapi.Model.DTO.PastWalkCard;
 import com.kethableez.walkerapi.Model.DTO.UserInfo;
 import com.kethableez.walkerapi.Model.Entity.Walk;
 import com.kethableez.walkerapi.Service.DogService;
@@ -51,5 +52,11 @@ public class OwnerController {
     public ResponseEntity<List<UserInfo>> getSitters(UsernamePasswordAuthenticationToken token) {
         List<UserInfo> sitters = this.walkService.getSitters(userService.getIdFromToken(token));
         return new ResponseEntity<>(sitters, HttpStatus.OK);
+    }
+
+    @GetMapping("/history")
+    public ResponseEntity<List<PastWalkCard>> getOwnerHistory(UsernamePasswordAuthenticationToken token) {
+        List<PastWalkCard> history = this.walkService.getOwnerHistory(userService.getIdFromToken(token));
+        return new ResponseEntity<>(history, HttpStatus.OK);
     }
 }

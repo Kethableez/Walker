@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DogCard } from 'src/app/models/dogs/dog-card.model';
+import { PastWalkCard } from 'src/app/models/walks/past-walk-card.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -23,5 +24,9 @@ export class OwnerService {
 
   getSitters(): Observable<any> {
     return this.http.get<any>(this.serviceUrl + '/sitters');
+  }
+
+  getHistory(): Observable<PastWalkCard[]> {
+    return this.http.get<PastWalkCard[]>(this.serviceUrl + '/history');
   }
 }

@@ -1,9 +1,95 @@
 <div class="container">
   <div class="page-header">Historia spacerów</div>
+  <div class="main-container" *ngIf="roleView === 'ROLE_SITTER'">
+    <div class="page-header">
+      <div class="text-2">
+        Zwierzak
+      </div>
 
-  <div class="main-container">
+      <div class="text-2">
+        Data spaceru
+      </div>
+
+      <div class="text-2">
+        Akcje
+      </div>
+    </div>
+
     <div *ngFor="let walkCard of walkHistory">
-      {{walkCard.dog.name}} {{walkCard.walk.walkDateTime | date:'dd/MM/yyyyr'}}
+      <div class="row">
+        <div class="dog">
+          <img class="image" [src]="walkCard.dog.dogPhoto">
+          <div class="text-1"> {{walkCard.dog.name}} </div>
+        </div>
+
+        <div class="text-1">
+          {{walkCard.walk.walkDateTime | date:'dd.MM.yyyyr'}}
+        </div>
+
+        <div class="actions">
+          <svg id="info_black_24dp_2_" data-name="info_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 30 30">
+            <path id="Path_51" data-name="Path 51" d="M0,0H30V30H0Z" fill="none"/>
+            <path id="Path_52" data-name="Path 52" d="M15,2A13,13,0,1,0,28,15,13,13,0,0,0,15,2Zm1.3,19.5H13.7V13.7h2.6Zm0-10.4H13.7V8.5h2.6Z" transform="translate(0 0)" fill="#bf9d8a"/>
+          </svg>
+
+          <svg id="chat_bubble_black_24dp_1_" data-name="chat_bubble_black_24dp (1)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 30 30">
+            <path id="Path_53" data-name="Path 53" d="M0,0H30V30H0Z" fill="none"/>
+            <path id="Path_54" data-name="Path 54" d="M25.4,2H4.6A2.608,2.608,0,0,0,2,4.6V28l5.2-5.2H25.4A2.608,2.608,0,0,0,28,20.2V4.6A2.608,2.608,0,0,0,25.4,2Z" transform="translate(0 0)" fill="#65858c"/>
+          </svg>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-container" *ngIf="roleView === 'ROLE_OWNER'">
+    <div class="page-header">
+      <div class="text-2">
+        Opiekun
+      </div>
+
+      <div class="text-2">
+        Zwierzak
+      </div>
+
+      <div class="text-2">
+        Data spaceru
+      </div>
+
+      <div class="text-2">
+        Akcje
+      </div>
+    </div>
+
+    <div *ngFor="let walkCard of ownerWalkHistory">
+      <div class="row">
+        <div class="sitter">
+          <img class="image" [src]="walkCard.dogPhoto">
+          <div class="text-1">           {{walkCard.sitterInfo.firstName}} {{walkCard.sitterInfo.lastName}} </div>
+        </div>
+
+        <div class="dog">
+          <img class="image" [src]="walkCard.dogPhoto">
+          <div class="text-1"> {{walkCard.dogName}} </div>
+        </div>
+
+        <div class="text-1 date">
+          {{walkCard.walkDateTime | date:'dd.MM.yyyyr'}}
+        </div>
+
+        <div class="actions">
+          <svg id="info_black_24dp_2_" data-name="info_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 30 30">
+            <path id="Path_51" data-name="Path 51" d="M0,0H30V30H0Z" fill="none"/>
+            <path id="Path_52" data-name="Path 52" d="M15,2A13,13,0,1,0,28,15,13,13,0,0,0,15,2Zm1.3,19.5H13.7V13.7h2.6Zm0-10.4H13.7V8.5h2.6Z" transform="translate(0 0)" fill="#bf9d8a"/>
+          </svg>
+
+          <svg id="chat_bubble_black_24dp_1_" data-name="chat_bubble_black_24dp (1)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 30 30">
+            <path id="Path_53" data-name="Path 53" d="M0,0H30V30H0Z" fill="none"/>
+            <path id="Path_54" data-name="Path 54" d="M25.4,2H4.6A2.608,2.608,0,0,0,2,4.6V28l5.2-5.2H25.4A2.608,2.608,0,0,0,28,20.2V4.6A2.608,2.608,0,0,0,25.4,2Z" transform="translate(0 0)" fill="#65858c"/>
+          </svg>
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

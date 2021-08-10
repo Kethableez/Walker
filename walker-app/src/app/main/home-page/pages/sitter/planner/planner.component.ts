@@ -17,7 +17,7 @@ export class PlannerComponent implements OnInit {
   currentDay: Date = new Date(Date.now());
   currentWeek: number = -1;
   calendar: WalkCardMapper[][] = [];
-  fullView = true;
+  fullView = false;
 
   constructor(
     private dateService: DateService,
