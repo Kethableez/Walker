@@ -16,6 +16,10 @@ export class ImageService {
   }
 
   uploadDogPhoto(dogPhoto: FormData, dogId: string) {
-    return this.http.post<any>(this.serviceUrl + '/upload/' + dogId, dogPhoto);
+    return this.http.post<any>(this.serviceUrl + '/dog/upload/' + dogId, dogPhoto);
+  }
+
+  uploadUserPhoto(userPhoto: FormData, userId: string) {
+    return this.http.post<any>(this.serviceUrl + '/user/upload/' + userId, userPhoto);
   }
 }

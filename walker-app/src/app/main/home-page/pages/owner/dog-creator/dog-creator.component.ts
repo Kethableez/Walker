@@ -44,10 +44,6 @@ export class DogCreatorComponent implements OnInit {
     walkDescription: ['', Validators.required],
   });
 
-  get name() {
-    return this.dogForm.get('name');
-  }
-
   ngOnInit(): void {
     this.ref.detectChanges();
   }

@@ -1,8 +1,10 @@
 package com.kethableez.walkerapi.Controller;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import com.kethableez.walkerapi.Model.Entity.DogImage;
+import com.kethableez.walkerapi.Model.Entity.UserImage;
 import com.kethableez.walkerapi.Model.Response.MessageResponse;
 import com.kethableez.walkerapi.Service.ImageService;
 
@@ -30,10 +32,10 @@ public class ImageController {
     @Autowired
     private final ImageService imageService;
 
-    @PostMapping("/upload/{dogId}")
+    @PostMapping("/dog/upload/{dogId}")
     public ResponseEntity<?> uploadDogPhoto(@RequestParam("imageFile") MultipartFile imageFile, @PathVariable("dogId") String dogId) {
         try {
-            imageService.uploadPhoto(imageFile, dogId);
+            imageService.uploadDogPhoto(imageFile, dogId);
             return ResponseEntity.ok(new MessageResponse("Dodano zdjęcie!"));
         }
         catch (Exception e) {
@@ -42,13 +44,40 @@ public class ImageController {
         }
     }
 
-    @GetMapping(value="/{dogId}/{filename}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
-    public ResponseEntity<?> getImage(@PathVariable("dogId") String dogId, @PathVariable("filename") String filename) {
+    @PostMapping("/user/upload/{userId}")
+    public ResponseEntity<?> uploadUserPhoto(@RequestParam("imageFile") MultipartFile imageFile, @PathVariable("userId") String userId) {
         try {
-            Optional<DogImage> image = imageService.getImage(dogId, filename);
+            imageService.uploadUserPhoto(imageFile, userId);
+            return ResponseEntity.ok(new MessageResponse("Dodano zdjęcie"));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new MessageResponse("Wystąpił problem"));
+        }
+    }
+
+
+
+    @GetMapping(value="/dog/{dogId}/{filename}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    public ResponseEntity<?> getDogImage(@PathVariable("dogId") String dogId, @PathVariable("filename") String filename) {
+        try {
+            Optional<DogImage> image = imageService.getDogImage(dogId, filename);
             if(image.isPresent()) return new ResponseEntity<>(image.get().getFile(), HttpStatus.OK);
             else return ResponseEntity.badRequest().body("Brak takiego zdjęcia!");
             
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error!");
+        }
+    }
+
+    @GetMapping(value="/user/{userId}/{filename}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    public ResponseEntity<?> getUserImage(@PathVariable("userId") String userId, @PathVariable("filename") String filename) {
+        try {
+            Optional<UserImage> image = imageService.getUserImage(userId, filename);
+            if (image.isPresent()) return new ResponseEntity<>(image.get().getFile(), HttpStatus.OK);
+            else return ResponseEntity.badRequest().body("Brak takiego zdjęcia!");
         }
         catch (Exception e){
             e.printStackTrace();

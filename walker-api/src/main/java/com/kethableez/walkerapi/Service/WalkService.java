@@ -80,12 +80,12 @@ public class WalkService {
     }
 
     public List<Walk> getOwnerHistoryWalk(String ownerId) {
-        return walkRepository.findByWalkDateTimeLessThanAndOwnerId(LocalDateTime.now(), ownerId);
+        return walkRepository.findByWalkDateTimeLessThanAndOwnerIdAndIsBooked(LocalDateTime.now(), ownerId, true);
     }
 
     public List<PastWalkCard> getOwnerHistory(String ownerId) {
         List<PastWalkCard> walks = new ArrayList<>();
-        for(Walk w : walkRepository.findByWalkDateTimeLessThanAndOwnerId(LocalDateTime.now(), ownerId)) walks.add(createPastWalkCard(w));
+        for(Walk w : walkRepository.findByWalkDateTimeLessThanAndOwnerIdAndIsBooked(LocalDateTime.now(), ownerId, true)) walks.add(createPastWalkCard(w));
 
         return walks;
     }

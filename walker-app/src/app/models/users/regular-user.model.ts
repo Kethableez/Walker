@@ -1,5 +1,10 @@
 import { Role } from "../enums/role.model";
 
+export interface UserRole{
+  id: string;
+  role: Role;
+}
+
 export interface RegularUser {
   id: string;
   username: string;
@@ -10,7 +15,7 @@ export interface RegularUser {
   birthdate: Date;
   avatar: string;
   gender: string;
-  roles: Role[];
+  roles: UserRole[];
   isActive: boolean;
   isSubscribed: boolean;
 }

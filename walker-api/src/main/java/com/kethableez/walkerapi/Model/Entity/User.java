@@ -83,11 +83,7 @@ public class User {
         this.isSubscribed = isSubscribed;
     }
 
-    // public Integer getAge() {
-    // return Period.between(this.birthdate, LocalDate.now()).getYears();
-    // }
-
-    // public void setAge(int age) {
-    // this.age = age;
-    // }
+    public String getAvatar() {
+        return "http://localhost:8080/image/user/" + this.id + "/" + this.avatar;
+    }
 }

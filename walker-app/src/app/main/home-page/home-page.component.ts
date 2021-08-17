@@ -14,7 +14,7 @@ export class HomePageComponent implements OnInit {
 
   isLoggedIn = false;
   currentUser: any;
-  userData?: User | RegularUser;
+  userData?: User;
   response?: ActionResponse;
 
   constructor(private token: TokenStorageService,
@@ -27,7 +27,8 @@ export class HomePageComponent implements OnInit {
 
       this.userService.getUserData().subscribe(
         (response: User | RegularUser) => {
-          this.userData = response;
+          this.userData = response as User;
+          console.log(this.userData.user.avatar);
         }
       )
     }

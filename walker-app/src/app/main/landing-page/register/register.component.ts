@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { ImageService } from 'src/app/core/services/models/image.service';
 
 const ADMIN_TOKEN = '05da579b-cafe-4395-8eeb-88826dfd6cc9';
 
@@ -15,13 +16,16 @@ export class RegisterComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private builder: FormBuilder,
     private router: Router,
-    private auth: AuthService) { }
+    private auth: AuthService,
+    private imageService: ImageService) { }
 
   terms: boolean = false;
   subscription: boolean = false;
   isAdminRegistration: boolean = false;
   isMessageBoxVisible = false;
   response?: ActionResponse;
+  selectedFile: string = ' ';
+  tempImage?: string;
 
   registerForm = this.builder.group({
     firstName: ['', Validators.required],
@@ -31,6 +35,7 @@ export class RegisterComponent implements OnInit {
     password: ['', Validators.required],
     birthdate: ['', Validators.required],
     gender: ['', Validators.required],
+    avatar: ['', Validators.required],
     role: ['', Validators.required],
     isSubscribed: [false]
   })
@@ -70,11 +75,26 @@ export class RegisterComponent implements OnInit {
     this.auth.registerUser(this.registerForm.value, this.token).subscribe(
       res => {
         this.response = {
-          'message': res.message,
-          'isSuccess': true
-        }
-        this.isMessageBoxVisible = true;
-        this.registerForm.reset();
+          message: res.message,
+          isSuccess: true,
+        };
+
+        let userId = res.message;
+        let userPhoto = new FormData();
+        userPhoto.append('imageFile', this.selectedFile);
+        this.imageService.uploadUserPhoto(userPhoto, userId).subscribe(
+          res => {
+            this.isMessageBoxVisible = true;
+            this.registerForm.reset();
+          },
+          err => {
+            (this.response = {
+              message: err.error,
+              isSuccess: true,
+            }),
+              (this.isMessageBoxVisible = true);
+          }
+        )
       },
       err => {
         this.response = {
@@ -88,5 +108,21 @@ export class RegisterComponent implements OnInit {
 
   closeMessageBox(event: boolean) {
     this.isMessageBoxVisible = false;
+  }
+
+  onSelectFile(e: any) {
+    if (e.target.files.length > 0) {
+      const f = e.target.files[0];
+      this.selectedFile = e.target.files[0];
+      this.registerForm.patchValue({
+        avatar: e.target.files[0].name
+      })
+
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (event: any) => {
+        this.tempImage = event.target.result;
+      }
+    }
   }
 }

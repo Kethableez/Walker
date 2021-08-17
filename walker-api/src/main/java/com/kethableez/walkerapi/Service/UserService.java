@@ -43,13 +43,13 @@ public class UserService {
         @Autowired
         private final PasswordEncoder encoder;
 
-        public User registerUser(RegisterRequest request) {
+        public String registerUser(RegisterRequest request) {
                 Random rnd = new Random();
                 int code = rnd.nextInt(999999);
 
                 User newUser = new User(request.getUsername(), request.getEmail(),
                                 encoder.bCryptPasswordEncoder().encode(request.getPassword()), request.getFirstName(),
-                                request.getLastName(), request.getBirthdate(), "default.png", request.getGender(),
+                                request.getLastName(), request.getBirthdate(), request.getAvatar(), request.getGender(),
                                 false, request.getIsSubscribed());
                 Set<UserRole> roles = new HashSet<>();
                 roles.add(roleRepository.findByRole(Role.ROLE_USER).orElseThrow());
@@ -63,15 +63,16 @@ public class UserService {
                                 false);
 
                 tokenStorageRepository.save(userToken);
-                return userRepository.save(newUser);
+                userRepository.save(newUser);
+                return newUser.getId();
         }
 
-        public User registerAdmin(RegisterRequest request) {
+        public String registerAdmin(RegisterRequest request) {
                 Random rnd = new Random();
                 int code = rnd.nextInt(999999);
                 User newUser = new User(request.getUsername(), request.getEmail(),
                                 encoder.bCryptPasswordEncoder().encode(request.getPassword()), request.getFirstName(),
-                                request.getLastName(), request.getBirthdate(), "default.png", request.getGender(),
+                                request.getLastName(), request.getBirthdate(), request.getAvatar(), request.getGender(),
                                 false, request.getIsSubscribed());
                 Set<UserRole> roles = new HashSet<>();
                 roles.add(roleRepository.findByRole(request.getRole()).orElseThrow());
@@ -82,7 +83,41 @@ public class UserService {
                                 LocalDateTime.now().plusMinutes(20), false);
 
                 tokenStorageRepository.save(token);
-                return userRepository.save(newUser);
+                userRepository.save(newUser);
+                return newUser.getId();
+        }
+
+        public ActionResponse confirmUser(String token, String code) {
+                Optional<TokenStorage> userToken = tokenStorageRepository.findByToken(token);
+
+                if (userToken.isPresent()) {
+                        if (!userToken.get().isConfirmed()) {
+                                if (userToken.get().getCode().equals(code)) {
+                                        if (LocalDateTime.now().isBefore(userToken.get().getExpiredAt())) {
+                                                switch (userToken.get().getRole()) {
+                                                        case ROLE_ADMIN:
+                                                                confirmAdmin(userToken.get());
+                                                                break;
+                                                        case ROLE_OWNER:
+                                                                confirmOwner(userToken.get());
+                                                                break;
+                                                        case ROLE_SITTER:
+                                                                confirmSitter(userToken.get());
+                                                                break;
+                                                        default:
+                                                                return new ActionResponse(false, "Error!");
+                                                }
+                                                userToken.get().setConfirmed(true);
+                                                tokenStorageRepository.save(userToken.get());
+                                                return new ActionResponse(true, "Konto zostało potwierdzone");
+                                        } else
+                                                return new ActionResponse(false, "Token wygasł");
+                                } else
+                                        return new ActionResponse(false, "Zły kod");
+                        } else
+                                return new ActionResponse(false, "Token został potwierdzony");
+                } else
+                        return new ActionResponse(false, "Zły token");
         }
 
         public User confirmAdmin(TokenStorage token) {
@@ -148,10 +183,11 @@ public class UserService {
 
         public UserInfo getUserInfo(String userId) {
                 User user = userRepository.findById(userId).orElseThrow();
-                return new UserInfo(user.getId(), user.getFirstName(), user.getLastName(), user.getUsername(), user.getAvatar());
-        }       
+                return new UserInfo(user.getId(), user.getFirstName(), user.getLastName(), user.getUsername(),
+                                user.getAvatar());
+        }
 
-        public Optional<UserRole> getRole (User user) {
+        public Optional<UserRole> getRole(User user) {
                 return user.getRoles().stream().filter(r -> r.getRole() != Role.ROLE_USER).findFirst();
         }
 }

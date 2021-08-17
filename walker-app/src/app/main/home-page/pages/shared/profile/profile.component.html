@@ -1,34 +1,30 @@
 <div class="container">
-  <div class="page-header">
-    Twój profil
-  </div>
+  <div class="page-header" *ngIf="isCurrentUserProfile">Twój profil</div>
+  <div class="page-header" *ngIf="!isCurrentUserProfile">{{user?.user?.username}}</div>
 
   <div class="main-container">
     <div class="user-info">
-      <div class="header">
-        {{user?.user?.firstName}} {{user?.user?.lastName}}
-        <!-- Amadeusz Janiszyn -->
-      </div>
-      <div class="user-photo">
-
-      </div>
+      <img class="user-photo" [src]="user?.user?.avatar">
+      <div class="text-1"> {{user?.user?.firstName}} {{user?.user?.lastName}}</div>
+      <!-- <div class="text-2"> {{user?.user?.email}}</div> -->
+      <div class="buttons" *ngIf="isCurrentUserProfile">asd bds asd</div>
     </div>
     <div class="container-2">
-      <div class="container-3">
-        <div class="page-header">
-          O mnie
-        </div>
-      </div>
-
       <div class="container-3">
         <div class="page-header">
           Galeria
         </div>
       </div>
 
-      <div class="container-3">
+      <div class="container-3"  *ngIf="mainRole === 'ROLE_SITTER'">
         <div class="page-header">
           Opinie
+        </div>
+      </div>
+
+      <div class="container-3"  *ngIf="mainRole === 'ROLE_OWNER'">
+        <div class="page-header">
+          Zwierzaki
         </div>
       </div>
     </div>

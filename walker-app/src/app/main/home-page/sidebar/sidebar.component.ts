@@ -18,6 +18,9 @@ export class SidebarComponent implements OnInit {
   @Input()
   roles!: string[];
 
+  @Input()
+  avatar?: string;
+
   mainRole!: string;
 
   constructor(private token: TokenStorageService,

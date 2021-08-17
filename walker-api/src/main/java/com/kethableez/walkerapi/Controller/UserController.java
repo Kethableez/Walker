@@ -60,9 +60,7 @@ public class UserController {
     @GetMapping("/get_data")
     public ResponseEntity<?> getData(UsernamePasswordAuthenticationToken token) {
         User user = userRepository.findByUsername(token.getName()).orElseThrow();
-
          Optional<UserRole> mainRole = userService.getRole(user);
-
          if (mainRole.isPresent()) {
              switch(mainRole.get().getRole()){
                 case ROLE_OWNER:
@@ -76,7 +74,25 @@ public class UserController {
              }
          }
          else return ResponseEntity.badRequest().body(new MessageResponse("jesteś nikim"));
+    }
 
+    @GetMapping("/get_data/{username}")
+    public ResponseEntity<?> getData(@PathVariable String username) {
+        User user = userRepository.findByUsername(username).orElseThrow();
+         Optional<UserRole> mainRole = userService.getRole(user);
+         if (mainRole.isPresent()) {
+             switch(mainRole.get().getRole()){
+                case ROLE_OWNER:
+                    return new ResponseEntity<>(ownerService.getData(user.getId()), HttpStatus.OK);
+
+                case ROLE_SITTER:
+                    return new ResponseEntity<>(sitterService.getData(user.getId()), HttpStatus.OK);
+
+                default:
+                    return new ResponseEntity<>(user, HttpStatus.OK);
+             }
+         }
+         else return ResponseEntity.badRequest().body(new MessageResponse("jesteś nikim"));
     }
 
     @GetMapping("/{id}")

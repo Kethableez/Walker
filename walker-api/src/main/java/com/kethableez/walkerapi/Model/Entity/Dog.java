@@ -71,6 +71,6 @@ public class Dog {
     
     public String getDogPhoto() {
         // http://localhost:8080/image/222333/beagle.jpg
-        return "http://localhost:8080/image/" + this.id + "/" + this.dogPhoto;
+        return "http://localhost:8080/image/dog/" + this.id + "/" + this.dogPhoto;
     }
 }

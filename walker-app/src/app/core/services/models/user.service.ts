@@ -17,4 +17,8 @@ export class UserService {
   getUserData(): Observable<User | RegularUser> {
     return this.http.get<User | RegularUser>(this.serviceUrl + '/get_data');
   }
+
+  getUserDataParam(username: string): Observable<User | RegularUser> {
+    return this.http.get<User | RegularUser>(this.serviceUrl + '/get_data/' + username);
+  }
 }

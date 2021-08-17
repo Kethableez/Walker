@@ -1,8 +1,6 @@
 <body>
   <div class="home-container">
-    <ktbz-sidebar [roles]="currentUser.roles">
-
-    </ktbz-sidebar>
+    <ktbz-sidebar [roles]="currentUser.roles" [avatar]="userData?.user?.avatar"></ktbz-sidebar>
     <div class="page">
       <router-outlet>
 

@@ -1,5 +1,6 @@
 
 <form [formGroup]="registerForm">
+  <input type="file" (change)="onSelectFile($event)">
   <input type="text" formControlName="firstName" placeholder="Imię">
   <input type="text" formControlName="lastName" placeholder="Nazwisko">
   <input type="text" formControlName="username" placeholder="Nazwa użytkownika">
@@ -8,17 +9,18 @@
   <input type="password" placeholder="Powtórz hasło">
   <input type="date" formControlName="birthdate">
 
-  <select formControlName="gender">
-    <option value="" disabled selected>Wybierz płeć</option>
-    <option value="MALE">Mężczyzna</option>
-    <option value="FEMALE">Kobieta</option>
-  </select>
+    <select formControlName="gender">
+      <option value="" disabled selected>Wybierz płeć</option>
+      <option value="MALE">Mężczyzna</option>
+      <option value="FEMALE">Kobieta</option>
+    </select>
 
-  <select *ngIf="!isAdminRegistration" formControlName="role">
-    <option value="" disabled selected>Jesteś właścicielem czy opiekunem?</option>
-    <option value="ROLE_OWNER">Właściciel</option>
-    <option value="ROLE_SITTER">Opiekun</option>
-  </select>
+    <select *ngIf="!isAdminRegistration" formControlName="role">
+      <option value="" disabled selected>Jesteś właścicielem czy opiekunem?</option>
+      <option value="ROLE_OWNER">Właściciel</option>
+      <option value="ROLE_SITTER">Opiekun</option>
+    </select>
+
 
   <div class="checkbox-group sub-text">
     <div class="checks">
@@ -39,3 +41,5 @@
 *ngIf="isMessageBoxVisible"
 [response]="response"
 (closeMessageBox)="closeMessageBox($event)"></ktbz-box-message>
+
+{{ registerForm.value | json}}

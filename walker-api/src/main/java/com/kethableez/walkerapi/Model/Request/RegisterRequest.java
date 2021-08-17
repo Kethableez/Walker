@@ -16,6 +16,7 @@ public class RegisterRequest {
     private String firstName;
     private String lastName;
     private LocalDate birthdate;
+    private String avatar;
     private Gender gender;
     private Role role;
     private Boolean isSubscribed;

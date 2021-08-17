@@ -6,25 +6,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
 import lombok.Setter;
 
-@Document(collection="dog_images")
+@Document(collection="user_images")
 @Getter
 @Setter
-public class DogImage {
-    
+public class UserImage {
     @Id
     private String id;
 
-    private String dogId;
+    private String userId;
 
     private String fileName;
 
     private byte[] file;
 
 
-    public DogImage(String dogId, String fileName, byte[] file) {
-        this.dogId = dogId;
+    public UserImage(String userId, String fileName, byte[] file) {
+        this.userId = userId;
         this.fileName = fileName;
         this.file = file;
     }
-
+    
 }
