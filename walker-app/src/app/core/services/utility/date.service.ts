@@ -17,7 +17,7 @@ export class DateService {
       for (let i = 1; i < this.dayOfWeek(year, month, day); i++) {
         week.push({
           'day': -1,
-          'walkCard': []
+          'walkInfo': []
         });
       }
     }
@@ -25,7 +25,7 @@ export class DateService {
     while (day <= daysNumber) {
       week.push({
         'day': day,
-        'walkCard': []
+        'walkInfo': []
       });
       if (this.dayOfWeek(year, month, day) == 7) {
         x.push(week);

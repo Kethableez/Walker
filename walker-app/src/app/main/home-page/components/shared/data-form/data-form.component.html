@@ -1,0 +1,13 @@
+<form [formGroup]="dataForm">
+  <input formControlName="firstName" type="text" placeholder="Imię" >
+  <input formControlName="lastName" type="text" placeholder="Nazwisko" >
+  <input formControlName="birthdate" type="date"  >
+  <input formControlName="city" type="text" placeholder="Miejsce zamieszkania" >
+  <div [ngClass]="dataForm.valid  ? 'button' : 'button-disabled'" (click)="submitData()">Zmień dane</div>
+</form>
+
+<form [formGroup]="passwordForm">
+  <input formControlName="password" type="password" placeholder="Hasło" >
+  <input formControlName="confirmPassword" type="password" placeholder="Potwierdź hasło" >
+  <div [ngClass]="passwordForm.valid  ? 'button' : 'button-disabled'" (click)="submitPassword()">Zmień hasło</div>
+</form>

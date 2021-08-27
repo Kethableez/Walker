@@ -1,23 +1,26 @@
+import { SettingService } from './../utility/setting.service';
 import { DogCard } from './../../../models/dogs/dog-card.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DogService {
 
-  private serviceUrl = environment.apiBaseUrl + '/dog/';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private setting: SettingService) { }
 
   createDog(dogRequest: any) {
-    return this.http.post<any>(this.serviceUrl + 'create', dogRequest);
+    const url = this.setting.getDogUrl('createDog');
+
+    return this.http.post<any>(url, dogRequest);
   }
 
   getDog(dogId: string): Observable<DogCard> {
-    return this.http.get<DogCard>(this.serviceUrl + dogId);
+    const url = this.setting.getDogUrl('getDog', { dogId: dogId });
+
+    return this.http.get<DogCard>(url);
   }
 }

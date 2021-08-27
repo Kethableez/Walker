@@ -5,18 +5,18 @@
 
   <div class="page-header">Kreator pupila</div>
   <div class="calendar" *ngIf="fullView">
-    <div *ngFor="let week of calendar">
+    <div *ngFor="let weeks of calendar">
       <div class="weeks">
-        <div *ngFor="let walkCard of week">
+        <div *ngFor="let week of weeks">
           <div
-            [ngClass]="{ 'today': walkCard.day == currentDay.getDate(), 'day': walkCard.day > currentDay.getDate(), 'past-day': walkCard.day < currentDay.getDate() }"
-            *ngIf="walkCard.day != -1">
+            [ngClass]="{ 'today': week.day == currentDay.getDate(), 'day': week.day > currentDay.getDate(), 'past-day': week.day < currentDay.getDate() }"
+            *ngIf="week.day != -1">
             <div class="date">
-              {{walkCard.day | number: '2.0-0'}}
+              {{week.day | number: '2.0-0'}}
             </div>
             <div class="walks">
-              <div class="dog-photo" *ngFor="let dog of walkCard.walkCard" [routerLink]="['/home/dog', dog.dog.id]">
-                <img class="photo" [src]="dog.dog.dogPhoto">
+              <div class="dog-photo" *ngFor="let info of week.walkInfo" [routerLink]="['/home/walk', info.id]">
+                <img class="photo" [src]="info.dogPhoto">
               </div>
             </div>
           </div>
@@ -27,21 +27,21 @@
   </div>
 
   <div class="week-view" *ngIf="!fullView">
-    <div *ngFor="let walkCard of calendar[currentWeek]">
+    <div *ngFor="let walkInfo of calendar[currentWeek]">
       <div
-        [ngClass]="{ 'today': walkCard.day == currentDay.getDate(), 'day': walkCard.day > currentDay.getDate(), 'past-day': walkCard.day < currentDay.getDate() }"
-        *ngIf="walkCard.day != -1">
+        [ngClass]="{ 'today': walkInfo.day == currentDay.getDate(), 'day': walkInfo.day > currentDay.getDate(), 'past-day': walkInfo.day < currentDay.getDate() }"
+        *ngIf="walkInfo.day != -1">
         <div class="date">
-          {{walkCard.day | number: '2.0-0'}}
+          {{walkInfo.day | number: '2.0-0'}}
         </div>
 
         <div class="walks">
-          <div *ngFor="let dog of walkCard.walkCard">
+          <div *ngFor="let info of walkInfo.walkInfo">
             <div class="walk-card">
               <div class="header">
-                <img class="photo" [src]="dog.dog.dogPhoto">
+                <img class="photo" [src]="info.dogPhoto">
                 <div class="text-1">
-                  {{dog.dog.name}}
+                  {{info.dogName}}
                 </div>
               </div>
 
@@ -58,7 +58,7 @@
                   </g>
                 </svg>
                 <div class="text">
-                  {{dog.walk.city}}
+                  {{info.city}}
                 </div>
               </div>
 
@@ -71,10 +71,10 @@
                     transform="translate(-0.208 -0.104)" fill="#3e403b" />
                 </svg>
                 <div class="text">
-                  {{dog.walk.walkDateTime | date:'HH:mm'}}
+                  {{info.walkDateTime | date:'HH:mm'}}
                 </div>
               </div>
-              <div class="icon" [routerLink]="['/home/walk', dog.walk.id]">
+              <div class="icon" [routerLink]="['/home/walk', info.id]">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.548 22.548">
                   <g id="info_black_24dp_1_" data-name="info_black_24dp (1)" transform="translate(0 0)">
                     <path id="Path_49" data-name="Path 49" d="M0,0H22.548V22.548H0Z" transform="translate(0 0)"

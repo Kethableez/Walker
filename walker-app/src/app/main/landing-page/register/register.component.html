@@ -6,7 +6,7 @@
   <input type="text" formControlName="username" placeholder="Nazwa użytkownika">
   <input type="text" formControlName="email" placeholder="Adres e-mail">
   <input type="password" formControlName="password" placeholder="Hasło">
-  <input type="password" placeholder="Powtórz hasło">
+  <input type="password" formControlName="confirmPassword" placeholder="Powtórz hasło">
   <input type="date" formControlName="birthdate">
 
     <select formControlName="gender">
@@ -42,4 +42,37 @@
 [response]="response"
 (closeMessageBox)="closeMessageBox($event)"></ktbz-box-message>
 
-{{ registerForm.value | json}}
+<div class="form-error" *ngIf="checkFieldValidation()">
+  <div class="form-error-field">
+    Pola wymagane: <br>
+    <span *ngIf="firstName?.errors?.required && isFirstNameInvalid">Imię, </span>
+      <span *ngIf="lastName?.errors?.required && isLastNameInvalid">Nazwisko, </span>
+      <span *ngIf="username?.errors?.required && isUsernameInvalid">Nazwa użytkownika, </span>
+      <span *ngIf="email?.errors?.required && isEmailInvalid">Adres email, </span>
+      <span *ngIf="password?.errors?.required && isPasswordInvalid">Hasło, </span>
+      <span *ngIf="confirmPassword?.errors?.required && isConfirmPasswordInvalid">Potwierdzenie hasła, </span>
+      <span *ngIf="birthdate?.errors?.required && isBirthdateInvalid">Data urodziń, </span>
+      <span *ngIf="gender?.errors?.required && isGenderInvalid">Płeć, </span>
+      <span *ngIf="role?.errors?.required && isRoleInvalid">Rola uzytkownika, </span>
+      <span *ngIf="avatar?.errors?.required && isAvatarInvalid">Avatar, </span>
+  </div>
+  <div class="form-error-field" *ngIf="username?.errors?.minlength">
+    Nazwa uzytkownika musi mieć więcej niż 6 znaków
+  </div>
+  <div class="form-error-field" *ngIf="username?.errors?.maxlength">
+    Nazwa uzytkownika musi mieć mniej niż 20 znaków
+  </div>
+  <div class="form-error-field" *ngIf="password?.errors?.minlength">
+    Hało uzytkownika musi mieć więcej niż 6 znaków
+  </div>
+  <div class="form-error-field" *ngIf="password?.errors?.maxlength">
+    Hasło uzytkownika musi mieć mniej niż 20 znaków
+  </div>
+  <div class="form-error-field" *ngIf="email?.errors?.pattern">
+    Nieprawidłowy format adresu email
+  </div>
+  <div class="form-error-field" *ngIf="formControl.confirmPassword.errors?.mustMatch">
+    Hasła muszą się zgadzać
+  </div>
+
+</div>

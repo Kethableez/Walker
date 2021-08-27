@@ -1,3 +1,4 @@
+import { CurrentUserStoreService } from './../services/store/current-user-store.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -7,7 +8,7 @@ import { TokenStorageService } from '../services/auth/token-storage.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private token: TokenStorageService, private router: Router) { }
+  constructor(private token: TokenStorageService, private router: Router, private userStore: CurrentUserStoreService) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -18,7 +19,7 @@ export class AuthGuard implements CanActivate {
 
   checkUserLogin(route: ActivatedRouteSnapshot, url: any): boolean {
     if (this.token.getToken() != null) {
-      const userRole = this.token.getRole();
+      const userRole = this.userStore.roles;
       if (!userRole.includes(route.data.role)) {
         this.router.navigate(['/home/dashboard']);
         return false;

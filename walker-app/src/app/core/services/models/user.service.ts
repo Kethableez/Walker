@@ -1,24 +1,27 @@
+import { SettingService } from './../utility/setting.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RegularUser } from 'src/app/models/users/regular-user.model';
 import { User } from 'src/app/models/users/user.model';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private serviceUrl = environment.apiBaseUrl + '/user';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private setting: SettingService) { }
 
   getUserData(): Observable<User | RegularUser> {
-    return this.http.get<User | RegularUser>(this.serviceUrl + '/get_data');
+    const url = this.setting.getUserUrl('getLoggedUserData');
+
+    return this.http.get<User | RegularUser>(url);
   }
 
-  getUserDataParam(username: string): Observable<User | RegularUser> {
-    return this.http.get<User | RegularUser>(this.serviceUrl + '/get_data/' + username);
+  getUserDataParam(username: string): Observable<any> {
+    const url = this.setting.getUserUrl('getUserData', { username: username });
+
+    return this.http.get<any>(url);
   }
 }

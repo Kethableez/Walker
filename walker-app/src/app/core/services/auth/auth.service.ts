@@ -1,3 +1,4 @@
+import { SettingService } from './../utility/setting.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -12,21 +13,32 @@ const httpOptions = {
 })
 export class AuthService {
 
-  private serviceUrl = environment.apiBaseUrl + '/auth';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private setting: SettingService) { }
 
   registerUser(registerData: any, token: string | null): Observable<any> {
-    if (token != null) return this.http.post<any>(this.serviceUrl + '/register/' + token, registerData);
-    else return this.http.post<any>(this.serviceUrl + '/register/', registerData);
+    if (token != null) {
+      const url = this.setting.getAuthUrl('registerAdmin', { token: token });
+
+      return this.http.post<any>(url, registerData);
+    }
+    else {
+      const url = this.setting.getAuthUrl('registerUser');
+
+      return this.http.post<any>(url, registerData);
+    }
   }
 
   confirmToken(token: string, code: number) {
-    return this.http.put<any>(this.serviceUrl + '/confirm/' + token, code);
+    const url = this.setting.getAuthUrl('confirmUser', { token: token });
+
+    return this.http.put<any>(url, code);
   }
 
   loginUser(credentials: any): Observable<any> {
-    return this.http.post(this.serviceUrl + '/login', {
+    const url = this.setting.getAuthUrl('loginUser');
+
+    return this.http.post(url, {
       username: credentials.username,
       password: credentials.password
     }, httpOptions);

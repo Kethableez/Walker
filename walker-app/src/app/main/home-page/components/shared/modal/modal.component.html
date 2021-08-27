@@ -1,0 +1,33 @@
+<div class="modal">
+  <div class="form">
+    <div class="form-header">
+      {{ modalName }}
+
+<svg (click)="close()" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/></svg>
+    </div>
+    <div [ngSwitch]="settingSelector">
+      <div *ngSwitchCase="'AVATAR'">
+        <ktbz-avatar-form (avatarEmitter)="getAvatar($event)"></ktbz-avatar-form>
+      </div>
+
+      <div *ngSwitchCase="'DATA'">
+        <ktbz-data-form (dataEmitter)="getData($event)"></ktbz-data-form>
+      </div>
+
+      <div *ngSwitchCase="'DESCRIPTION'">
+        <ktbz-description-form (dataEmitter)="getDescription($event)"></ktbz-description-form>
+      </div>
+
+      <div *ngSwitchCase="'SITTER_REVIEW'">
+        <ktbz-sitter-review-form [walkId]="walkId"></ktbz-sitter-review-form>
+      </div>
+
+      <div *ngSwitchCase="'DOG_REVIEW'">
+        <ktbz-dog-review-form [walkId]="walkId"></ktbz-dog-review-form>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

@@ -2,8 +2,6 @@
 <div class="page-header">Planer spaceru</div>
 
 <div class="main-container">
-
-
   <div class="page-header">Wybierz psa</div>
   <form [formGroup]="walkForm">
     <div class="dog-container">
@@ -28,6 +26,20 @@
     Dodaj
   </div>
   </form>
+
+  <div class="form-error" *ngIf="checkFieldValidation()">
+    <div class="form-error-field">
+      Pola wymagane: <br>
+      <span *ngIf="address?.errors?.required && isAddressInvalid">Adres, </span>
+        <span *ngIf="city?.errors?.required && isCityInvalid">Miasto </span>
+        <span *ngIf="walkDateTime?.errors?.required && isWalkDateTimeInvalid">Data i czas </span>
+
+    </div>
+    <div class="form-error-field" *ngIf="walkDescription?.errors?.maxlength">
+      Opis spaceru musi mieć mniej niż 255 znaków
+    </div>
+
+  </div>
 </div>
 </div>
 

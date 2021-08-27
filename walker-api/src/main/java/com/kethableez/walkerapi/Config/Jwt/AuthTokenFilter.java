@@ -1,6 +1,5 @@
 package com.kethableez.walkerapi.Config.Jwt;
 
-import com.kethableez.walkerapi.Service.UserDetailServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,9 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.kethableez.walkerapi.User.Service.UserDetailServiceImpl;
+
 import java.io.IOException;
 
 public class AuthTokenFilter extends OncePerRequestFilter {

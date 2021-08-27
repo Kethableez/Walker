@@ -24,10 +24,27 @@ export class WalkPlannerComponent implements OnInit {
     city: ['', Validators.required],
     dogId: ['', Validators.required],
     walkDateTime: ['', Validators.required],
-    walkDescription: [''],
+    walkDescription: ['', Validators.maxLength(255)],
     walkLat: ['69.99', Validators.required],
     walkLon: ['42.00', Validators.required],
   });
+
+  get address() { return this.walkForm.get('address') };
+  get city() { return this.walkForm.get('city') };
+  get walkDateTime() { return this.walkForm.get('walkDateTime') };
+  get walkDescription() { return this.walkForm.get('walkDescription') };
+
+  get isAddressInvalid() { return this.address!.invalid && this.address!.touched };
+  get isCityInvalid() { return this.city!.invalid && this.city!.touched };
+  get isWalkDateTimeInvalid() { return this.walkDateTime!.invalid && this.walkDateTime!.touched };
+
+  checkFieldValidation() {
+    return (
+      this.isAddressInvalid ||
+      this.isCityInvalid ||
+      this.isWalkDateTimeInvalid
+    );
+  }
 
   ngOnInit(): void {
     this.ownerService.getDogs().subscribe(

@@ -2,7 +2,8 @@ package com.kethableez.walkerapi.Config.Security;
 
 import com.kethableez.walkerapi.Config.Jwt.AuthEntryPointJwt;
 import com.kethableez.walkerapi.Config.Jwt.AuthTokenFilter;
-import com.kethableez.walkerapi.Service.UserDetailServiceImpl;
+import com.kethableez.walkerapi.User.Service.UserDetailServiceImpl;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

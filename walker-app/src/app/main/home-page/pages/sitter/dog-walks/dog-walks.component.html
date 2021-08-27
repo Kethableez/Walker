@@ -11,8 +11,8 @@
     </div>
 
     <div class="all-view" *ngIf="allView">
-      <div *ngFor="let walkCard of allWalks">
-        <ktbz-dog-card [walkCard]="walkCard">
+      <div *ngFor="let walkInfo of allWalks">
+        <ktbz-dog-card [walkInfo]="walkInfo">
 
         </ktbz-dog-card>
 
@@ -20,8 +20,8 @@
     </div>
 
     <div class="incoming-view" *ngIf="!allView">
-      <div *ngFor="let walkCard of sitterWalks">
-        <ktbz-dog-card [walkCard]="walkCard">
+      <div *ngFor="let walkInfo of sitterWalks">
+        <ktbz-dog-card [walkInfo]="walkInfo">
 
         </ktbz-dog-card>
       </div>

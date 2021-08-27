@@ -35,6 +35,12 @@ import { ButtonDirective } from './main/home-page/sidebar/button.directive';
 import { DogComponent } from './main/home-page/pages/shared/dog/dog.component';
 import { WalkComponent } from './main/home-page/pages/shared/walk/walk.component';
 import { DogCardComponent } from './main/home-page/components/shared/dog-card/dog-card.component';
+import { ModalComponent } from './main/home-page/components/shared/modal/modal.component';
+import { AvatarFormComponent } from './main/home-page/components/shared/avatar-form/avatar-form.component';
+import { DataFormComponent } from './main/home-page/components/shared/data-form/data-form.component';
+import { DescriptionFormComponent } from './main/home-page/components/shared/description-form/description-form.component';
+import { SitterReviewFormComponent } from './main/home-page/components/owner/sitter-review-form/sitter-review-form.component';
+import { DogReviewFormComponent } from './main/home-page/components/sitter/dog-review-form/dog-review-form.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +74,12 @@ import { DogCardComponent } from './main/home-page/components/shared/dog-card/do
     DogComponent,
     WalkComponent,
     DogCardComponent,
+    ModalComponent,
+    AvatarFormComponent,
+    DataFormComponent,
+    DescriptionFormComponent,
+    SitterReviewFormComponent,
+    DogReviewFormComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,7 @@ $primaryBrass: #bf9d8a;
 $primaryTeal: #65858c;
 
 $secondaryTeal: #99acb1;
-$secodnaryDark: #e6e6e6;
+$secondaryDark: #e6e6e6;
 $secondaryLight: #f2f2f2;
 
 $primaryDark: #3e403b;
@@ -79,6 +79,23 @@ html body {
   }
 }
 
+bar-rating {
+  color: $primaryBrass !important;
+  .br-unit {
+    width: 3rem !important;
+    font-size: 3rem !important;
+    .br-default .br-selected:after {
+      color: $primaryBrass !important;
+    }
+
+  }
+
+  width: 10rem;
+  height: 5rem;
+  fill: $primaryBrass;
+  color: $primaryBrass;
+}
+
 .app-footer {
   height: 10%;
   display: flex;
@@ -149,7 +166,6 @@ form {
 input[type="text"],
 input[type="password"],
 input[type="date"],
-input[type="file"],
 input[type="time"],
 input[type="datetime-local"],
 select,
@@ -159,10 +175,10 @@ textarea {
   border-radius: 5px;
   margin-top: 1%;
   margin-bottom: 1%;
-  height: 3rem;
+  height: 2.5rem;
   margin-inline: auto;
   width: 70%;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   background-color: $primaryLight;
   outline: none;
   border: none;
@@ -184,15 +200,31 @@ textarea::-webkit-scrollbar-thumb {
   border-radius: 1rem;
 }
 
+input[type="file"] {
+  font-family: $fontMain;
+  border-radius: 5px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  height: 2.5rem;
+  margin-inline: auto;
+  width: 70%;
+  font-size: 1.25rem;
+  background-color: $primaryLight;
+  outline: none;
+  border: none;
+  box-shadow: $shadow-inset;
+  text-align: center;
+}
+
 input[type="file"]::file-selector-button {
   font-family: $fontMain;
   margin-inline: auto;
   margin-right: 2rem;
   width: fit-content;
   padding-inline: 5%;
-  height: 3rem;
+  height: 2.5rem;
   background-color: $primaryBrass;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: $primaryLight;
   outline: none;
   border: none;
@@ -206,6 +238,7 @@ input[type="file"]::file-selector-button {
 input[type="file"]::file-selector-button:hover {
   background-color: rgba($primaryBrass, 0.7);
 }
+
 select,
 option {
   text-align-last: center;
@@ -217,8 +250,8 @@ option {
   margin-bottom: 3%;
   margin-inline: auto;
   width: fit-content;
-  padding-inline: 10%;
-  height: 3rem;
+  padding-inline: 5%;
+  height: 2.5rem;
   background-color: $primaryTeal;
   font-size: 1.5rem;
   color: $primaryLight;
@@ -244,8 +277,8 @@ option {
   margin-bottom: 3%;
   margin-inline: auto;
   width: fit-content;
-  padding-inline: 10%;
-  height: 3rem;
+  padding-inline: 5%;
+  height: 2.5rem;
   background-color: $primaryTeal;
   font-size: 1.5rem;
   color: $primaryLight;
@@ -324,6 +357,25 @@ ktbz-register {
 
   .button-disabled {
     background-color: $primaryBrass;
+  }
+
+  .form-error {
+    position: absolute;
+    padding: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    width: 20rem;
+    height: fit-content;
+    background-color: $error;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    border-radius: 5px;
+  }
+  .form-error-field {
+    margin: .5rem 0;
+    font-weight: bold;
+    color: $primaryLight;
   }
 }
 
@@ -686,6 +738,77 @@ ktbz-box-message {
   }
 }
 
+ktbz-modal {
+  .modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($primaryDark, 0.5);
+
+    .form {
+      background-color: $secondaryLight;
+      width: fit-content;
+      height: fit-content;
+      border-radius: 5px;
+      padding-bottom: 1rem;
+
+      .ktbz-data-form {
+        form {
+          width: 20rem;
+        }
+
+      }
+
+      input {
+        width: 90%;
+        margin: 2% auto;
+        box-shadow: $shadow;
+      }
+
+      textarea {
+        width: 30rem;
+        height: 10rem;
+        margin: 2% auto;
+        box-shadow: $shadow;
+      }
+
+      .button {
+        margin: 2% auto;
+      }
+      .button-disabled {
+        margin: 2% auto;
+      }
+
+      .form-header {
+        min-width: 25rem;
+        position: relative;
+        font-size: 1.2rem;
+        font-weight: bold;
+        padding: 1rem;
+        border-bottom: 1px solid $primaryDark;
+
+        .icon {
+          width: 2rem;
+          height: 2rem;
+          fill: $primaryDark;
+          cursor: pointer;
+          position: absolute;
+          // bottom: .5rem;
+          bottom: .75rem;
+          right: .2rem;
+        }
+      }
+    }
+  }
+}
+
 ktbz-page-not-found {
   .code {
     font-weight: bolder;
@@ -715,62 +838,322 @@ ktbz-profile {
     justify-content: space-between;
   }
 
-  .user-info {
-    width: 15.6rem;
-    height: 100%;
-    background-color: $primaryLight;
-    box-shadow: $shadow;
-    border-radius: 5px;
+  .profile-column {
+    position: relative;
+    width: 20rem;
+    display: flex;
+    flex-flow: column;
+    justify-content: start;
+    align-items: center;
 
-    .header {
+    .buttons {
+      position: absolute;
+      bottom: 0;
+      width: 90%;
       text-align: center;
-      background-color: $primaryBrass;
-      box-shadow: $shadow;
-      border-radius: 5px 5px 0 0;
-      color: $primaryLight;
-      font-weight: bold;
-      font-size: 2rem;
-      padding: 1rem 0.5rem;
+
+      .icon {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
     }
-    .user-photo {
-      width: 15.6rem;
-      height: 15.6rem;
-      background-color: $primaryDark;
-      box-shadow: $shadow;
-      border-radius: 5px;
-      object-fit: cover;
+    .photo {
+      width: 15rem;
+      height: 15rem;
+      position: relative;
+
+      .icon {
+        position: absolute;
+        bottom: .5rem;
+        right: .5rem;
+        visibility: hidden;
+      }
+
+      .profile-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+        box-shadow: $shadow;
+      }
     }
-    .text-1 {
-      font-weight: bold;
-      text-align: center;
+    .photo:hover {
+      .icon {
+        visibility: visible;
+      }
+    }
+
+    .data-editable {
+      width: 15rem;
+      position: relative;
+      border-bottom: 1px solid $primaryDark;
+
+      .icon-edit {
+        width: 1.2rem;
+        height: 1.2rem;
+        fill: $primaryDark;
+        cursor: pointer;
+        position: absolute;
+        bottom: .5rem;
+        right: .5rem;
+        visibility: hidden;
+      }
+    }
+
+    .data-editable:hover {
+     .icon-edit {
+        visibility: visible;
+      }
+    }
+
+
+    .icon {
+      width: 1.2rem;
+      height: 1.2rem;
+      fill: $primaryDark;
+      cursor: pointer;
+    }
+
+    .text-2 {
+      margin: .2rem 0;
+      font-style: italic;
+      color: $primaryDark;
       font-size: 1.2rem;
+      display: flex;
+      flex-flow: row;
+      justify-content: center;
+      align-items: center;
+
+    }
+
+    .text-1 {
+      margin: .2rem 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    .rating {
+      color: $primaryBrass;
+      font-size: 2rem;
+    }
+
+    .statistic {
+      display: flex;
+      flex-flow: column;
+      width: 90%;
+      .text-1 {
+        font-weight: normal;
+        font-size: 1rem;
+      }
+
+      .statistic-row {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+      }
     }
   }
 
-  .form-container {
-    top: 0;
-    left: 0;
-    position: absolute;
-    width: 40vw;
-    margin: 25vh 30vw;
-    // margin: 0 auto;
-    height: 50vh;
-    background-color: #1d861f;
+  .information-column {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
   }
 
-  .container-2 {
-    height: 100%;
-    flex-grow: 0.98;
-    border-radius: 5px;
+  .description-box {
+    margin: 0 auto 1rem;
+    width: 90%;
+    height: 10rem;
+    text-align: justify;
+
+    .page-header {
+      position: relative;
+      font-size: 1.25rem;
+      padding: 0.5rem;
+
+      .icon-edit {
+        width: 1.2rem;
+        height: 1.2rem;
+        fill: $primaryDark;
+        cursor: pointer;
+        position: absolute;
+        bottom: .5rem;
+        right: .5rem;
+        visibility: hidden;
+      }
+    }
+
+    .page-header:hover {
+      .icon-edit {
+        visibility: visible;
+      }
+    }
+  }
+
+  .switch-box {
+    width: 100%;
+    margin: 0 auto;
+    width: 90%;
     display: flex;
     flex-flow: column;
 
-    .container-3 {
-      flex-grow: 1;
+    .switch-body {
+      height: 27.5rem;
+      // flex-grow: 1;
+
+      display: flex;
+      flex-flow: row wrap;
+      overflow: auto;
+      justify-content: center;
+
+      .box {
+        margin: 0.5rem 0.5rem;
+        width: 10rem;
+        height: 10rem;
+        background-color: $primaryBrass;
+      }
+
+      .dog-card {
+        position: relative;
+        margin: auto;
+        width: 20rem;
+        height: 7rem;
+        background-color: $primaryBrass;
+        border-radius: 5px;
+        box-shadow: $shadow;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        align-items: center;
+        margin: 1rem;
+
+        .card-container {
+          text-align: center;
+          color: $primaryLight;
+        }
+
+        .photo {
+          width: 5rem;
+          height: 5rem;
+          box-shadow: $shadow;
+          border-radius: 10rem;
+          object-fit: cover;
+        }
+
+        .text-1 {
+          font-size: 2rem;
+          font-weight: bold;
+        }
+
+        .text-2 {
+          font-size: 1.5rem;
+        }
+
+        .icon {
+          width: 2rem;
+          height: 2rem;
+          fill: $primaryLight;
+          transition: 0.2s ease;
+          cursor: pointer;
+        }
+
+        .icon:hover {
+          fill: $primaryDark;
+        }
+      }
+
+      .comment-box {
+        margin: 0.5rem 0;
+        display: flex;
+        flex-flow: row;
+        border-radius: 5px;
+        box-shadow: $shadow;
+        height: 8rem;
+        background-color: white;
+
+        .comment-row {
+          display: flex;
+          flex-flow: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .comment-info {
+          margin: 0 0.5rem;
+          width: 7rem;
+          display: flex;
+          flex-flow: column;
+          justify-content: center;
+          align-items: center;
+
+          .avatar {
+            width: 5rem;
+            height: 5rem;
+            background-color: black;
+            border-radius: 10rem;
+          }
+          .text-1 {
+            font-weight: bold;
+          }
+        }
+
+        .comment-body {
+          margin: 0 0.5rem;
+          .rating {
+            color: $primaryBrass;
+            font-size: 2rem;
+          }
+          .text-2 {
+            text-align: center;
+            color: gray;
+            font-style: italic;
+          }
+        }
+      }
+    }
+
+    .buttons {
+      height: 3rem;
+      display: flex;
+      flex-flow: row;
+      justify-content: space-evenly;
+      align-items: center;
+      border-bottom: 1px solid $primaryDark;
+
+
+    }
+  }
+
+  .settings {
+    position: relative;
+    display: flex;
+    flex-flow: row;
+    background-color: red;
+    height: 100%;
+    width: 100%;
+    justify-content: space-evenly;
+
+    .column {
+      width: 20%;
+      height: 20rem;
+      background-color: #1d861f;
 
       .page-header {
-        font-size: 1.5rem;
-        padding: 0.5rem;
+        font-size: 1rem;
+        padding: .5rem;
+      }
+
+    }
+
+    .buttons {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      .icon {
+        fill: $primaryDark;
+
       }
     }
   }
@@ -779,11 +1162,32 @@ ktbz-profile {
 // OWNER
 ktbz-dog-creator {
   .main-container {
+    position: relative;
     flex-grow: 1;
     margin: 1rem;
     display: flex;
     flex-flow: row;
     justify-content: space-around;
+
+    .form-error {
+      position: absolute;
+      padding: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      width: 20rem;
+      height: fit-content;
+      background-color: $error;
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+      border-radius: 5px;
+      box-shadow: $shadow;
+    }
+    .form-error-field {
+      margin: .5rem 0;
+      font-weight: bold;
+      color: $primaryLight;
+    }
   }
 
   .creator-form {
@@ -807,8 +1211,8 @@ ktbz-dog-creator {
       width: 100%;
       height: 2rem;
       font-size: 1rem;
-      margin-top: 0.7rem;
-      margin-bottom: 0.7rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
       box-shadow: $shadow;
     }
 
@@ -816,8 +1220,8 @@ ktbz-dog-creator {
       width: 100%;
       height: 5rem;
       font-size: 1rem;
-      margin-top: 0.7rem;
-      margin-bottom: 0.7rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
       box-shadow: $shadow;
     }
 
@@ -967,6 +1371,31 @@ ktbz-dog {
 }
 
 ktbz-walk-planner {
+  .container {
+    position: relative;
+    .form-error {
+      position: absolute;
+      padding: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      width: 20rem;
+      height: fit-content;
+      background-color: $error;
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+      border-radius: 5px;
+      box-shadow: $shadow;
+    }
+    .form-error-field {
+      margin: .5rem 0;
+      font-weight: bold;
+      color: $primaryLight;
+    }
+  }
+
+
+
   .main-container {
     width: 40%;
     margin-inline: auto;
@@ -1203,7 +1632,7 @@ ktbz-dog-card {
       }
 
       .icon:hover {
-        fill: $secodnaryDark;
+        fill: $secondaryDark;
       }
     }
 
@@ -1415,3 +1844,4 @@ ktbz-planner {
 }
 
 // ADMIN
+

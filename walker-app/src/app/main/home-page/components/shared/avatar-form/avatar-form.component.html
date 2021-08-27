@@ -1,0 +1,4 @@
+<form [formGroup]="avatarForm">
+  <input type="file" (change)="onSelectFile($event)">
+  <div [ngClass]="avatarForm.valid  ? 'button' : 'button-disabled'" (click)="submitAvatar()">Zmień zdjęcie</div>
+</form>

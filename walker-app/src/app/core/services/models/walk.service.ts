@@ -3,32 +3,44 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { WalkCard } from 'src/app/models/walks/walk-card.model';
+import { SettingService } from '../utility/setting.service';
+import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WalkService {
-  private serviceUrl = environment.apiBaseUrl + '/walk/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private setting: SettingService) {}
 
-  getAll(): Observable<WalkCard[]> {
-    return this.http.get<WalkCard[]>(this.serviceUrl + 'all');
+  getAll(): Observable<WalkInfo[]> {
+    const url = this.setting.getWalkUrl('getAllWalks');
+
+    return this.http.get<WalkInfo[]>(url);
   }
 
   getWalk(walkId: string): Observable<WalkCard> {
-    return this.http.get<WalkCard>(this.serviceUrl + walkId);
+    const url = this.setting.getWalkUrl('getWalk', { id: walkId });
+
+    return this.http.get<WalkCard>(url);
   }
 
   createWalk(walkRequest: any) {
-    return this.http.post<any>(this.serviceUrl + 'create', walkRequest);
+    const url = this.setting.getWalkUrl('createWalk');
+
+    return this.http.post<any>(url, walkRequest);
   }
 
-  enroll(id: string) {
-    return this.http.post(this.serviceUrl + 'enroll/' + id, {});
+  enroll(walkId: string) {
+    const url = this.setting.getWalkUrl('walkEnroll', { id: walkId });
+
+    return this.http.post(url, {});
   }
 
-  disenroll(id: string) {
-    return this.http.post(this.serviceUrl + 'disenroll/' + id, {});
+  disenroll(walkId: string) {
+    const url = this.setting.getWalkUrl('walkDisenroll', { id: walkId });
+
+    return this.http.post(url, {});
   }
 }

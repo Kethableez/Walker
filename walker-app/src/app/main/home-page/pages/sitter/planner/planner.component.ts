@@ -1,12 +1,13 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SitterService } from 'src/app/core/services/models/sitter.service';
 import { WalkCard } from 'src/app/models/walks/walk-card.model';
+import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 import { DateService } from './../../../../../core/services/utility/date.service';
 
 export interface WalkCardMapper {
   day: number;
-  walkCard: WalkCard[];
+  walkInfo: WalkInfo[];
 }
 
 @Component({
@@ -38,18 +39,18 @@ export class PlannerComponent implements OnInit {
     });
   }
 
-  mapWithDay(walkCards: WalkCard[], calendar: WalkCardMapper[][]): void {
-    walkCards
+  mapWithDay(walk: WalkInfo[], calendar: WalkCardMapper[][]): void {
+    walk
       .filter(
-        (walkCard) =>
-          new Date(walkCard.walk.walkDateTime).getMonth() == this.currentDay.getMonth()
+        (walk) =>
+          new Date(walk.walkDateTime).getMonth() == this.currentDay.getMonth()
       )
       .forEach(dog => {
-        let walkDate = new Date(dog.walk.walkDateTime);
-        console.log(dog.walk.walkDateTime)
+        let walkDate = new Date(dog.walkDateTime);
+        console.log(dog.walkDateTime)
         console.log(walkDate.getDate())
         calendar.forEach((week) => {
-          week.find((day) => day.day == walkDate.getDate())?.walkCard.push(dog);
+          week.find((day) => day.day == walkDate.getDate())?.walkInfo.push(dog);
         });
       });
   }

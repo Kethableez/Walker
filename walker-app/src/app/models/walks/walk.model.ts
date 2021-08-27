@@ -9,5 +9,7 @@ export interface Walk {
   walkLon: number;
   walkDescription: string;
   booked: boolean;
+  sitterReviewed: boolean;
+  dogReviewed: boolean;
   sitterId: string | null;
 }

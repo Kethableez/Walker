@@ -14,6 +14,7 @@ export interface RegularUser {
   lastName: string;
   birthdate: Date;
   avatar: string;
+  description: string;
   gender: string;
   roles: UserRole[];
   isActive: boolean;

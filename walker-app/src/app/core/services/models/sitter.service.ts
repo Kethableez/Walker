@@ -1,28 +1,34 @@
+import { SettingService } from './../utility/setting.service';
 import { WalkCard } from './../../../models/walks/walk-card.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DogCard } from 'src/app/models/dogs/dog-card.model';
-import { environment } from 'src/environments/environment';
+import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SitterService {
 
-  private serviceUrl = environment.apiBaseUrl + '/sitter';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private setting: SettingService) { }
 
   getDogs(): Observable<DogCard[]> {
-    return this.http.get<DogCard[]>(this.serviceUrl + '/dogs');
+    const url = this.setting.getSitterUrl('getDogs');
+
+    return this.http.get<DogCard[]>(url);
   }
 
-  getWalks(): Observable<WalkCard[]> {
-    return this.http.get<WalkCard[]>(this.serviceUrl + '/walks');
+  getWalks(): Observable<WalkInfo[]> {
+    const url = this.setting.getSitterUrl('getWalks');
+
+    return this.http.get<WalkInfo[]>(url);
   }
 
   getHistory(): Observable<WalkCard[]> {
-    return this.http.get<WalkCard[]>(this.serviceUrl + '/history');
+    const url = this.setting.getSitterUrl('getHistory');
+
+    return this.http.get<WalkCard[]>(url);
   }
 }

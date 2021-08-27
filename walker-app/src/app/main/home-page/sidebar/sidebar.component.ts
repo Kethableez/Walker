@@ -1,5 +1,6 @@
+import { CurrentUserStoreService } from './../../../core/services/store/current-user-store.service';
 import { Router } from '@angular/router';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef, OnChanges, SimpleChanges, DoCheck } from '@angular/core';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
 
 export enum Roles {
@@ -13,40 +14,38 @@ export enum Roles {
   selector: 'ktbz-sidebar',
   templateUrl: './sidebar.component.html'
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnChanges, DoCheck {
 
   @Input()
   roles!: string[];
 
-  @Input()
-  avatar?: string;
+  // @Input()
+  avatar = this.userStore.regularUser.avatar;
+  mainRole = this.userStore.role;
 
-  mainRole!: string;
-
-  constructor(private token: TokenStorageService,
-    private router: Router) { }
+  constructor(
+    private token: TokenStorageService,
+    private userStore: CurrentUserStoreService,
+    private router: Router,
+    private ref: ChangeDetectorRef
+    ) { }
 
   ngOnInit(): void {
-    this.roles.forEach(role => {
-      switch (role) {
-        case 'ROLE_ADMIN':
-          this.mainRole = Roles.ADMIN
-          break;
-
-        case 'ROLE_OWNER':
-          this.mainRole = Roles.OWNER
-          break;
-
-        case 'ROLE_SITTER':
-          this.mainRole = Roles.SITTER
-          break;
-      }
-    })
+    console.log(this.mainRole);
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+  }
+
+  ngDoCheck() {
+    if (this.avatar !== this.userStore.regularUser.avatar) this.avatar = this.userStore.regularUser.avatar;
+  }
+
 
 
   logoutUser(): void {
     this.token.signOut();
+    this.userStore.removeUser();
     this.router.navigate(['start']);
   }
 

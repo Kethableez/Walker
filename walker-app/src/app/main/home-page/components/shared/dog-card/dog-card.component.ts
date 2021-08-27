@@ -1,3 +1,4 @@
+import { CurrentUserStoreService } from './../../../../../core/services/store/current-user-store.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
 import { UserService } from 'src/app/core/services/models/user.service';
@@ -6,6 +7,7 @@ import { ActionResponse } from 'src/app/models/action-response.model';
 import { RegularUser } from 'src/app/models/users/regular-user.model';
 import { User } from 'src/app/models/users/user.model';
 import { WalkCard } from 'src/app/models/walks/walk-card.model';
+import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 
 @Component({
   selector: 'ktbz-dog-card',
@@ -14,24 +16,27 @@ import { WalkCard } from 'src/app/models/walks/walk-card.model';
 export class DogCardComponent implements OnInit {
 
   @Input()
-  walkCard?: WalkCard;
+  walkInfo?: WalkInfo;
 
   response?: ActionResponse;
   isMessageBoxVisible = false;
   userId: string = '';
 
-  constructor(private walkService: WalkService,
-    private tokenStorage: TokenStorageService) { }
+  constructor(
+    private userStore: CurrentUserStoreService,
+    private walkService: WalkService,
+    // private tokenStorage: TokenStorageService
+    ) { }
 
   ngOnInit(): void {
   }
 
-  action(card: WalkCard) {
-    if (card.walk.booked && card.walk.sitterId === this.tokenStorage.getUser().id){
-      this.disenroll(card.walk.id);
+  action(walk: WalkInfo) {
+    if (walk.isBooked && walk.sitterId === this.userStore.regularUser.id){
+      this.disenroll(walk.id);
     }
-    else if (!card.walk.booked) {
-      this.enroll(card.walk.id);
+    else if (!walk.isBooked) {
+      this.enroll(walk.id);
     }
   }
 

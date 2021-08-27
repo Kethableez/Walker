@@ -1,0 +1,4 @@
+<form [formGroup]="descriptionForm">
+  <textarea formControlName="description" placeholder="Opis"></textarea>
+  <div [ngClass]="descriptionForm.valid  ? 'button' : 'button-disabled'" (click)="submitData()">Zmień opis</div>
+</form>

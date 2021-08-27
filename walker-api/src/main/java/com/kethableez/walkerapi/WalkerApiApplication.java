@@ -9,5 +9,4 @@ public class WalkerApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WalkerApiApplication.class, args);
 	}
-
 }
