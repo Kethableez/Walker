@@ -123,7 +123,7 @@ export class DogCreatorComponent implements OnInit {
     this.dogService.createDog(this.dogForm.value).subscribe(
       (res) => {
         this.response = {
-          message: res.message,
+          message: 'Stworzono zwierzaka!',
           isSuccess: true,
         };
 

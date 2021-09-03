@@ -1,8 +1,12 @@
-import { Walk } from './../walks/walk.model';
+import { WalkInfo } from './../walks/walk-info.model';
 import { UserInfo } from './../users/user-info.model';
 import { Dog } from './dog.model';
+import { DogReviewCard } from '../reviews/dog-review-card.model';
+
 export interface DogCard {
   dog: Dog;
   owner: UserInfo;
-  incomingWalks: Walk[];
+  reviews: DogReviewCard[];
+  incomingWalks: WalkInfo[];
+  images: string[];
 }

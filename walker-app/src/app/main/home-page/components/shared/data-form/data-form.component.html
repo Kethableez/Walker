@@ -7,7 +7,8 @@
 </form>
 
 <form [formGroup]="passwordForm">
-  <input formControlName="password" type="password" placeholder="Hasło" >
+  <input formControlName="oldPassword" type="password" placeholder="Stare hasło" >
+  <input formControlName="newPassword" type="password" placeholder="Hasło" >
   <input formControlName="confirmPassword" type="password" placeholder="Potwierdź hasło" >
   <div [ngClass]="passwordForm.valid  ? 'button' : 'button-disabled'" (click)="submitPassword()">Zmień hasło</div>
 </form>

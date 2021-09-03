@@ -4,11 +4,14 @@
 <div class="main-container">
   <div class="page-header">Wybierz psa</div>
   <form [formGroup]="walkForm">
-    <div class="dog-container">
+    <div class="dog-container" *ngIf="ownerDogs.length !== 0">
       <div *ngFor="let dog of ownerDogs">
-        <img [ngClass]="dog.dog.id === walkForm.get('dogId')?.value ? 'dog-selected' : 'dog'" [src]="dog.dog.dogPhoto" (click)="selectDog(dog.dog.id)">
+        <img [ngClass]="dog.id === walkForm.get('dogId')?.value ? 'dog-selected' : 'dog'" [src]="dog.dogPhoto" (click)="selectDog(dog.id)">
       </div>
     </div>
+      <div class="dog-container" *ngIf="ownerDogs.length === 0">
+        Nie masz żadnych zwierząt.
+      </div>
 
     <div class="page-header">Dodaj informacje</div>
     <input type="datetime-local" formControlName="walkDateTime">

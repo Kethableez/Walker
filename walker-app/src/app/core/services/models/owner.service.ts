@@ -1,3 +1,5 @@
+import { DogInfo } from './../../../models/dogs/dog-info.model';
+import { PastWalkInfo } from './../../../models/walks/past-walk-info.model';
 import { SettingService } from './../utility/setting.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -13,10 +15,10 @@ export class OwnerService {
   constructor(private http: HttpClient,
     private setting: SettingService) { }
 
-  getDogs(): Observable<DogCard[]> {
+  getDogs(): Observable<DogInfo[]> {
     const url = this.setting.getOwnerUrl('getDogs');
 
-    return this.http.get<DogCard[]>(url);
+    return this.http.get<DogInfo[]>(url);
   }
 
   getWalks(): Observable<any> {
@@ -31,9 +33,9 @@ export class OwnerService {
     return this.http.get<any>(url);
   }
 
-  getHistory(): Observable<PastWalkCard[]> {
+  getHistory(): Observable<PastWalkInfo[]> {
     const url = this.setting.getOwnerUrl('getHistory');
 
-    return this.http.get<PastWalkCard[]>(url);
+    return this.http.get<PastWalkInfo[]>(url);
   }
 }

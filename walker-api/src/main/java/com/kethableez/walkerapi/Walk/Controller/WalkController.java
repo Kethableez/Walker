@@ -45,7 +45,7 @@ public class WalkController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WalkCard> getWalkInfo(@PathVariable("id") String walkId) {
+    public ResponseEntity<WalkCard> getWalkCard(@PathVariable("id") String walkId) {
         WalkCard walk = this.walkService.createCard(this.walkService.getWalkFromId(walkId));
         return new ResponseEntity<>(walk, HttpStatus.OK);
     }

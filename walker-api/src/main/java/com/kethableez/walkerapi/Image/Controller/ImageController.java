@@ -56,8 +56,6 @@ public class ImageController {
         }
     }
 
-
-
     @GetMapping(value="/dog/{dogId}/{filename}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     public ResponseEntity<?> getDogImage(@PathVariable("dogId") String dogId, @PathVariable("filename") String filename) {
         try {

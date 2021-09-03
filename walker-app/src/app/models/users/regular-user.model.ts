@@ -1,9 +1,9 @@
 import { Role } from "../enums/role.model";
 
-export interface UserRole{
-  id: string;
-  role: Role;
-}
+// export interface UserRole{
+//   id: string;
+//   role: Role;
+// }
 
 export interface RegularUser {
   id: string;
@@ -13,10 +13,11 @@ export interface RegularUser {
   firstName: string;
   lastName: string;
   birthdate: Date;
+  city: string;
   avatar: string;
   description: string;
   gender: string;
-  roles: UserRole[];
+  roles: Role[];
   isActive: boolean;
   isSubscribed: boolean;
 }

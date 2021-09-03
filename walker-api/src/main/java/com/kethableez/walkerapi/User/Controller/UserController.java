@@ -3,12 +3,10 @@ package com.kethableez.walkerapi.User.Controller;
 import java.util.List;
 import java.util.Optional;
 
-import com.kethableez.walkerapi.Config.Security.PasswordEncoder;
-import com.kethableez.walkerapi.Owner.Service.OwnerService;
-import com.kethableez.walkerapi.Sitter.Service.SitterService;
+import com.kethableez.walkerapi.User.Model.DTO.UserCard;
 import com.kethableez.walkerapi.User.Model.DTO.UserInfo;
 import com.kethableez.walkerapi.User.Model.Entity.User;
-import com.kethableez.walkerapi.User.Model.Entity.UserRole;
+import com.kethableez.walkerapi.User.Model.Request.DescriptionRequest;
 import com.kethableez.walkerapi.User.Model.Request.UserDataRequest;
 import com.kethableez.walkerapi.User.Model.Request.UserPasswordRequest;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
@@ -26,7 +24,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,16 +40,7 @@ public class UserController {
     private final UserRepository userRepository;
 
     @Autowired
-    private final SitterService sitterService;
-
-    @Autowired
-    private final OwnerService ownerService;
-
-    @Autowired
     private final UserService userService;
-
-    @Autowired
-    private final PasswordEncoder encoder;
 
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAll() {
@@ -59,38 +50,21 @@ public class UserController {
 
     @GetMapping("/get_data")
     public ResponseEntity<?> getData(UsernamePasswordAuthenticationToken token) {
-        User user = userRepository.findByUsername(token.getName()).orElseThrow();
-         Optional<UserRole> mainRole = userService.getRole(user);
-         if (mainRole.isPresent()) {
-             switch(mainRole.get().getRole()){
-                case ROLE_OWNER:
-                    return new ResponseEntity<>(ownerService.getData(userService.getIdFromToken(token)), HttpStatus.OK);
-
-                case ROLE_SITTER:
-                    return new ResponseEntity<>(sitterService.getData(userService.getIdFromToken(token)), HttpStatus.OK);
-
-                default:
-                    return new ResponseEntity<>(user, HttpStatus.OK);
-             }
+        Optional<User> user = userRepository.findByUsername(token.getName());
+        // Optional<UserRole> mainRole = userService.getRole(user);
+         if (user.isPresent()) {
+            UserCard userCard = userService.getUserCard(user.get().getId());
+            return new ResponseEntity<>(userCard, HttpStatus.OK);
          }
          else return ResponseEntity.badRequest().body(new MessageResponse("jesteś nikim"));
     }
 
     @GetMapping("/get_data/{username}")
     public ResponseEntity<?> getData(@PathVariable String username) {
-        User user = userRepository.findByUsername(username).orElseThrow();
-         Optional<UserRole> mainRole = userService.getRole(user);
-         if (mainRole.isPresent()) {
-             switch(mainRole.get().getRole()){
-                case ROLE_OWNER:
-                    return new ResponseEntity<>(ownerService.getData(user.getId()), HttpStatus.OK);
-
-                case ROLE_SITTER:
-                    return new ResponseEntity<>(sitterService.getData(user.getId()), HttpStatus.OK);
-
-                default:
-                    return new ResponseEntity<>(user, HttpStatus.OK);
-             }
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
+            UserCard userCard = userService.getUserCard(user.get().getId());
+            return new ResponseEntity<>(userCard, HttpStatus.OK);
          }
          else return ResponseEntity.badRequest().body(new MessageResponse("jesteś nikim"));
     }
@@ -113,14 +87,22 @@ public class UserController {
     @PutMapping("/change_password")
     public ResponseEntity<?> changePassword(UsernamePasswordAuthenticationToken token,
             @RequestBody UserPasswordRequest request) {
-        User user = userRepository.findByUsername(token.getName()).get();
+                ActionResponse response = this.userService.changePassword(userService.getIdFromToken(token), request);
+                if (response.isSuccess()) return ResponseEntity.ok(new MessageResponse(response.getMessage()));
+                else return ResponseEntity.badRequest().body(response.getMessage());
+    }
 
-        if (encoder.bCryptPasswordEncoder().matches(request.getOldPassword(), user.getPassword())) {
-            user.setPassword(encoder.bCryptPasswordEncoder().encode(request.getNewPassword()));
-            userRepository.save(user);
-            return ResponseEntity.ok(new MessageResponse("Zmieniono dane pomyślnie"));
-        } else {
-            return ResponseEntity.badRequest().body("Złe hasło");
-        }
+    @PutMapping("/change_description")
+    public ResponseEntity<?> changeDescription(UsernamePasswordAuthenticationToken token, @RequestBody DescriptionRequest request) {
+        ActionResponse response = this.userService.changeDescription(userService.getIdFromToken(token), request);
+        if (response.isSuccess()) return ResponseEntity.ok(new MessageResponse(response.getMessage()));
+        else return ResponseEntity.badRequest().body(response.getMessage());
+    }
+
+    @PutMapping("/change_avatar")
+    public ResponseEntity<?> changeAvatar(UsernamePasswordAuthenticationToken token, @RequestParam("imageFile") MultipartFile imageFile) {
+        ActionResponse response = this.userService.changeAvatar(userService.getIdFromToken(token), imageFile);
+        if (response.isSuccess()) return ResponseEntity.ok(new MessageResponse(response.getMessage()));
+        else return ResponseEntity.badRequest().body(response.getMessage());
     }
 }

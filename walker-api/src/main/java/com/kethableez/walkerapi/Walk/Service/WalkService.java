@@ -16,6 +16,7 @@ import com.kethableez.walkerapi.Utility.Enum.Role;
 import com.kethableez.walkerapi.Utility.Mapper.MapperService;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
 import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkCard;
+import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkInfo;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkCard;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
 import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
@@ -47,7 +48,7 @@ public class WalkService {
     private final UserService userService;
 
     @Autowired
-    private final MapperService mapperService;
+    private final MapperService mapper;
 
     public ActionResponse createWalk(UsernamePasswordAuthenticationToken token, WalkRequest request) {
         if (userRepository.findByUsername(token.getName()).isPresent()) {
@@ -70,6 +71,12 @@ public class WalkService {
         return walkRepository.findByOwnerId(ownerId);
     }
 
+    public List<WalkInfo> getOwnerWalksInfo(String ownerId) {
+        List<WalkInfo> walks = new ArrayList<>();
+        getOwnerWalks(ownerId).stream().forEach(walk -> walks.add(mapper.walkInfoMapper(walk.getId())));
+        return walks;
+    }
+
     public List<Walk> getSitterWalks(String sitterId) {
         return walkRepository.findByWalkDateTimeGreaterThanAndSitterId(LocalDateTime.now(), sitterId);
     }
@@ -78,9 +85,15 @@ public class WalkService {
         return walkRepository.findByWalkDateTimeLessThanAndSitterId(LocalDateTime.now(), sitterId);
     }
 
+    public List<PastWalkInfo> getSitterHistoryWalkInfo(String sitterId) {
+        List<PastWalkInfo> walks = new ArrayList<>();
+        getSitterHistoryWalk(sitterId).stream().forEach(walk -> walks.add(mapper.pastWalkInfoMapper(walk.getId())));
+        return walks;
+    }
+
     public List<WalkInfo> getSitterWalkInfos(String sitterId) {
         List<WalkInfo> walks = new ArrayList<>();
-        getSitterWalks(sitterId).stream().forEach(w -> walks.add(mapperService.walkInfoMapper(w.getId())));
+        getSitterWalks(sitterId).stream().forEach(w -> walks.add(mapper.walkInfoMapper(w.getId())));
         return walks;
     }
 
@@ -88,14 +101,11 @@ public class WalkService {
         return walkRepository.findByWalkDateTimeLessThanAndOwnerIdAndIsBooked(LocalDateTime.now(), ownerId, true);
     }
 
-    public List<PastWalkCard> getOwnerHistory(String ownerId) {
-        List<PastWalkCard> walks = new ArrayList<>();
-        for(Walk w : walkRepository.findByWalkDateTimeLessThanAndOwnerIdAndIsBooked(LocalDateTime.now(), ownerId, true)) walks.add(createPastWalkCard(w));
-
+    public List<PastWalkInfo> getOwnerHistory(String ownerId) {
+        List<PastWalkInfo> walks = new ArrayList<>();
+        walkRepository.findByWalkDateTimeLessThanAndOwnerIdAndIsBooked(LocalDateTime.now(), ownerId, true).stream().forEach(walk -> walks.add(mapper.pastWalkInfoMapper(walk.getId())));
         return walks;
     }
-
-
 
     public List<WalkCard> getSitterHistoryWalkCards(String sitterId) {
         List<WalkCard> walks = new ArrayList<>();
@@ -190,7 +200,7 @@ public class WalkService {
 
     public List<WalkInfo> getAllAvailableWalkInfo() {
         List<WalkInfo> walkInfos = new ArrayList<>();        
-        this.getWalks().stream().forEach(w -> walkInfos.add(mapperService.walkInfoMapper(w.getId())));
+        this.getWalks().stream().forEach(w -> walkInfos.add(mapper.walkInfoMapper(w.getId())));
         return walkInfos;
     }
 

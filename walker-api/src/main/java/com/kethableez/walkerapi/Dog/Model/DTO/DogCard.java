@@ -5,7 +5,7 @@ import java.util.List;
 import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
 import com.kethableez.walkerapi.Review.Model.DTO.DogReviewCard;
 import com.kethableez.walkerapi.User.Model.DTO.UserInfo;
-import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,11 +17,7 @@ import lombok.Setter;
 public class DogCard {
     private Dog dog;
     private UserInfo owner;
-    private List<Walk> incomingWalks;
-
-    // private DogInfo dog;
-    // private UserInfo owner;
-    // private List<DogReviewCard> reviews;
-    // private List<WalkInfo> incomingWalks;
-    // private List<String> sitterImages;
+    private List<DogReviewCard> reviews;
+    private List<WalkInfo> incomingWalks;
+    private List<String> images;
 }

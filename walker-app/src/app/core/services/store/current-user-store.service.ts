@@ -1,6 +1,6 @@
 import { UserService } from 'src/app/core/services/models/user.service';
 import { Injectable } from '@angular/core';
-import { RegularUser, UserRole } from 'src/app/models/users/regular-user.model';
+import { RegularUser } from 'src/app/models/users/regular-user.model';
 import { User } from 'src/app/models/users/user.model';
 import { Role } from 'src/app/models/enums/role.model';
 
@@ -47,28 +47,28 @@ export class CurrentUserStoreService {
     return JSON.parse(sessionStorage.getItem(ROLES) as string) as Role[];
   }
 
-  private saveUser(user: User | RegularUser) {
+  private saveUser(user: RegularUser) {
     window.sessionStorage.removeItem(CURRENT_USER);
     window.sessionStorage.setItem(CURRENT_USER, JSON.stringify(user));
   }
 
-  private saveRoles(user: User | RegularUser) {
-    const u = this.instanceOfUser(user) ? (user as User).user : user as RegularUser;
-    const roles = u.roles.map(this.getRoleNames);
+  private saveRoles(user: RegularUser) {
+    console.log(user.roles);
+    const roles = user.roles;
     window.sessionStorage.removeItem(ROLES);
     window.sessionStorage.setItem(ROLES, JSON.stringify(roles));
   }
 
-  private saveRole(user: User | RegularUser ){
-    const u = this.instanceOfUser(user) ? (user as User).user : user as RegularUser;
-    const main_role = u.roles.filter(r => r.role != Role.ROLE_USER).map(this.getRoleNames)[0];
+  private saveRole(user: RegularUser ){
+    const main_role = user.roles.filter(role => role != Role.ROLE_USER)[0];
+    // const main_role = u.roles.filter(r => r.role != Role.ROLE_USER).map(this.getRoleNames)[0];
     window.sessionStorage.removeItem(MAIN_ROLE);
     window.sessionStorage.setItem(MAIN_ROLE, main_role);
   }
 
-  private getRoleNames(role: UserRole) {
-    return role['role'];
-  }
+  // private getRoleNames(role: UserRole) {
+  //   return role['role'];
+  // }
 
   private instanceOfUser(user: any): user is User {
     return 'walks' in user && 'dogs' in user && 'user' in user;

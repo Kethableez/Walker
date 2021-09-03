@@ -31,10 +31,6 @@ public class DogReview {
     
     private String sitterId;
 
-    private String sitterName;
-    
-    private String dogName;
-
     private String dogPhoto;
 
     private String reviewBody;
@@ -42,12 +38,10 @@ public class DogReview {
     private LocalDateTime reviewDate;
 
 
-    public DogReview(String walkId, String dogId, String sitterId, String sitterName, String dogName, String dogPhoto, String reviewBody, LocalDateTime reviewDate) {
+    public DogReview(String walkId, String dogId, String sitterId, String dogPhoto, String reviewBody, LocalDateTime reviewDate) {
         this.walkId = walkId;
         this.dogId = dogId;
         this.sitterId = sitterId;
-        this.sitterName = sitterName;
-        this.dogName = dogName;
         this.dogPhoto = dogPhoto;
         this.reviewBody = reviewBody;
         this.reviewDate = reviewDate;

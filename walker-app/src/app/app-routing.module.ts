@@ -30,7 +30,7 @@ const routes: Routes = [
     children: [
       { path: 'register', component: RegisterComponent },
       { path: 'register/:token', component: RegisterComponent },
-      { path: 'confirmation/:token', component: ConfirmationComponent },
+      { path: 'confirm/:token', component: ConfirmationComponent },
       { path: '**', component: PageNotFoundComponent}
     ],
   },

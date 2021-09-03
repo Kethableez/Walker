@@ -1,22 +1,14 @@
 package com.kethableez.walkerapi.Utility.Testing;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.kethableez.walkerapi.User.Model.Entity.User;
 import com.kethableez.walkerapi.User.Model.Entity.UserRole;
-import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.User.Repository.UserRoleRepository;
 import com.kethableez.walkerapi.User.Service.UserService;
-import com.kethableez.walkerapi.Utility.Enum.Gender;
 import com.kethableez.walkerapi.Utility.Enum.Role;
 import com.kethableez.walkerapi.Utility.Response.MessageResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,12 +27,6 @@ public class TestingController {
     private final UserRoleRepository roleRepository;
 
     @Autowired
-    private final BCryptPasswordEncoder encoder;
-
-    @Autowired
-    private final UserRepository userRepository;
-
-    @Autowired
     private final UserService userService;
 
     @PostMapping("/add_roles")
@@ -56,37 +42,6 @@ public class TestingController {
         roleRepository.save(sitter);
 
         return ResponseEntity.ok().body(new MessageResponse("Dodano role"));
-    }
-
-    @PostMapping("/add_users")
-    public ResponseEntity<?> insertUsers() {
-        Set<UserRole> roles = new HashSet<>();
-
-        roles.add(roleRepository.findByRole(Role.ROLE_USER).orElseThrow());
-        roles.add(roleRepository.findByRole(Role.ROLE_OWNER).orElseThrow());
-        User user1 = new User("owner1", "owner1@gmail.com", encoder.encode("owner1"), "John", "Doe",
-                LocalDate.of(2000, 10, 10), "test.jpg", Gender.MALE, true, true);
-        user1.setRoles(roles);
-        userRepository.save(user1);
-        roles.clear();
-
-        roles.add(roleRepository.findByRole(Role.ROLE_USER).orElseThrow());
-        roles.add(roleRepository.findByRole(Role.ROLE_SITTER).orElseThrow());
-        User user2 = new User("sitter1", "sitter1@gmail.com", encoder.encode("sitter1"), "Mark", "Hamill",
-                LocalDate.of(1998, 10, 10), "test.jpg", Gender.MALE, true, true);
-        user2.setRoles(roles);
-        userRepository.save(user2);
-        roles.clear();
-
-        roles.add(roleRepository.findByRole(Role.ROLE_USER).orElseThrow());
-        roles.add(roleRepository.findByRole(Role.ROLE_ADMIN).orElseThrow());
-        User user3 = new User("admin1", "admin1@gmail.com", encoder.encode("admin1"), "John", "Doe",
-                LocalDate.of(2000, 10, 10), "test.jpg", Gender.MALE, true, true);
-        user3.setRoles(roles);
-        userRepository.save(user3);
-        roles.clear();
-
-        return ResponseEntity.ok().body(new MessageResponse("Dodano testowych użytkowników"));
     }
 
     @GetMapping("/checkout")

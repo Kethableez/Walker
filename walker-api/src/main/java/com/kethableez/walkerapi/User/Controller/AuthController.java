@@ -86,7 +86,6 @@ public class AuthController {
         }
     }
 
-    // TODO: Better response handling!
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {

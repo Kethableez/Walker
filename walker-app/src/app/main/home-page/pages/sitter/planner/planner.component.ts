@@ -1,3 +1,4 @@
+import { SitterStoreService } from './../../../../../core/services/store/sitter-store.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SitterService } from 'src/app/core/services/models/sitter.service';
@@ -22,7 +23,7 @@ export class PlannerComponent implements OnInit {
 
   constructor(
     private dateService: DateService,
-    private sitterService: SitterService,
+    private sitterStore: SitterStoreService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -34,9 +35,7 @@ export class PlannerComponent implements OnInit {
       this.currentDay.getMonth()
     );
     this.currentWeek = this.findWeek();
-    this.sitterService.getWalks().subscribe((res) => {
-      this.mapWithDay(res, this.calendar);
-    });
+    this.mapWithDay(this.sitterStore.incomingWalks, this.calendar);
   }
 
   mapWithDay(walk: WalkInfo[], calendar: WalkCardMapper[][]): void {

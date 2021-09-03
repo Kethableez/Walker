@@ -1,5 +1,6 @@
+import { SitterStoreService } from './../../../../../core/services/store/sitter-store.service';
 import { CurrentUserStoreService } from './../../../../../core/services/store/current-user-store.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
 import { UserService } from 'src/app/core/services/models/user.service';
 import { WalkService } from 'src/app/core/services/models/walk.service';
@@ -18,6 +19,10 @@ export class DogCardComponent implements OnInit {
   @Input()
   walkInfo?: WalkInfo;
 
+  @Output()
+  actionEmitter = new EventEmitter<void>();
+
+
   response?: ActionResponse;
   isMessageBoxVisible = false;
   userId: string = '';
@@ -25,6 +30,7 @@ export class DogCardComponent implements OnInit {
   constructor(
     private userStore: CurrentUserStoreService,
     private walkService: WalkService,
+    private sitterStore: SitterStoreService
     // private tokenStorage: TokenStorageService
     ) { }
 
@@ -33,17 +39,19 @@ export class DogCardComponent implements OnInit {
 
   action(walk: WalkInfo) {
     if (walk.isBooked && walk.sitterId === this.userStore.regularUser.id){
-      this.disenroll(walk.id);
+      this.disenroll(walk);
     }
     else if (!walk.isBooked) {
-      this.enroll(walk.id);
+      this.enroll(walk);
     }
   }
 
 
-  enroll(id: string) {
-    this.walkService.enroll(id).subscribe(
+  enroll(walk: WalkInfo) {
+    this.walkService.enroll(walk.id).subscribe(
       (res: any) => {
+        this.sitterStore.saveEnrollAction(walk);
+        this.actionEmitter.emit();
         this.response = {
           message: res.message,
           isSuccess: true,
@@ -60,9 +68,11 @@ export class DogCardComponent implements OnInit {
     );
   }
 
-  disenroll(id: string) {
-    this.walkService.disenroll(id).subscribe(
+  disenroll(walk: WalkInfo) {
+    this.walkService.disenroll(walk.id).subscribe(
       (res: any) => {
+        this.sitterStore.saveDisenrollAction(walk);
+        this.actionEmitter.emit();
         this.response = {
           message: res.message,
           isSuccess: true,

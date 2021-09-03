@@ -2,10 +2,8 @@ package com.kethableez.walkerapi.Owner.Model;
 
 import java.util.List;
 
-import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
-import com.kethableez.walkerapi.Review.Model.DTO.DogReviewCard;
-import com.kethableez.walkerapi.User.Model.Entity.User;
-import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
+import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
+import com.kethableez.walkerapi.User.Model.DTO.UserCard;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,9 +13,8 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class Owner {
-    private User user;
-    private List<Dog> dogs;
-    private List<Walk> walks;
+    private UserCard user;
+    private List<DogInfo> dogs;
 
     // private UserCard owner;
     // private List<DogInfo> ownerDogs;

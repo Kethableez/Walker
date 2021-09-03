@@ -1,6 +1,7 @@
+import { SitterStoreService } from './../../../../../core/services/store/sitter-store.service';
 import { WalkCard } from './../../../../../models/walks/walk-card.model';
 import { WalkService } from './../../../../../core/services/models/walk.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { ActionResponse } from 'src/app/models/action-response.model';
 import { SitterService } from 'src/app/core/services/models/sitter.service';
 import { WalkInfo } from 'src/app/models/walks/walk-info.model';
@@ -12,10 +13,11 @@ import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 export class DogWalksComponent implements OnInit {
   constructor(
     private walkService: WalkService,
-    private sitterService: SitterService
+    private sitterStore: SitterStoreService,
+    private changes: ChangeDetectorRef
   ) { }
   allWalks: WalkInfo[] = [];
-  sitterWalks: WalkInfo[] = [];
+  sitterWalks: WalkInfo[] = this.sitterStore.incomingWalks;
 
   allView = true;
   currentView = 'Wszystkie';
@@ -25,8 +27,8 @@ export class DogWalksComponent implements OnInit {
 
   ngOnInit(): void {
     this.walkService.getAll().subscribe((res) => (this.allWalks = res));
-    this.sitterService.getWalks().subscribe((res) => (this.sitterWalks = res));
   }
+
 
   closeMessageBox(event: boolean) {
     this.isMessageBoxVisible = false;
@@ -34,5 +36,11 @@ export class DogWalksComponent implements OnInit {
 
   changeView() {
     this.allView ? (this.allView = false, this.currentView = 'Nadchodzące') : (this.allView = true, this.currentView = 'Wzystkie');
+  }
+
+  getActionEvent() {
+    this.sitterWalks = this.sitterStore.incomingWalks;
+    console.log(this.sitterWalks, this.sitterStore.incomingWalks);
+    console.log('action detected');
   }
 }

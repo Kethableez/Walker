@@ -1,18 +1,21 @@
 package com.kethableez.walkerapi.Review.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
 import com.kethableez.walkerapi.Dog.Repository.DogRepository;
+import com.kethableez.walkerapi.Review.Model.DTO.DogReviewCard;
+import com.kethableez.walkerapi.Review.Model.DTO.SitterReviewCard;
 import com.kethableez.walkerapi.Review.Model.Entity.DogReview;
 import com.kethableez.walkerapi.Review.Model.Entity.SitterReview;
 import com.kethableez.walkerapi.Review.Model.Request.DogReviewRequest;
 import com.kethableez.walkerapi.Review.Model.Request.SitterReviewRequest;
 import com.kethableez.walkerapi.Review.Repository.DogReviewRepository;
 import com.kethableez.walkerapi.Review.Repository.SitterReviewRepository;
-import com.kethableez.walkerapi.User.Repository.UserRepository;
+import com.kethableez.walkerapi.Utility.Mapper.MapperService;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
 import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
 import com.kethableez.walkerapi.Walk.Repository.WalkRepository;
@@ -39,7 +42,7 @@ public class ReviewService {
     private final DogRepository dogRepository;
 
     @Autowired
-    private final UserRepository userRepository;
+    private final MapperService mapper;
 
     public ActionResponse addSitterReview(String ownerId, String walkId, SitterReviewRequest request) {
         if(checkDataCorrectness(ownerId, walkId)) {
@@ -49,8 +52,7 @@ public class ReviewService {
                 walkRepository.findById(walkId).get().getId(),
                 walkRepository.findById(walkId).get().getSitterId(),
                 walkRepository.findById(walkId).get().getOwnerId(),
-                userRepository.findById(ownerId).get().getFirstName(),
-                dogRepository.findById(walkRepository.findById(walkId).get().getDogId()).get().getName(),
+                walkRepository.findById(walkId).get().getDogId(),
                 request.getRating(),
                 request.getReivewBody(),
                 LocalDateTime.now()
@@ -73,8 +75,6 @@ public class ReviewService {
                 walkRepository.findById(walkId).get().getId(),
                 walkRepository.findById(walkId).get().getDogId(),
                 walkRepository.findById(walkId).get().getSitterId(),
-                userRepository.findById(sitterId).get().getFirstName(),
-                dogRepository.findById(walkRepository.findById(walkId).get().getDogId()).get().getName(),
                 request.getDogPhoto(),
                 request.getReviewBody(),
                 LocalDateTime.now()
@@ -93,8 +93,20 @@ public class ReviewService {
         return dogReviewRepository.findAllByDogId(dogId);
     }
 
+    public List<DogReviewCard> getDogReviewCard(String dogId) {
+        List<DogReviewCard> reviews = new ArrayList<>();
+        getDogReview(dogId).stream().forEach(review -> reviews.add(mapper.dogReviewMapper(review.getId())));
+        return reviews;
+    }
+
     public List<SitterReview> getSitterReview(String sitterId) {
         return sitterReviewRepository.findAllBySitterId(sitterId);
+    }
+
+    public List<SitterReviewCard> getSitterReviewCard(String sitterId) {
+        List<SitterReviewCard> reviews = new ArrayList<>();
+        getSitterReview(sitterId).stream().forEach(review -> reviews.add(mapper.sitterReviewMapper(review.getId())));
+        return reviews;
     }
 
     private boolean checkDataCorrectness(String ownerId, String walkId) {

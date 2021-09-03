@@ -1,29 +1,26 @@
-import { RegularUser } from './../../../../../models/users/regular-user.model';
-import { CurrentUserStoreService } from './../../../../../core/services/store/current-user-store.service';
-import { PageNotFoundComponent } from './../../../../shared/page-not-found/page-not-found.component';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/core/services/models/user.service';
 import { Role } from 'src/app/models/enums/role.model';
-// import { RegularUser } from 'src/app/models/users/regular-user.model';
-import { User } from 'src/app/models/users/user.model';
-import { combineLatest } from 'rxjs';
+import { WalkInfo } from 'src/app/models/walks/walk-info.model';
+import { CurrentUserStoreService } from './../../../../../core/services/store/current-user-store.service';
+import { DogInfo } from './../../../../../models/dogs/dog-info.model';
+import { RegularUser } from './../../../../../models/users/regular-user.model';
 
 enum Options {
   GALLERY = 'GALLERY',
   REVIEWS = 'REVIEWS',
-  PETS = 'PETS'
+  PETS = 'PETS',
 }
 
 @Component({
   selector: 'ktbz-profile',
-  templateUrl: './profile.component.html'
+  templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
-
   user!: RegularUser;
-  dogs?: any;
-  walks?: any;
+  dogs?: DogInfo[];
+  walks?: WalkInfo[];
 
   mainRole?: Role;
   isCurrentUserProfile = true;
@@ -31,44 +28,26 @@ export class ProfileComponent implements OnInit {
   isSettingsOpened = false;
   setting = '';
 
-
-  constructor(private userService: UserService,
+  constructor(
+    private userService: UserService,
     private route: ActivatedRoute,
-    private userStore: CurrentUserStoreService) { }
+    private userStore: CurrentUserStoreService
+  ) {}
 
   ngOnInit(): void {
     const username = this.route.snapshot.paramMap.get('username');
-
     if (username && username != this.userStore.regularUser.username) {
       this.isCurrentUserProfile = false;
-      this.userService.getUserDataParam(username).subscribe(
-        (response) => {
-          this.mainRole = (response as User).user.roles.filter(r => r.role != Role.ROLE_USER)[0].role;
-
-          if (this.mainRole) {
-            const {dogs, walks, user} = response;
-            this.walks = walks;
-            this.dogs = dogs;
-            this.user = user;
-          }
-          else this.user = response as RegularUser;
-        }
-      )
-    }
-    else {
+      this.userService
+        .getUserDataParam(username)
+        .subscribe((response: RegularUser) => {
+          this.user = response,
+          this.mainRole = this.user.roles.filter(role => role != Role.ROLE_USER)[0];
+        });
+    } else {
       this.isCurrentUserProfile = true;
       this.mainRole = this.userStore.role;
-
-      if (this.mainRole === Role.ROLE_OWNER || this.mainRole === Role.ROLE_SITTER ) {
-        const {dogs, walks, user} = this.userStore.user;
-        this.user = user;
-        this.walks = walks;
-        this.dogs = dogs;
-      }
-      else {
-        this.user = this.userStore.regularUser;
-      }
-
+      this.user = this.userStore.regularUser;
     }
   }
 
@@ -94,9 +73,6 @@ export class ProfileComponent implements OnInit {
   }
 
   updateData(event: any) {
-    console.log(this.user);
-    console.log(event);
     this.user = event as RegularUser;
   }
-
 }

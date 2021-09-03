@@ -1,5 +1,5 @@
 <form [formGroup]="sitterReviewForm">
-  <!-- <input type="text" formControlName="rating" placeholder="Ocena"> -->
+  <input type="number" formControlName="rating">
   <input type="text" formControlName="reivewBody" placeholder="Komentarz">
   <div [ngClass]="sitterReviewForm.valid  ? 'button' : 'button-disabled'" (click)="submitReview()">Oceń opiekuna</div>
 </form>

@@ -31,7 +31,9 @@ public class ImageService {
         return "OK";
     }
 
-    public ActionResponse uploadUPhoto(MultipartFile file, String userId) throws IOException {
+    public ActionResponse changeUserPhoto(MultipartFile file, String userId) throws IOException {
+        userImageRepository.deleteById(userImageRepository.findByUserId(userId).get().getId());
+        
         UserImage image = new UserImage(userId, file.getOriginalFilename(), file.getBytes());
         userImageRepository.save(image);
         return new ActionResponse(true, "Dodano zdjęcie");

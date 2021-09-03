@@ -49,6 +49,8 @@ public class User {
     @NotBlank
     private LocalDate birthdate;
 
+    private String city;
+
     private String description;
 
     @NotBlank
@@ -68,13 +70,14 @@ public class User {
     private Boolean isSubscribed;
 
     public User(String username, String email, String password, String firstName, String lastName, LocalDate birthdate,
-            String avatar, Gender gender, Boolean isActive, Boolean isSubscribed) {
+            String city, String avatar, Gender gender, Boolean isActive, Boolean isSubscribed) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
+        this.city = city;
         this.avatar = avatar;
         this.gender = gender;
         this.isActive = isActive;

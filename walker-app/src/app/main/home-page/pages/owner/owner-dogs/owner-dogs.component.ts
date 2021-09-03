@@ -1,3 +1,4 @@
+import { DogInfo } from './../../../../../models/dogs/dog-info.model';
 import { DogCard } from './../../../../../models/dogs/dog-card.model';
 import { Component, OnInit } from '@angular/core';
 import { OwnerService } from 'src/app/core/services/models/owner.service';
@@ -10,11 +11,11 @@ export class OwnerDogsComponent implements OnInit {
 
   constructor(private ownerService: OwnerService) { }
 
-  dogs: DogCard[] = [];
+  dogs: DogInfo[] = [];
 
   ngOnInit(): void {
     this.ownerService.getDogs().subscribe(
-      (res: DogCard[]) => this.dogs = res
+      (res: DogInfo[]) => this.dogs = res
     );
   }
 

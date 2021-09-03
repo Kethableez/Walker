@@ -1,3 +1,4 @@
+import { PastWalkInfo } from './../../../../../models/walks/past-walk-info.model';
 import { CurrentUserStoreService } from './../../../../../core/services/store/current-user-store.service';
 import { WalkCard } from './../../../../../models/walks/walk-card.model';
 import { SitterService } from './../../../../../core/services/models/sitter.service';
@@ -20,8 +21,7 @@ export class HistoryComponent implements OnInit {
   ) {}
 
   roleView = this.userStore.role;
-  walkHistory: WalkCard[] = [];
-  ownerWalkHistory: PastWalkCard[] = [];
+  walkHistory: PastWalkInfo[] = [];
   reviewedWalkId = '';
   setting = '';
   isSettingsOpened = false;
@@ -39,7 +39,7 @@ export class HistoryComponent implements OnInit {
     else if (this.roleView === Role.ROLE_OWNER) {
       this.ownerService.getHistory().subscribe(
         (res) => {
-          this.ownerWalkHistory = res;
+          this.walkHistory = res;
           console.log(res);
         }
       )

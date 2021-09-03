@@ -1,10 +1,10 @@
-import { SettingService } from './../utility/setting.service';
-import { WalkCard } from './../../../models/walks/walk-card.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DogCard } from 'src/app/models/dogs/dog-card.model';
 import { WalkInfo } from 'src/app/models/walks/walk-info.model';
+import { PastWalkInfo } from './../../../models/walks/past-walk-info.model';
+import { SettingService } from './../utility/setting.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +26,9 @@ export class SitterService {
     return this.http.get<WalkInfo[]>(url);
   }
 
-  getHistory(): Observable<WalkCard[]> {
+  getHistory(): Observable<PastWalkInfo[]> {
     const url = this.setting.getSitterUrl('getHistory');
 
-    return this.http.get<WalkCard[]>(url);
+    return this.http.get<PastWalkInfo[]>(url);
   }
 }

@@ -1,3 +1,8 @@
+import { PastWalkInfo } from './../../../models/walks/past-walk-info.model';
+import { PastWalkCard } from 'src/app/models/walks/past-walk-card.model';
+import { SitterStoreService } from './../../../core/services/store/sitter-store.service';
+import { WalkInfo } from 'src/app/models/walks/walk-info.model';
+import { SitterService } from 'src/app/core/services/models/sitter.service';
 import { UserService } from 'src/app/core/services/models/user.service';
 import { CurrentUserStoreService } from './../../../core/services/store/current-user-store.service';
 import { Component, OnInit } from '@angular/core';
@@ -6,7 +11,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
 import { ActionResponse } from 'src/app/models/action-response.model';
-import { UserRole } from 'src/app/models/users/regular-user.model';
 import { Role } from 'src/app/models/enums/role.model';
 
 @Component({
@@ -24,8 +28,10 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
+    private userService: UserService,
     private userStore: CurrentUserStoreService,
-    private UserService: UserService,
+    private sitterService: SitterService,
+    private sitterStore: SitterStoreService,
     private builder: FormBuilder,
     private router: Router) { }
 
@@ -53,14 +59,9 @@ export class LoginComponent implements OnInit {
   loginUser(): void {
     this.authService.loginUser(this.loginForm.value).subscribe(
       data => {
-        this.tokenStorage.saveToken(data.token);
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-
-        this.UserService.getUserData().subscribe(res => {
-          this.userStore.save(res);
-          this.router.navigate(['home/dashboard']);
-        });
+        this.saveAuthTokenAfterLogin(data.token);
+        this.setActionAfterSuccess();
+        this.storeUserDataAfterSuccess();
       },
       err => {
         this.response = {
@@ -70,6 +71,47 @@ export class LoginComponent implements OnInit {
         this.isMessageBoxVisible = true;
       }
     );
+  }
+
+  private saveAuthTokenAfterLogin(token: any) {
+    this.tokenStorage.saveToken(token);
+  }
+
+  private setActionAfterSuccess() {
+    this.isLoginFailed = false;
+    this.isLoggedIn = true;
+  }
+
+  private storeUserDataAfterSuccess() {
+    this.userService.getUserData().subscribe(res => {
+      this.userStore.save(res);
+      this.storeItemsForCorespondingRole(this.userStore.role);
+      this.router.navigate(['home/dashboard']);
+    });
+  }
+
+  private storeItemsForCorespondingRole(role: Role) {
+    switch(role) {
+      case Role.ROLE_OWNER:
+        break;
+
+      case Role.ROLE_SITTER:
+        this.storeSitterItems();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  private storeSitterItems() {
+    this.sitterService.getWalks().subscribe(
+      (response: WalkInfo[]) => this.sitterStore.saveIncomingWalks(response)
+    )
+
+    this.sitterService.getHistory().subscribe(
+      (response: PastWalkInfo[]) => this.sitterStore.savePastWalks(response)
+    )
   }
 
   closeMessageBox(event: boolean) {

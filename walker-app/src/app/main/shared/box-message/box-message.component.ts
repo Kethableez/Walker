@@ -13,9 +13,12 @@ export class BoxMessageComponent implements OnInit {
   @Output()
   closeMessageBox = new EventEmitter<boolean>();
 
+  messageVisibilityTime = 3500;
+
   constructor() { }
 
   ngOnInit(): void {
+    setTimeout(() => this.close(), this.messageVisibilityTime );
   }
 
   close() {

@@ -2,10 +2,8 @@ package com.kethableez.walkerapi.Sitter.Controller;
 
 import java.util.List;
 
-import com.kethableez.walkerapi.Dog.Model.DTO.DogCard;
-import com.kethableez.walkerapi.Dog.Service.DogService;
 import com.kethableez.walkerapi.User.Service.UserService;
-import com.kethableez.walkerapi.Walk.Model.DTO.WalkCard;
+import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkInfo;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
 import com.kethableez.walkerapi.Walk.Service.WalkService;
 
@@ -30,16 +28,13 @@ public class SitterController {
     private final WalkService walkService;
 
     @Autowired
-    private final DogService dogService;
-
-    @Autowired
     private final UserService userService;
 
-    @GetMapping("/dogs")
-    public ResponseEntity<List<DogCard>> getSitterDogs(UsernamePasswordAuthenticationToken token) {
-        List<DogCard> dogs = this.dogService.getSitterDogCards(userService.getIdFromToken(token));
-        return new ResponseEntity<>(dogs, HttpStatus.OK);
-    }
+    // @GetMapping("/dogs")
+    // public ResponseEntity<List<DogCard>> getSitterDogs(UsernamePasswordAuthenticationToken token) {
+    //     List<DogCard> dogs = this.dogService.getSitterDogCards(userService.getIdFromToken(token));
+    //     return new ResponseEntity<>(dogs, HttpStatus.OK);
+    // }
 
     @GetMapping("/walks")
     public ResponseEntity<List<WalkInfo>> getSitterWalks(UsernamePasswordAuthenticationToken token) {
@@ -48,8 +43,8 @@ public class SitterController {
     }
 
     @GetMapping("/history")
-    public ResponseEntity<List<WalkCard>> getWalkHistory(UsernamePasswordAuthenticationToken token) {
-        List<WalkCard> walks = walkService.getSitterHistoryWalkCards(userService.getIdFromToken(token));
+    public ResponseEntity<List<PastWalkInfo>> getWalkHistory(UsernamePasswordAuthenticationToken token) {
+        List<PastWalkInfo> walks = walkService.getSitterHistoryWalkInfo(userService.getIdFromToken(token));
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 }

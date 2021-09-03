@@ -1,5 +1,7 @@
-import { FormBuilder, Validator, Validators } from '@angular/forms';
+import { ActionResponse } from './../../../../../models/action-response.model';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { UserService } from 'src/app/core/services/models/user.service';
 
 @Component({
   selector: 'ktbz-description-form',
@@ -10,7 +12,8 @@ export class DescriptionFormComponent implements OnInit {
   @Output()
   dataEmitter = new EventEmitter<any>();
 
-  constructor(private builder: FormBuilder) { }
+  constructor(private builder: FormBuilder,
+    private userService: UserService) { }
 
   descriptionForm = this.builder.group({
     description: ['', Validators.required]
@@ -20,7 +23,14 @@ export class DescriptionFormComponent implements OnInit {
   }
 
   submitData() {
-    this.dataEmitter.emit(this.descriptionForm.value);
+    this.userService.changeDescription(this.descriptionForm.value).subscribe(
+      (res: ActionResponse) => {
+        console.log(res);
+        this.dataEmitter.emit(this.descriptionForm.value);
+      },
+      () => console.log('error')
+    )
+
   }
 
 }

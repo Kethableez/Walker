@@ -50,6 +50,7 @@ export class RegisterComponent implements OnInit {
       ],
       confirmPassword: ['', Validators.required],
       birthdate: ['', Validators.required],
+      city: ['', Validators.required],
       gender: ['', Validators.required],
       avatar: ['', Validators.required],
       role: ['', Validators.required],
@@ -81,6 +82,11 @@ export class RegisterComponent implements OnInit {
   get birthdate() {
     return this.registerForm.get('birthdate');
   }
+
+  get city() {
+    return this.registerForm.get('city');
+  }
+
   get gender() {
     return this.registerForm.get('gender');
   }
@@ -122,6 +128,10 @@ export class RegisterComponent implements OnInit {
     return this.birthdate!.invalid && this.birthdate!.touched;
   }
 
+  get isCityInvalid(): boolean {
+    return this.city!.invalid && this.city!.touched;
+  }
+
   get isGenderInvalid(): boolean {
     return this.gender!.invalid && this.gender!.touched;
   }
@@ -143,6 +153,7 @@ export class RegisterComponent implements OnInit {
       this.isPasswordInvalid ||
       this.isConfirmPasswordInvalid ||
       this.isBirthdateInvalid ||
+      this.isCityInvalid ||
       this.isGenderInvalid ||
       this.isAvatarInvalid ||
       this.isRoleInvalid
@@ -193,7 +204,7 @@ export class RegisterComponent implements OnInit {
     this.auth.registerUser(this.registerForm.value, this.token).subscribe(
       (res) => {
         this.response = {
-          message: res.message,
+          message: 'Zarejestrowano pomyślnie',
           isSuccess: true,
         };
 

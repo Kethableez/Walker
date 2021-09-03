@@ -7,12 +7,11 @@
     Spacery
   </div>
   <div class="main-container">
-    <div class="menu" *ngIf="allView">
-    </div>
-
+    <!-- <div class="menu" *ngIf="allView">
+    </div> -->
     <div class="all-view" *ngIf="allView">
       <div *ngFor="let walkInfo of allWalks">
-        <ktbz-dog-card [walkInfo]="walkInfo">
+        <ktbz-dog-card [walkInfo]="walkInfo"(actionEmitter)="getActionEvent()">
 
         </ktbz-dog-card>
 
@@ -21,7 +20,7 @@
 
     <div class="incoming-view" *ngIf="!allView">
       <div *ngFor="let walkInfo of sitterWalks">
-        <ktbz-dog-card [walkInfo]="walkInfo">
+        <ktbz-dog-card [walkInfo]="walkInfo" (actionEmitter)="getActionEvent()">
 
         </ktbz-dog-card>
       </div>

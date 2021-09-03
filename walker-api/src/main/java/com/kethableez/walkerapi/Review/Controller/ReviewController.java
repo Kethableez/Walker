@@ -2,8 +2,8 @@ package com.kethableez.walkerapi.Review.Controller;
 
 import java.util.List;
 
-import com.kethableez.walkerapi.Review.Model.Entity.DogReview;
-import com.kethableez.walkerapi.Review.Model.Entity.SitterReview;
+import com.kethableez.walkerapi.Review.Model.DTO.DogReviewCard;
+import com.kethableez.walkerapi.Review.Model.DTO.SitterReviewCard;
 import com.kethableez.walkerapi.Review.Model.Request.DogReviewRequest;
 import com.kethableez.walkerapi.Review.Model.Request.SitterReviewRequest;
 import com.kethableez.walkerapi.Review.Service.ReviewService;
@@ -51,14 +51,14 @@ public class ReviewController {
     }
 
     @GetMapping("/sitter/{sitterId}")
-    public ResponseEntity<List<SitterReview>> getUserReviews(@PathVariable("sitterId") String sitterId) {
-        List<SitterReview> reviews = reviewService.getSitterReview(sitterId);
+    public ResponseEntity<List<SitterReviewCard>> getUserReviews(@PathVariable("sitterId") String sitterId) {
+        List<SitterReviewCard> reviews = reviewService.getSitterReviewCard(sitterId);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
     @GetMapping("/dog/{dogId}")
-    public ResponseEntity<List<DogReview>> getDogReviews(@PathVariable("dogId") String dogId) {
-        List<DogReview> reviews = reviewService.getDogReview(dogId);
+    public ResponseEntity<List<DogReviewCard>> getDogReviews(@PathVariable("dogId") String dogId) {
+        List<DogReviewCard> reviews = reviewService.getDogReviewCard(dogId);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 }

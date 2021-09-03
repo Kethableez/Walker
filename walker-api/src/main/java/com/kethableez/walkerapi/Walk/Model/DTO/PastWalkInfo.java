@@ -14,7 +14,7 @@ public class PastWalkInfo {
     private String dogName;
     private String dogPhoto;
     private String city;
-    private String adress;
+    private String address;
     private LocalDateTime walkDateTime;
     private String sitterName;
     private String sitterAvatar;

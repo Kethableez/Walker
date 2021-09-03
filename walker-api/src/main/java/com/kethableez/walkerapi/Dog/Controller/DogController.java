@@ -37,7 +37,7 @@ public class DogController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DogCard> getDogInfo(@PathVariable("id") String dogId) {
-        DogCard dog = this.dogService.createDogCard(this.dogService.getDogFromId(dogId));
+        DogCard dog = this.dogService.getDogCard(dogId);
         return new ResponseEntity<>(dog, HttpStatus.OK);
     }
 

@@ -17,6 +17,8 @@ const urls: { [key: string]: any } = {
       getUserData: 'get_data/:username',
       changeData: 'change_data',
       changePassword: 'change_password',
+      changeDescription: 'change_description',
+      changeAvatar: 'change_avatar'
     },
   },
   owner: {
@@ -47,7 +49,7 @@ const urls: { [key: string]: any } = {
   walk: {
     prefix: 'walk',
     calls: {
-      getWalk: ':id',
+      getWalkCard: ':id',
       getAllWalks: 'all',
       createWalk: 'create',
       walkEnroll: 'enroll/:id',

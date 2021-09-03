@@ -21,7 +21,7 @@ export class WalkService {
   }
 
   getWalk(walkId: string): Observable<WalkCard> {
-    const url = this.setting.getWalkUrl('getWalk', { id: walkId });
+    const url = this.setting.getWalkUrl('getWalkCard', { id: walkId });
 
     return this.http.get<WalkCard>(url);
   }

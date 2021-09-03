@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Set;
 
 import com.kethableez.walkerapi.Dog.Model.DTO.DogCard;
+import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
 import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
 import com.kethableez.walkerapi.Dog.Model.Request.DogRequest;
 import com.kethableez.walkerapi.Dog.Repository.DogRepository;
-import com.kethableez.walkerapi.User.Model.DTO.UserInfo;
 import com.kethableez.walkerapi.User.Model.Entity.User;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.Utility.Enum.Role;
+import com.kethableez.walkerapi.Utility.Mapper.MapperService;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
 import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
 import com.kethableez.walkerapi.Walk.Repository.WalkRepository;
-import com.kethableez.walkerapi.Walk.Service.WalkService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +38,7 @@ public class DogService {
     private final UserRepository userRepository;
 
     @Autowired
-    private final WalkService walkService;
+    private final MapperService mapper;
 
     public ActionResponse createDog(UsernamePasswordAuthenticationToken token, DogRequest request) {
         if (userRepository.findByUsername(token.getName()).isPresent()) {
@@ -65,14 +65,10 @@ public class DogService {
 
     }
 
-    public List<DogCard> getOwnerDogs(String ownerId) {
-        List<DogCard> dogCards = new ArrayList<>();
-        for(Dog d : dogRepository.findByOwnerId(ownerId)) {
-            DogCard dc = this.createDogCard(d);
-            dogCards.add(dc);
-        }
-
-        return dogCards;
+    public List<DogInfo> getOwnerDogsInfo(String ownerId) {
+        List<DogInfo> dogInfos = new ArrayList<>();
+        dogRepository.findByOwnerId(ownerId).stream().forEach(dog -> dogInfos.add(mapper.dogInfoMapper(dog.getId())));
+        return dogInfos;
     }
 
     public List<Dog> getSitterDogs(String sitterId) {
@@ -85,15 +81,15 @@ public class DogService {
         return dogs;
     }
 
-    public List<DogCard> getSitterDogCards(String sitterId) {
-        Set<String> dogIds = new HashSet<>();
-        for (Walk w : walkRepository.findBySitterId(sitterId)) dogIds.add(w.getDogId());
+    // public List<DogCard> getSitterDogCards(String sitterId) {
+    //     Set<String> dogIds = new HashSet<>();
+    //     for (Walk w : walkRepository.findBySitterId(sitterId)) dogIds.add(w.getDogId());
 
-        List<DogCard> dogs = new ArrayList<>();
-        for (String id : dogIds) dogs.add(this.createDogCard(this.getDogFromId(id)));
+    //     List<DogCard> dogs = new ArrayList<>();
+    //     for (String id : dogIds) dogs.add(this.createDogCard(this.getDogFromId(id)));
 
-        return dogs;
-    }
+    //     return dogs;
+    // }
 
     public ActionResponse deleteDog(String dogId, String ownerId) {
         if (dogRepository.findByDogIdAndOwnerId(dogId, ownerId).isPresent()) {
@@ -104,11 +100,8 @@ public class DogService {
         else return new ActionResponse(false, "Nie stworzyłeś tego zwierzaka");
     }
 
-    public DogCard createDogCard(Dog dog) {
-        User owner = userRepository.findById(dog.getOwnerId()).orElseThrow();
-        UserInfo ownerInfo = new UserInfo(owner.getId(), owner.getFirstName(), owner.getLastName(), owner.getUsername(), owner.getAvatar(), owner.getDescription());
-        List<Walk> incomingWalks = walkService.getDogFutureWalks(dog.getId());
-        return new DogCard(dog, ownerInfo, incomingWalks);
+    public DogCard getDogCard(String dogId) {
+        return mapper.dogCardMapper(dogId);
     }
 
     public Dog getDogFromId(String dogId) {

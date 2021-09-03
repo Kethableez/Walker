@@ -1,5 +1,6 @@
 package com.kethableez.walkerapi.User.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
@@ -8,10 +9,13 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.kethableez.walkerapi.Config.Security.PasswordEncoder;
+import com.kethableez.walkerapi.Image.Service.ImageService;
+import com.kethableez.walkerapi.User.Model.DTO.UserCard;
 import com.kethableez.walkerapi.User.Model.DTO.UserInfo;
 import com.kethableez.walkerapi.User.Model.Entity.TokenStorage;
 import com.kethableez.walkerapi.User.Model.Entity.User;
 import com.kethableez.walkerapi.User.Model.Entity.UserRole;
+import com.kethableez.walkerapi.User.Model.Request.DescriptionRequest;
 import com.kethableez.walkerapi.User.Model.Request.RegisterRequest;
 import com.kethableez.walkerapi.User.Model.Request.UserDataRequest;
 import com.kethableez.walkerapi.User.Model.Request.UserPasswordRequest;
@@ -19,11 +23,13 @@ import com.kethableez.walkerapi.User.Repository.TokenStorageRepository;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.User.Repository.UserRoleRepository;
 import com.kethableez.walkerapi.Utility.Enum.Role;
+import com.kethableez.walkerapi.Utility.Mapper.MapperService;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,13 +49,19 @@ public class UserService {
         @Autowired
         private final PasswordEncoder encoder;
 
+        @Autowired
+        private final MapperService mapper;
+
+        @Autowired
+        private final ImageService imageService;
+
         public String registerUser(RegisterRequest request) {
                 Random rnd = new Random();
                 int code = rnd.nextInt(999999);
 
                 User newUser = new User(request.getUsername(), request.getEmail(),
                                 encoder.bCryptPasswordEncoder().encode(request.getPassword()), request.getFirstName(),
-                                request.getLastName(), request.getBirthdate(), request.getAvatar(), request.getGender(),
+                                request.getLastName(), request.getBirthdate(), request.getCity(), request.getAvatar(), request.getGender(),
                                 false, request.getIsSubscribed());
                 Set<UserRole> roles = new HashSet<>();
                 roles.add(roleRepository.findByRole(Role.ROLE_USER).orElseThrow());
@@ -72,7 +84,7 @@ public class UserService {
                 int code = rnd.nextInt(999999);
                 User newUser = new User(request.getUsername(), request.getEmail(),
                                 encoder.bCryptPasswordEncoder().encode(request.getPassword()), request.getFirstName(),
-                                request.getLastName(), request.getBirthdate(), request.getAvatar(), request.getGender(),
+                                request.getLastName(), request.getBirthdate(), request.getCity(), request.getAvatar(), request.getGender(),
                                 false, request.getIsSubscribed());
                 Set<UserRole> roles = new HashSet<>();
                 roles.add(roleRepository.findByRole(request.getRole()).orElseThrow());
@@ -177,14 +189,36 @@ public class UserService {
                         return new ActionResponse(false, "Nie znaleziono takiego użytkownika");
         }
 
+        public ActionResponse changeDescription(String userId, DescriptionRequest request) {
+                if (userRepository.findById(userId).isPresent()) {
+                        User user = userRepository.findById(userId).get();
+                        user.setDescription(request.getDescription());
+                        userRepository.save(user);
+                        return new ActionResponse(true, "Zmieniono opis,");
+                } else
+                        return new ActionResponse(false, "Wystapił problem.");
+        }
+
+        public ActionResponse changeAvatar(String userId, MultipartFile file) {
+                try {
+                       return this.imageService.changeUserPhoto(file, userId);
+                } catch (IOException e) {
+                        e.printStackTrace();
+                        return new ActionResponse(false, "Wystąpił error");
+                }
+
+        }
+
         public String getIdFromToken(UsernamePasswordAuthenticationToken token) {
                 return ((UserDetailsImpl) token.getPrincipal()).getId();
         }
 
+        public UserCard getUserCard(String userId) {
+                return mapper.userCardMapper(userId);
+        }
+
         public UserInfo getUserInfo(String userId) {
-                User user = userRepository.findById(userId).orElseThrow();
-                return new UserInfo(user.getId(), user.getFirstName(), user.getLastName(), user.getUsername(),
-                                user.getAvatar(), user.getDescription());
+                return mapper.userInfoMapper(userId);
         }
 
         public Optional<UserRole> getRole(User user) {

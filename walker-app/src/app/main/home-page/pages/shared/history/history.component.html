@@ -15,25 +15,25 @@
       </div>
     </div>
 
-    <div *ngFor="let walkCard of walkHistory">
+    <div *ngFor="let walk of walkHistory">
       <div class="row">
         <div class="dog">
-          <img class="image" [src]="walkCard.dog.dogPhoto">
-          <div class="text-1"> {{walkCard.dog.name}} </div>
+          <img class="image" [src]="walk.dogPhoto">
+          <div class="text-1"> {{walk.dogName}} </div>
         </div>
 
         <div class="text-1">
-          {{walkCard.walk.walkDateTime | date:'dd.MM.yyyyr'}}
+          {{walk.walkDateTime | date:'dd.MM.yyyyr'}}
         </div>
 
         <div class="actions">
-          <svg (click)="openReviewForm('DOG_REVIEW', walkCard.walk.id)" *ngIf="!walkCard.walk.dogReviewed" id="chat_bubble_black_24dp_1_" data-name="chat_bubble_black_24dp (1)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 30 30">
+          <svg (click)="openReviewForm('DOG_REVIEW', walk.id)" *ngIf="!walk.isDogReviewed" id="chat_bubble_black_24dp_1_" data-name="chat_bubble_black_24dp (1)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 30 30">
             <path id="Path_53" data-name="Path 53" d="M0,0H30V30H0Z" fill="none"/>
             <path id="Path_54" data-name="Path 54" d="M25.4,2H4.6A2.608,2.608,0,0,0,2,4.6V28l5.2-5.2H25.4A2.608,2.608,0,0,0,28,20.2V4.6A2.608,2.608,0,0,0,25.4,2Z" transform="translate(0 0)" fill="#65858c"/>
           </svg>
 
 
-          <svg *ngIf="walkCard.walk.dogReviewed" class="icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"  viewBox="0 0 24 24" >
+          <svg *ngIf="walk.isDogReviewed" class="icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"  viewBox="0 0 24 24" >
             <g>
               <rect fill="none" height="24" width="24" x="0"/>
               <path fill="#65858c" d="M18.05,19.29c-0.39,0.39-1.02,0.39-1.41,0l-2.12-2.12c-0.39-0.39-0.39-1.02,0-1.41l0,0c0.39-0.39,1.02-0.39,1.41,0 l1.41,1.41l3.54-3.54c0.39-0.39,1.02-0.39,1.41,0l0,0c0.39,0.39,0.39,1.02,0,1.41L18.05,19.29z M12,17c0-3.87,3.13-7,7-7 c1.08,0,2.09,0.25,3,0.68V4c0-1.1-0.9-2-2-2H4C2.9,2,2,2.9,2,4v18l4-4h6v0c0-0.17,0.01-0.33,0.03-0.5C12.01,17.33,12,17.17,12,17z"/>
@@ -64,30 +64,30 @@
       </div>
     </div>
 
-    <div *ngFor="let walkCard of ownerWalkHistory">
+    <div *ngFor="let walk of walkHistory">
       <div class="row">
         <div class="sitter">
-          <img class="image" [src]="walkCard.sitterInfo.avatar">
-          <div class="text-1">           {{walkCard.sitterInfo.firstName}} {{walkCard.sitterInfo.lastName}} </div>
+          <img class="image" [src]="walk.sitterAvatar">
+          <div class="text-1"> {{ walk.sitterName }} </div>
         </div>
 
         <div class="dog">
-          <img class="image" [src]="walkCard.dogPhoto">
-          <div class="text-1"> {{walkCard.dogName}} </div>
+          <img class="image" [src]="walk.dogPhoto">
+          <div class="text-1"> {{walk.dogName}} </div>
         </div>
 
         <div class="text-1 date">
-          {{walkCard.walkDateTime | date:'dd.MM.yyyyr'}}
+          {{walk.walkDateTime | date:'dd.MM.yyyyr'}}
         </div>
 
         <div class="actions">
-          <svg (click)="openReviewForm('SITTER_REVIEW', walkCard.walkId)" *ngIf="!walkCard.isSitterReviewed" id="chat_bubble_black_24dp_1_" data-name="chat_bubble_black_24dp (1)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 30 30">
+          <svg (click)="openReviewForm('SITTER_REVIEW', walk.id)" *ngIf="!walk.isSitterReviewed" id="chat_bubble_black_24dp_1_" data-name="chat_bubble_black_24dp (1)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 30 30">
             <path id="Path_53" data-name="Path 53" d="M0,0H30V30H0Z" fill="none"/>
             <path id="Path_54" data-name="Path 54" d="M25.4,2H4.6A2.608,2.608,0,0,0,2,4.6V28l5.2-5.2H25.4A2.608,2.608,0,0,0,28,20.2V4.6A2.608,2.608,0,0,0,25.4,2Z" transform="translate(0 0)" fill="#65858c"/>
           </svg>
 
 
-          <svg *ngIf="walkCard.isSitterReviewed" class="icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"  viewBox="0 0 24 24" >
+          <svg *ngIf="walk.isSitterReviewed" class="icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"  viewBox="0 0 24 24" >
             <g>
               <rect fill="none" height="24" width="24" x="0"/>
               <path fill="#65858c" d="M18.05,19.29c-0.39,0.39-1.02,0.39-1.41,0l-2.12-2.12c-0.39-0.39-0.39-1.02,0-1.41l0,0c0.39-0.39,1.02-0.39,1.41,0 l1.41,1.41l3.54-3.54c0.39-0.39,1.02-0.39,1.41,0l0,0c0.39,0.39,0.39,1.02,0,1.41L18.05,19.29z M12,17c0-3.87,3.13-7,7-7 c1.08,0,2.09,0.25,3,0.68V4c0-1.1-0.9-2-2-2H4C2.9,2,2,2.9,2,4v18l4-4h6v0c0-0.17,0.01-0.33,0.03-0.5C12.01,17.33,12,17.17,12,17z"/>

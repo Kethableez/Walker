@@ -359,6 +359,19 @@ ktbz-register {
     background-color: $primaryBrass;
   }
 
+  .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 70%;
+    margin: 0 auto;
+
+    input[type="text"], select {
+      width: 48%;
+      margin-inline: 0;
+    }
+  }
+
   .form-error {
     position: absolute;
     padding: 1rem;
@@ -763,7 +776,12 @@ ktbz-modal {
         form {
           width: 20rem;
         }
+      }
 
+      .ktbz-description-form {
+        form {
+          width: 20rem;
+        }
       }
 
       input {
@@ -773,7 +791,7 @@ ktbz-modal {
       }
 
       textarea {
-        width: 30rem;
+        width: 90%;
         height: 10rem;
         margin: 2% auto;
         box-shadow: $shadow;
@@ -1190,6 +1208,16 @@ ktbz-dog-creator {
     }
   }
 
+  .description-form {
+    width: 150rem;
+    form {
+      textarea {
+        width: 90%;
+      }
+    }
+
+  }
+
   .creator-form {
     width: 45%;
 
@@ -1527,7 +1555,7 @@ ktbz-dog-walks {
     display: flex;
     flex-flow: row wrap;
     overflow-y: scroll;
-    justify-content: space-around;
+    justify-content: flex-start;
   }
 
   .all-view::-webkit-scrollbar {
