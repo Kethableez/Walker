@@ -1676,14 +1676,29 @@ ktbz-dog-card {
 ktbz-planner {
   .container {
     position: relative;
-    .button {
+    .buttons {
+      user-select: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       position: absolute;
       right: 1rem;
       top: 1rem;
       margin: 0;
-      // width: 1%;
       height: 2.5rem;
       padding: 0 0.5rem;
+
+      .text-2 {
+        font-size: 1.5rem;
+        margin-right: 2rem;
+      }
+
+      .icon {
+        cursor: pointer;
+        fill: $primaryDark;
+        width: 2.5rem;
+        height: 2.5rem;
+      }
     }
   }
 
