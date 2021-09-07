@@ -73,6 +73,7 @@ const urls: { [key: string]: any } = {
       getDogImage: 'dog/:dogId/:filename',
       uploadUserImage: 'user/upload/:userId',
       getUserImage: 'user/:userId/:filename',
+      uploadDogReviewImage: 'review/upload/:reviewId',
     },
   },
 };

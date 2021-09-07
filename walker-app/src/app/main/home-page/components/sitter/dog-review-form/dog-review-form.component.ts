@@ -1,3 +1,6 @@
+import { ImageService } from 'src/app/core/services/models/image.service';
+import { ActionResponse } from 'src/app/models/action-response.model';
+import { ReviewService } from './../../../../../core/services/models/review.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -10,7 +13,9 @@ export class DogReviewFormComponent implements OnInit {
   @Input()
   walkId: string = '';
 
-  constructor(private builder: FormBuilder) { }
+  selectedFile: string = ' ';
+
+  constructor(private builder: FormBuilder, private reviewService: ReviewService, private imageService: ImageService) { }
 
   dogReviewForm = this.builder.group({
     dogPhoto: ['', Validators.required],
@@ -26,6 +31,29 @@ export class DogReviewFormComponent implements OnInit {
 
 
   submitReview() {
+    this.reviewService.addDogReview(this.dogReviewForm.value).subscribe(
+      (success: ActionResponse) => {
+        console.log(success.message);
+        let reviewId = success.message;
+        let dogPhoto = new FormData();
+        dogPhoto.append('imageFile', this.selectedFile);
 
+        this.imageService.uploadDogReviewImage(dogPhoto, reviewId).subscribe(
+          success => console.log(success),
+          error => console.log(error)
+        )
+      },
+      error => console.log(error)
+    )
+  }
+
+  onSelectFile(e: any) {
+    if (e.target.files.length > 0) {
+      const f = e.target.files[0];
+      this.selectedFile = e.target.files[0];
+      this.dogReviewForm.patchValue({
+        dogPhoto: e.target.files[0].name,
+      });
+    }
   }
 }

@@ -8,6 +8,7 @@ import com.kethableez.walkerapi.Dog.Model.DTO.DogCard;
 import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
 import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
 import com.kethableez.walkerapi.Dog.Repository.DogRepository;
+import com.kethableez.walkerapi.Image.Repository.DogReviewImageRepository;
 import com.kethableez.walkerapi.Owner.Model.Owner;
 import com.kethableez.walkerapi.Review.Model.DTO.DogReviewCard;
 import com.kethableez.walkerapi.Review.Model.DTO.SitterReviewCard;
@@ -53,6 +54,9 @@ public class MapperService {
 
     @Autowired
     private final SitterReviewRepository sitterReviewRepository;
+
+    @Autowired
+    private final DogReviewImageRepository reviewImageRepository;
 
     public UserInfo userInfoMapper(String userId) {
         User user = userRepository.findById(userId).get();
@@ -170,6 +174,7 @@ public class MapperService {
             page).stream().forEach(r -> incomingWalks.add(walkInfoMapper(r.getId())));
 
         List<String> images = new ArrayList<>();
+        reviewImageRepository.findAllByDogId(dogId).stream().forEach(i -> images.add(i.getDogFilePath()));
 
         DogCard dogCard = new DogCard(dog, owner, reviews, incomingWalks, images);
         return dogCard;

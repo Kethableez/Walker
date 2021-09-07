@@ -44,15 +44,15 @@ public class ReviewService {
     @Autowired
     private final MapperService mapper;
 
-    public ActionResponse addSitterReview(String ownerId, String walkId, SitterReviewRequest request) {
-        if(checkDataCorrectness(ownerId, walkId)) {
-            Walk walk = walkRepository.findById(walkId).get();
+    public ActionResponse addSitterReview(String ownerId, SitterReviewRequest request) {
+        if(checkDataCorrectness(ownerId, request.getWalkId())) {
+            Walk walk = walkRepository.findById(request.getWalkId()).get();
 
             SitterReview review = new SitterReview(
-                walkRepository.findById(walkId).get().getId(),
-                walkRepository.findById(walkId).get().getSitterId(),
-                walkRepository.findById(walkId).get().getOwnerId(),
-                walkRepository.findById(walkId).get().getDogId(),
+                walk.getSitterId(),
+                walk.getId(),
+                walk.getOwnerId(),
+                walk.getDogId(),
                 request.getRating(),
                 request.getReivewBody(),
                 LocalDateTime.now()
@@ -66,15 +66,15 @@ public class ReviewService {
         else return new ActionResponse(false, "Niepoprawne dane");
     }
 
-    public ActionResponse addDogReview(String sitterId, String walkId, DogReviewRequest request) {
+    public ActionResponse addDogReview(String sitterId, DogReviewRequest request) {
 
-        if(checkDogReviewDataCorrectness(sitterId, walkId)) {
-            Walk walk = walkRepository.findById(walkId).get();
+        if(checkDogReviewDataCorrectness(sitterId, request.getWalkId())) {
+            Walk walk = walkRepository.findById(request.getWalkId()).get();
 
             DogReview review = new DogReview(
-                walkRepository.findById(walkId).get().getId(),
-                walkRepository.findById(walkId).get().getDogId(),
-                walkRepository.findById(walkId).get().getSitterId(),
+                walk.getId(),
+                walk.getDogId(),
+                walk.getSitterId(),
                 request.getDogPhoto(),
                 request.getReviewBody(),
                 LocalDateTime.now()
@@ -84,7 +84,7 @@ public class ReviewService {
     
             dogReviewRepository.save(review);
             walkRepository.save(walk);
-            return new ActionResponse(true, "Dodano ocenę zwierzakowi");
+            return new ActionResponse(true, review.getId());
         }
         else return new ActionResponse(false, "Niepoprawne dane");
     }
@@ -116,7 +116,7 @@ public class ReviewService {
                 Optional<Dog> dog = dogRepository.findById(walk.get().getDogId());
                 if (dog.isPresent()) {
                     if(walk.get().isBooked()) {
-                        if(!walk.get().isDogReviewed()) {
+                        if(!walk.get().isSitterReviewed()) {
                             if (walk.get().getWalkDateTime().isBefore(LocalDateTime.now())) return true;
                             else return false;
                         }

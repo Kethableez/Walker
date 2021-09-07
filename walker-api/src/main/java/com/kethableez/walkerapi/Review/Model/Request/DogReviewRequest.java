@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DogReviewRequest {
+    private String walkId;
     private String dogPhoto;
     private String reviewBody;
 }

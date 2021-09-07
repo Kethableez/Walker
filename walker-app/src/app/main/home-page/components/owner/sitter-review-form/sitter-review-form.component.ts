@@ -1,3 +1,5 @@
+import { ActionResponse } from 'src/app/models/action-response.model';
+import { ReviewService } from './../../../../../core/services/models/review.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -12,7 +14,8 @@ export class SitterReviewFormComponent implements OnInit {
 
   rate: number = 3;
 
-  constructor(private builder: FormBuilder) { }
+  constructor(private builder: FormBuilder,
+    private reviewService: ReviewService) { }
 
   sitterReviewForm = this.builder.group({
     rating: ['', Validators.required],
@@ -28,6 +31,9 @@ export class SitterReviewFormComponent implements OnInit {
 
 
   submitReview() {
-
+    this.reviewService.addSitterReview(this.sitterReviewForm.value).subscribe(
+      (response: ActionResponse) => console.log(response),
+      (error: ActionResponse) => console.log(error)
+    )
   }
 }

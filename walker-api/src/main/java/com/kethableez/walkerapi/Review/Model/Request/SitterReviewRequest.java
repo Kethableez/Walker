@@ -6,6 +6,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SitterReviewRequest {
+    private String walkId;
     private Float rating;
     private String reivewBody;
 }

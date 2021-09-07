@@ -21,4 +21,10 @@ export class ImageService {
 
     return this.http.post<any>(url, userPhoto);
   }
+
+  uploadDogReviewImage(dogPhoto: FormData, reviewId: string) {
+    const url = this.setting.getImageUrl('uploadDogReviewImage', { reviewId: reviewId });
+
+    return this.http.post<any>(url, dogPhoto);
+  }
 }
