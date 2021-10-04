@@ -66,6 +66,10 @@ public class AuthController {
         } else {
             if (!user.get().getIsActive()) {
                 return ResponseEntity.badRequest().body("Konto nie jest aktywowane!!");
+            } else if (user.get().getIsBlocked()) {
+                return ResponseEntity.badRequest().body("Konto jest zablokowane!");
+            } else if (user.get().getIsBanned()) {
+                return ResponseEntity.badRequest().body("Konto zostało zbanowane!");
             } else {
                 if (encoder.bCryptPasswordEncoder().matches(request.getPassword(), user.get().getPassword())) {
                     Authentication authentication = authenticationManager.authenticate(

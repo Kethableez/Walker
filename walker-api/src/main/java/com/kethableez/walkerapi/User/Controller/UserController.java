@@ -3,6 +3,7 @@ package com.kethableez.walkerapi.User.Controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.kethableez.walkerapi.Report.Service.ReportService;
 import com.kethableez.walkerapi.User.Model.DTO.UserCard;
 import com.kethableez.walkerapi.User.Model.DTO.UserInfo;
 import com.kethableez.walkerapi.User.Model.Entity.User;
@@ -21,6 +22,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,14 +35,21 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/user")
-@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
     private final UserRepository userRepository;
+    private final UserService userService;
+    private final ReportService reportService;
 
     @Autowired
-    private final UserService userService;
+    public UserController(
+        UserRepository userRepository,
+        UserService userService,
+        ReportService reportService) {
+            this.userRepository = userRepository;
+            this.userService = userService;
+            this.reportService = reportService;
+        }
 
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAll() {
@@ -102,6 +111,13 @@ public class UserController {
     @PutMapping("/change_avatar")
     public ResponseEntity<?> changeAvatar(UsernamePasswordAuthenticationToken token, @RequestParam("imageFile") MultipartFile imageFile) {
         ActionResponse response = this.userService.changeAvatar(userService.getIdFromToken(token), imageFile);
+        if (response.isSuccess()) return ResponseEntity.ok(new MessageResponse(response.getMessage()));
+        else return ResponseEntity.badRequest().body(response.getMessage());
+    }
+
+    @PostMapping("/report")
+    public ResponseEntity<?> createReport(@RequestBody String reportBody, UsernamePasswordAuthenticationToken token) {
+        ActionResponse response = reportService.createReport(reportBody, userService.getIdFromToken(token));
         if (response.isSuccess()) return ResponseEntity.ok(new MessageResponse(response.getMessage()));
         else return ResponseEntity.badRequest().body(response.getMessage());
     }

@@ -81,6 +81,10 @@ public class DogService {
         return dogs;
     }
 
+    public List<Dog> getOwnerDogs(String ownerId) {
+        return this.dogRepository.findByOwnerId(ownerId);
+    }
+
     // public List<DogCard> getSitterDogCards(String sitterId) {
     //     Set<String> dogIds = new HashSet<>();
     //     for (Walk w : walkRepository.findBySitterId(sitterId)) dogIds.add(w.getDogId());

@@ -69,8 +69,12 @@ public class User {
     @NotBlank
     private Boolean isSubscribed;
 
+    private Boolean isBlocked;
+
+    private Boolean isBanned;
+
     public User(String username, String email, String password, String firstName, String lastName, LocalDate birthdate,
-            String city, String avatar, Gender gender, Boolean isActive, Boolean isSubscribed) {
+            String city, String avatar, Gender gender, Boolean isActive, Boolean isSubscribed, Boolean isBlocked, Boolean isBanned) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -82,6 +86,8 @@ public class User {
         this.gender = gender;
         this.isActive = isActive;
         this.isSubscribed = isSubscribed;
+        this.isBlocked = isBlocked;
+        this.isBanned = isBanned;
     }
 
     public String getAvatar() {

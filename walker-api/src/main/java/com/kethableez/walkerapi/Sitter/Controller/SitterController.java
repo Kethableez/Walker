@@ -2,6 +2,11 @@ package com.kethableez.walkerapi.Sitter.Controller;
 
 import java.util.List;
 
+import com.kethableez.walkerapi.Image.Service.ImageService;
+import com.kethableez.walkerapi.Review.Model.DTO.SitterReviewCard;
+import com.kethableez.walkerapi.Review.Service.ReviewService;
+import com.kethableez.walkerapi.Sitter.Model.Sitter;
+import com.kethableez.walkerapi.Sitter.Service.SitterService;
 import com.kethableez.walkerapi.User.Service.UserService;
 import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkInfo;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
@@ -25,16 +30,25 @@ import lombok.RequiredArgsConstructor;
 public class SitterController {
 
     @Autowired
+    private final SitterService sitterService;
+
+    @Autowired
     private final WalkService walkService;
 
     @Autowired
     private final UserService userService;
 
-    // @GetMapping("/dogs")
-    // public ResponseEntity<List<DogCard>> getSitterDogs(UsernamePasswordAuthenticationToken token) {
-    //     List<DogCard> dogs = this.dogService.getSitterDogCards(userService.getIdFromToken(token));
-    //     return new ResponseEntity<>(dogs, HttpStatus.OK);
-    // }
+    @Autowired
+    private final ReviewService reviewService;
+
+    @Autowired
+    private final ImageService imageService;
+
+    @GetMapping("/sitterData")
+    public ResponseEntity<Sitter> getSitterData(UsernamePasswordAuthenticationToken token) {
+        Sitter sitter = sitterService.getSitterData(userService.getIdFromToken(token));
+        return new ResponseEntity<>(sitter, HttpStatus.OK);
+    }
 
     @GetMapping("/walks")
     public ResponseEntity<List<WalkInfo>> getSitterWalks(UsernamePasswordAuthenticationToken token) {
@@ -46,5 +60,17 @@ public class SitterController {
     public ResponseEntity<List<PastWalkInfo>> getWalkHistory(UsernamePasswordAuthenticationToken token) {
         List<PastWalkInfo> walks = walkService.getSitterHistoryWalkInfo(userService.getIdFromToken(token));
         return new ResponseEntity<>(walks, HttpStatus.OK);
+    }
+
+    @GetMapping("/reviews")
+    public ResponseEntity<List<SitterReviewCard>> getReviews(UsernamePasswordAuthenticationToken token) {
+        List<SitterReviewCard> reviews = reviewService.getSitterReviewCard(userService.getIdFromToken(token));
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
+
+    @GetMapping("/images")
+    public ResponseEntity<List<String>> getImages(UsernamePasswordAuthenticationToken token) {
+        List<String> images = imageService.getSitterReviewImages(userService.getIdFromToken(token));
+        return new ResponseEntity<>(images, HttpStatus.OK);
     }
 }

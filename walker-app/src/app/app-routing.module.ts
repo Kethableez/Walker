@@ -22,7 +22,6 @@ import { SystemComponent } from './main/home-page/pages/admin/system/system.comp
 import { BugReportComponent } from './main/home-page/pages/admin/bug-report/bug-report.component';
 import { UsersComponent } from './main/home-page/pages/admin/users/users.component';
 import { DogsComponent } from './main/home-page/pages/admin/dogs/dogs.component';
-import { NotificationTestComponent } from './main/notification-test/notification-test.component';
 
 const routes: Routes = [
   {
@@ -32,7 +31,6 @@ const routes: Routes = [
       { path: 'register', component: RegisterComponent },
       { path: 'register/:token', component: RegisterComponent },
       { path: 'confirm/:token', component: ConfirmationComponent },
-      { path: 'sub/:id', component: NotificationTestComponent},
       { path: '**', component: PageNotFoundComponent}
 
     ],

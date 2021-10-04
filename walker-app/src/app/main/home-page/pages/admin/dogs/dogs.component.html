@@ -1,1 +1,21 @@
-<p>dogs works!</p>
+<div class="container">
+  <div class="page-header">Zwierzęta i spacery</div>
+
+  <div class="main-container">
+    <div *ngIf="switchButton">
+      <div *ngFor="let dog of dogs | async">
+        {{ dog.id }}
+      </div>
+    </div>
+    <div *ngIf="!switchButton">
+      <div *ngFor="let walk of walks | async">
+        {{ walk.id }}
+      </div>
+    </div>
+
+    <button (click)="click()"> change </button>
+  </div>
+</div>
+
+
+

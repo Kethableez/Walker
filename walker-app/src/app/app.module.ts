@@ -41,7 +41,6 @@ import { DataFormComponent } from './main/home-page/components/shared/data-form/
 import { DescriptionFormComponent } from './main/home-page/components/shared/description-form/description-form.component';
 import { SitterReviewFormComponent } from './main/home-page/components/owner/sitter-review-form/sitter-review-form.component';
 import { DogReviewFormComponent } from './main/home-page/components/sitter/dog-review-form/dog-review-form.component';
-import { NotificationTestComponent } from './main/notification-test/notification-test.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +80,6 @@ import { NotificationTestComponent } from './main/notification-test/notification
     DescriptionFormComponent,
     SitterReviewFormComponent,
     DogReviewFormComponent,
-    NotificationTestComponent,
   ],
   imports: [
     BrowserModule,

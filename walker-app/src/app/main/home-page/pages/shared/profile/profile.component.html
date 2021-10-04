@@ -12,7 +12,7 @@
 
 
       <!-- TODO: Rating -->
-      <div class="rating" *ngIf="mainRole === 'ROLE_SITTER'">★ 4.5</div>
+      <div class="rating" *ngIf="mainRole === 'ROLE_SITTER'">★ {{sitterData?.rating}}</div>
       <div class="data-editable">
         <svg *ngIf="isCurrentUserProfile" (click)="openEditForm('DATA')" class="icon-edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
 
@@ -67,10 +67,38 @@
 
         <div class="switch-body" [ngSwitch]="selectedOption">
           <div *ngSwitchCase="'GALLERY'">
-            Galeria
+            <div *ngIf="mainRole === 'ROLE_SITTER'">
+              <div class="photo" *ngFor="let image of sitterData?.images">
+                <img class="profile-photo" [src]="image">
+              </div>
+            </div>
           </div>
           <div *ngSwitchCase="'REVIEWS'">
-            Opinie
+            <div *ngIf="mainRole === 'ROLE_SITTER'">
+
+              <div class="comment-box" *ngFor="let review of sitterData?.reviews">
+                <div class="comment-info">
+                  <img class="avatar" [src]="review.owner.avatar">
+                  <div class="text-1"> {{review.owner.firstName}}</div>
+                  <div class="text-2"> {{review.reviewDate | date:'dd.MM.yyyy'}} </div>
+                </div>
+                <div class="comment-body">
+                  <div class="comment-row">
+                    <div class="rating"> {{review.rating}}</div>
+                    <div class="text-2">
+                      Spacer w dniu {{review.walk.walkDateTime | date:'dd.MM.yyyy'}} z {{review.dog.dogName}}
+                    </div>
+                  </div>
+                  <div class="text-1">
+                    {{review.reviewBody}}
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+
           </div>
           <div *ngSwitchCase="'PETS'">
             <div *ngFor="let dog of dogs">
@@ -97,25 +125,7 @@
           <div class="box"></div>
           <div class="box"></div> -->
 
-          <!-- <div class="comment-box">
-            <div class="comment-info">
-              <div class="avatar"></div>
-              <div class="text-1"> John </div>
-              <div class="text-2"> 28.01.2021r </div>
-            </div>
-            <div class="comment-body">
-              <div class="comment-row">
-                <div class="rating">★★★★☆</div>
-                <div class="text-2">
-                  Spacer w dniu 20.07.2021 z Alanem
-                </div>
-              </div>
-              <div class="text-1">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium.
-              </div>
-
-            </div>
-          </div>
+<!--
           <div class="comment-box">
             <div class="comment-info">
               <div class="avatar"></div>

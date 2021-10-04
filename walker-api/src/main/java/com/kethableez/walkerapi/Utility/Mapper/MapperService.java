@@ -3,6 +3,8 @@ package com.kethableez.walkerapi.Utility.Mapper;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import com.kethableez.walkerapi.Dog.Model.DTO.DogCard;
 import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
@@ -19,7 +21,9 @@ import com.kethableez.walkerapi.Review.Repository.SitterReviewRepository;
 import com.kethableez.walkerapi.Sitter.Model.Sitter;
 import com.kethableez.walkerapi.User.Model.DTO.UserCard;
 import com.kethableez.walkerapi.User.Model.DTO.UserInfo;
+import com.kethableez.walkerapi.User.Model.DTO.UserWithAdditionalInfo;
 import com.kethableez.walkerapi.User.Model.Entity.User;
+import com.kethableez.walkerapi.User.Model.Entity.UserRole;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.Utility.Enum.Role;
 import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkInfo;
@@ -39,6 +43,8 @@ import lombok.RequiredArgsConstructor;
 public class MapperService {
 
     private final static String PATTERN = "%s %s";
+
+    private static String UrlBase = "http://localhost:8080/image/review/%s/%s/%s";
 
     @Autowired
     private final WalkRepository walkRepository;
@@ -185,8 +191,11 @@ public class MapperService {
         List<SitterReviewCard> reviews = new ArrayList<>();
         sitterReviewRepository.findAllBySitterId(sitterId).stream().forEach(review -> reviews.add(sitterReviewMapper(review.getId())));
         Float rating = (float)reviews.stream().mapToDouble(r -> r.getRating()).sum();
+        List<String> images = new ArrayList<>();
 
-        Sitter sitter = new Sitter(sitterCard, rating, reviews);
+        reviewImageRepository.findAllBySitterId(sitterId).forEach(i -> images.add(String.format(UrlBase, "u", i.getSitterId(), i.getFileName())));
+
+        Sitter sitter = new Sitter(sitterCard, rating, reviews, images);
 
         return sitter;
     }
@@ -195,9 +204,40 @@ public class MapperService {
         UserCard ownerCard = userCardMapper(ownerId);
         List<DogInfo> dogs = new ArrayList<>();
         dogRepository.findByOwnerId(ownerId).stream().forEach(dog -> dogs.add(dogInfoMapper(dog.getId())));
+        List<WalkInfo> plannedWalks = new ArrayList<>();
+        walkRepository.findByOwnerId(ownerId).stream().forEach(walk -> plannedWalks.add(walkInfoMapper(walk.getId())));
 
-        Owner owner = new Owner(ownerCard, dogs);
+        List<WalkInfo> pastWalks = new ArrayList<>();
+        walkRepository.findByWalkDateTimeLessThanAndOwnerIdAndIsBooked(LocalDateTime.now(), ownerId, true).stream().forEach(walk -> pastWalks.add(walkInfoMapper(walk.getId())));
+
+        List<String> images = new ArrayList<>();
+
+        Owner owner = new Owner(ownerCard, dogs, plannedWalks, pastWalks, images);
         return owner;
     }
 
+    public UserWithAdditionalInfo userWithAdditionalInfoMapper(String userId) {
+        User user = userRepository.findById(userId).get();
+        System.out.println(user);
+        return new UserWithAdditionalInfo(
+            user.getId(),
+            user.getUsername(),
+            user.getFirstName(),
+            user.getLastName(),
+            user.getAvatar(),
+            this.getMainRole(user.getRoles()),
+            user.getIsActive(),
+            user.getIsBlocked(),
+            user.getIsBanned()
+        );
+    }
+
+    private Role getMainRole(Set<UserRole> userRoles) {
+        Optional<Role> mainRole = userRoles.stream()
+        .filter(roles -> roles.getRole() != Role.ROLE_USER)
+        .map(role -> role.getRole())
+        .findFirst();
+
+        return mainRole.isPresent() ? mainRole.get() : Role.ROLE_USER;
+    }
 }

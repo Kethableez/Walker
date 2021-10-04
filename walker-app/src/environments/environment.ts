@@ -1,4 +1,12 @@
 const urls: { [key: string]: any } = {
+  admin: {
+    prefix: 'admin',
+    calls: {
+      getUsers: 'users',
+      getDogs: 'dogs',
+      getWalks: 'walks'
+    }
+  },
   auth: {
     prefix: 'auth',
     calls: {
@@ -33,6 +41,7 @@ const urls: { [key: string]: any } = {
   sitter: {
     prefix: 'sitter',
     calls: {
+      getData: 'sitterData',
       getDogs: 'dogs',
       getHistory: 'history',
       getWalks: 'walks',

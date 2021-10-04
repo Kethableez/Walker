@@ -7,6 +7,7 @@ import com.kethableez.walkerapi.Utility.Response.ActionResponse;
 import com.kethableez.walkerapi.Utility.Response.MessageResponse;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkCard;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkWithFilters;
 import com.kethableez.walkerapi.Walk.Model.Request.WalkRequest;
 import com.kethableez.walkerapi.Walk.Service.WalkService;
 
@@ -92,5 +93,11 @@ public class WalkController {
             return ResponseEntity.ok(new MessageResponse(response.getMessage()));
         else
             return ResponseEntity.badRequest().body(response.getMessage());
+    }
+
+    @GetMapping("/allWithFilters")
+    public ResponseEntity<WalkWithFilters> getWalksWithFilters() {
+        WalkWithFilters walks = walkService.getWalkWithFilters();
+        return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 }

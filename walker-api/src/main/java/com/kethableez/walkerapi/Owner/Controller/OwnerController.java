@@ -1,10 +1,12 @@
 package com.kethableez.walkerapi.Owner.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
+import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
 import com.kethableez.walkerapi.Dog.Service.DogService;
-import com.kethableez.walkerapi.User.Model.DTO.UserInfo;
+import com.kethableez.walkerapi.Image.Service.ImageService;
 import com.kethableez.walkerapi.User.Service.UserService;
 import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkInfo;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
@@ -36,6 +38,9 @@ public class OwnerController {
     @Autowired
     private final UserService userService;
 
+    @Autowired
+    private final ImageService imageService;
+
     @GetMapping("/dogs")
     public ResponseEntity<List<DogInfo>> getDogs(UsernamePasswordAuthenticationToken token) {
         List<DogInfo> dogCards = this.dogService.getOwnerDogsInfo(userService.getIdFromToken(token));
@@ -48,15 +53,18 @@ public class OwnerController {
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 
-    @GetMapping("/sitters")
-    public ResponseEntity<List<UserInfo>> getSitters(UsernamePasswordAuthenticationToken token) {
-        List<UserInfo> sitters = this.walkService.getSitters(userService.getIdFromToken(token));
-        return new ResponseEntity<>(sitters, HttpStatus.OK);
-    }
-
     @GetMapping("/history")
     public ResponseEntity<List<PastWalkInfo>> getOwnerHistory(UsernamePasswordAuthenticationToken token) {
         List<PastWalkInfo> history = this.walkService.getOwnerHistory(userService.getIdFromToken(token));
         return new ResponseEntity<>(history, HttpStatus.OK);
+    }
+
+    @GetMapping("/images")
+    public ResponseEntity<List<String>> getImages(UsernamePasswordAuthenticationToken token) {
+        List<String> images = new ArrayList<>();
+        for (Dog d : this.dogService.getOwnerDogs(userService.getIdFromToken(token))) {
+            images.addAll(imageService.getDogReviewImages(d.getId()));
+        }
+        return new ResponseEntity<>(images, HttpStatus.OK);
     }
 }

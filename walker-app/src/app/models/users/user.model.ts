@@ -1,9 +1,17 @@
+import { Role } from './../enums/role.model';
 import { Dog } from "../dogs/dog.model";
 import { Walk } from "../walks/walk.model";
 import { RegularUser } from "./regular-user.model";
 
 export interface User {
-  user: RegularUser;
-  dogs: Dog[];
-  walks: Walk[];
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  birthdate: string;
+  city: string;
+  avatar: string;
+  gender: string;
+  description: string;
+  roles: Role[];
 }

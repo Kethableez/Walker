@@ -16,4 +16,5 @@ public class Sitter {
     private UserCard sitter;
     private Float rating;
     private List<SitterReviewCard> reviews;
+    private List<String> images;
 }

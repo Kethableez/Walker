@@ -5,6 +5,7 @@ import { Component, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '
 import { ActionResponse } from 'src/app/models/action-response.model';
 import { SitterService } from 'src/app/core/services/models/sitter.service';
 import { WalkInfo } from 'src/app/models/walks/walk-info.model';
+import { WalkWithFilters } from 'src/app/models/walks/walk-with-filters.model';
 
 @Component({
   selector: 'ktbz-dog-walks',
@@ -17,6 +18,7 @@ export class DogWalksComponent implements OnInit {
     private changes: ChangeDetectorRef
   ) { }
   allWalks: WalkInfo[] = [];
+  walksWithFilters?: WalkWithFilters;
   sitterWalks: WalkInfo[] = this.sitterStore.incomingWalks;
 
   allView = true;
@@ -26,7 +28,7 @@ export class DogWalksComponent implements OnInit {
   isMessageBoxVisible = false;
 
   ngOnInit(): void {
-    this.walkService.getAll().subscribe((res) => (this.allWalks = res));
+    this.walkService.getWalksWithFilters().subscribe((res: WalkWithFilters) => this.allWalks = res.walks);
   }
 
 

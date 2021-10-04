@@ -1,3 +1,6 @@
+import { User } from 'src/app/models/users/user.model';
+import { SitterStoreService } from './../../../../../core/services/store/sitter-store.service';
+import { SitterData } from './../../../../../models/users/sitter.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/core/services/models/user.service';
@@ -18,9 +21,12 @@ enum Options {
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
-  user!: RegularUser;
+  user!: User;
   dogs?: DogInfo[];
   walks?: WalkInfo[];
+
+
+  sitterData?: SitterData;
 
   mainRole?: Role;
   isCurrentUserProfile = true;
@@ -31,7 +37,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private userStore: CurrentUserStoreService
+    private userStore: CurrentUserStoreService,
+    private sitterStore: SitterStoreService,
   ) {}
 
   ngOnInit(): void {
@@ -41,13 +48,17 @@ export class ProfileComponent implements OnInit {
       this.userService
         .getUserDataParam(username)
         .subscribe((response: RegularUser) => {
-          this.user = response,
+          this.user = (response as unknown as User),
           this.mainRole = this.user.roles.filter(role => role != Role.ROLE_USER)[0];
         });
     } else {
       this.isCurrentUserProfile = true;
       this.mainRole = this.userStore.role;
-      this.user = this.userStore.regularUser;
+      if(this.mainRole === Role.ROLE_SITTER) {
+        this.sitterData = this.sitterStore.sitterData;
+
+        this.user = this.sitterData.sitter;
+      }
     }
   }
 
@@ -73,6 +84,6 @@ export class ProfileComponent implements OnInit {
   }
 
   updateData(event: any) {
-    this.user = event as RegularUser;
+    this.user = event as User;
   }
 }

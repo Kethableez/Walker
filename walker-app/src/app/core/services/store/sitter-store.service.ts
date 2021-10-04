@@ -1,11 +1,14 @@
+import { SitterReviewCard } from './../../../models/reviews/sitter-review-card.model';
 import { CurrentUserStoreService } from './current-user-store.service';
 import { Injectable } from "@angular/core";
 import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 import { PastWalkInfo } from './../../../models/walks/past-walk-info.model';
+import { SitterData } from 'src/app/models/users/sitter.model';
 
 const INCOMING_WALKS = 'incoming_walks'
 const PAST_WALKS = 'past_walks'
 const REVIEWS = 'reviews'
+const SITTER_DATA = 'sitter_data'
 const FAVOURITE = 'favourite'
 
 @Injectable({
@@ -31,10 +34,24 @@ export class SitterStoreService {
     this.saveIncomingWalks(walks);
   }
 
+  saveReviews(reviews: SitterReviewCard) {
+    window.sessionStorage.removeItem(REVIEWS);
+    window.sessionStorage.setItem(REVIEWS, JSON.stringify(reviews));
+  }
+
+  saveSitterData(sitterData: SitterData) {
+    window.sessionStorage.removeItem(SITTER_DATA);
+    window.sessionStorage.setItem(SITTER_DATA, JSON.stringify(sitterData))
+  }
+
   saveDisenrollAction(walk: WalkInfo) {
     const walks = this.incomingWalks.filter(w => w.id !== walk.id);
     this.prepareWalkForDisenroll(walk);
     this.saveIncomingWalks(walks);
+  }
+
+  get sitterData() {
+    return JSON.parse(sessionStorage.getItem(SITTER_DATA) as string) as SitterData;
   }
 
   get incomingWalks() {

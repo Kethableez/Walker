@@ -1,3 +1,4 @@
+import { SitterData } from './../../../models/users/sitter.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -30,5 +31,17 @@ export class SitterService {
     const url = this.setting.getSitterUrl('getHistory');
 
     return this.http.get<PastWalkInfo[]>(url);
+  }
+
+  getSitterReviews(sitterId: string) {
+    const url = this.setting.getReviewUrl('getSitterReviews', {sitterId: sitterId});
+
+    return this.http.get(url);
+  }
+
+  getSitterData() {
+    const url = this.setting.getSitterUrl('getData');
+
+    return this.http.get<SitterData>(url);
   }
 }

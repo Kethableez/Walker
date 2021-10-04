@@ -49,8 +49,8 @@ public class ReviewService {
             Walk walk = walkRepository.findById(request.getWalkId()).get();
 
             SitterReview review = new SitterReview(
-                walk.getSitterId(),
                 walk.getId(),
+                walk.getSitterId(),
                 walk.getOwnerId(),
                 walk.getDogId(),
                 request.getRating(),
@@ -152,5 +152,4 @@ public class ReviewService {
         }
         else return false;
     }
-
 }

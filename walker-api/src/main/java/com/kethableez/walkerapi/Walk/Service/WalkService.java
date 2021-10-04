@@ -19,8 +19,11 @@ import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkCard;
 import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkInfo;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkCard;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkWithDog;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkWithFilters;
 import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
 import com.kethableez.walkerapi.Walk.Model.Request.WalkRequest;
+import com.kethableez.walkerapi.Walk.Model.Utility.WalkFilter;
 import com.kethableez.walkerapi.Walk.Repository.WalkRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,6 +190,17 @@ public class WalkService {
 
     public List<Walk> getWalks() {
         return this.walkRepository.findByWalkDateTimeGreaterThanAndIsBooked(LocalDateTime.now(), false);
+    }
+
+    // Przemyśleć to jeszczce ze 3 razy
+    public WalkWithFilters getWalkWithFilters() {
+        List<WalkWithDog> walks = List.of(this.walkRepository.findByWalkDateTimeGreaterThanAndIsBooked(LocalDateTime.now(), false).stream()
+        .map(walk -> new WalkWithDog(walk, dogRepository.findById(walk.getDogId()).get()))
+        .toArray(WalkWithDog[]::new));
+        List<WalkInfo> walkInfos = List.of(walks.stream()
+        .map(w -> mapper.walkInfoMapper(w.getWalk().getId()))
+        .toArray(WalkInfo[]::new));
+        return new WalkWithFilters(walkInfos, new WalkFilter(walks));
     }
 
     public PastWalkCard createPastWalkCard(Walk walk) {

@@ -1,3 +1,4 @@
+import { SitterData } from './../../../models/users/sitter.model';
 import { PastWalkInfo } from './../../../models/walks/past-walk-info.model';
 import { PastWalkCard } from 'src/app/models/walks/past-walk-card.model';
 import { SitterStoreService } from './../../../core/services/store/sitter-store.service';
@@ -104,6 +105,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  // Przenieść do store
   private storeSitterItems() {
     this.sitterService.getWalks().subscribe(
       (response: WalkInfo[]) => this.sitterStore.saveIncomingWalks(response)
@@ -111,6 +113,10 @@ export class LoginComponent implements OnInit {
 
     this.sitterService.getHistory().subscribe(
       (response: PastWalkInfo[]) => this.sitterStore.savePastWalks(response)
+    )
+
+    this.sitterService.getSitterData().subscribe(
+      (response: SitterData) => this.sitterStore.saveSitterData(response)
     )
   }
 

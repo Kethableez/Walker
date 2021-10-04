@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { WalkCard } from 'src/app/models/walks/walk-card.model';
 import { SettingService } from '../utility/setting.service';
 import { WalkInfo } from 'src/app/models/walks/walk-info.model';
+import { WalkWithFilters } from 'src/app/models/walks/walk-with-filters.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,10 @@ export class WalkService {
     const url = this.setting.getWalkUrl('getAllWalks');
 
     return this.http.get<WalkInfo[]>(url);
+  }
+
+  getWalksWithFilters(): Observable<WalkWithFilters> {
+    return this.http.get<WalkWithFilters>('http://localhost:8080/walk/allWithFilters');
   }
 
   getWalk(walkId: string): Observable<WalkCard> {

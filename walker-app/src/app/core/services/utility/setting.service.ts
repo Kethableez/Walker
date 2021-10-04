@@ -42,6 +42,10 @@ export class SettingService {
     return this.getUrl('image', action, params);
   }
 
+  public getAdminUrl(action: string, params?: any) {
+    return this.getUrl('admin', action, params);
+  }
+
   private getUrl(prefix: string, action: string, params?: any) {
     const preparedCall = this.injectParams(this.getCall(prefix, action), params);
     const finalUrl = [this.baseUrl, preparedCall].join('/');

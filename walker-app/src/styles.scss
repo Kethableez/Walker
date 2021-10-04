@@ -471,6 +471,74 @@ ktbz-sidebar {
   cursor: pointer;
 }
 
+ktbz-users {
+  .main-container {
+    overflow-y: scroll;
+  }
+
+  .main-container::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  .main-container:-webkit-scrollbar-thumb {
+    background-color: $primaryDark;
+    border-radius: 1rem;
+  }
+
+  .row {
+    margin: .5rem 2rem;
+    padding: .5rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $primaryDark;
+
+    .image {
+      border-radius: 5px;
+      width: 5rem;
+      height: 5rem;
+      object-fit: cover;
+
+    }
+
+    .text-1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .badge {
+      font-family: "Trebuchet MS";
+      text-shadow: $shadow;
+      // bottom: 1rem;
+      // right: 1rem;
+      // position: absolute;
+      height: fit-content;
+      padding: 0 0.3rem;
+      border: 3px solid $primaryTeal;
+      width: fit-content;
+      border-radius: 5px;
+      color: $primaryTeal;
+      // font-weight: 00;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+
+      .icon {
+        margin: 0 .25rem;
+        width: 1.7rem;
+        height: 1.7rem;
+        fill: $primaryDark;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 .sidebar-button:hover {
   background-color: $secondaryTeal;
   box-shadow: $shadow;

@@ -62,7 +62,7 @@ public class UserService {
                 User newUser = new User(request.getUsername(), request.getEmail(),
                                 encoder.bCryptPasswordEncoder().encode(request.getPassword()), request.getFirstName(),
                                 request.getLastName(), request.getBirthdate(), request.getCity(), request.getAvatar(), request.getGender(),
-                                false, request.getIsSubscribed());
+                                false, request.getIsSubscribed(), false, false);
                 Set<UserRole> roles = new HashSet<>();
                 roles.add(roleRepository.findByRole(Role.ROLE_USER).orElseThrow());
                 newUser.setRoles(roles);
@@ -85,7 +85,7 @@ public class UserService {
                 User newUser = new User(request.getUsername(), request.getEmail(),
                                 encoder.bCryptPasswordEncoder().encode(request.getPassword()), request.getFirstName(),
                                 request.getLastName(), request.getBirthdate(), request.getCity(), request.getAvatar(), request.getGender(),
-                                false, request.getIsSubscribed());
+                                false, request.getIsSubscribed(), false, false);
                 Set<UserRole> roles = new HashSet<>();
                 roles.add(roleRepository.findByRole(request.getRole()).orElseThrow());
                 newUser.setRoles(roles);

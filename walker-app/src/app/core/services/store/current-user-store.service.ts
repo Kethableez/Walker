@@ -33,9 +33,7 @@ export class CurrentUserStoreService {
   }
 
   get regularUser() {
-    const user = this.instanceOfUser(JSON.parse(sessionStorage.getItem(CURRENT_USER) as string)) ?
-    (JSON.parse(sessionStorage.getItem(CURRENT_USER) as string) as User).user : JSON.parse(sessionStorage.getItem(CURRENT_USER) as string) as RegularUser;
-
+    const user = JSON.parse(sessionStorage.getItem(CURRENT_USER) as string) as RegularUser;
     return user;
   }
 
