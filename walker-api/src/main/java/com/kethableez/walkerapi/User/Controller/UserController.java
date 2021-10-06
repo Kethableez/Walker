@@ -12,6 +12,7 @@ import com.kethableez.walkerapi.User.Model.Request.UserDataRequest;
 import com.kethableez.walkerapi.User.Model.Request.UserPasswordRequest;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.User.Service.UserService;
+import com.kethableez.walkerapi.Utility.Enum.Role;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
 import com.kethableez.walkerapi.Utility.Response.MessageResponse;
 
@@ -57,10 +58,14 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @GetMapping("/role/{username}")
+    public ResponseEntity<Role> getUserRole(@PathVariable String username) {
+        return new ResponseEntity<>(userService.getUserRole(username), HttpStatus.OK);
+    }
+
     @GetMapping("/get_data")
     public ResponseEntity<?> getData(UsernamePasswordAuthenticationToken token) {
         Optional<User> user = userRepository.findByUsername(token.getName());
-        // Optional<UserRole> mainRole = userService.getRole(user);
          if (user.isPresent()) {
             UserCard userCard = userService.getUserCard(user.get().getId());
             return new ResponseEntity<>(userCard, HttpStatus.OK);
@@ -77,6 +82,8 @@ public class UserController {
          }
          else return ResponseEntity.badRequest().body(new MessageResponse("jesteś nikim"));
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<UserInfo> getUserInfo(@PathVariable("id") String userId) {

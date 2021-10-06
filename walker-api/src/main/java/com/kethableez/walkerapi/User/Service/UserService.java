@@ -213,6 +213,10 @@ public class UserService {
                 return ((UserDetailsImpl) token.getPrincipal()).getId();
         }
 
+        public String getIdFromUsername(String username) {
+                return userRepository.findByUsername(username).get().getId();
+        }
+
         public UserCard getUserCard(String userId) {
                 return mapper.userCardMapper(userId);
         }
@@ -223,5 +227,13 @@ public class UserService {
 
         public Optional<UserRole> getRole(User user) {
                 return user.getRoles().stream().filter(r -> r.getRole() != Role.ROLE_USER).findFirst();
+        }
+
+        public Role getUserRole(String username) {
+                Optional<Role> mainRole = userRepository.findByUsername(username).get().getRoles().stream()
+                .map(userRole -> userRole.getRole())
+                .filter(role -> role != Role.ROLE_USER).findFirst();
+
+                return mainRole.isPresent() ? mainRole.get() : Role.ROLE_USER;
         }
 }

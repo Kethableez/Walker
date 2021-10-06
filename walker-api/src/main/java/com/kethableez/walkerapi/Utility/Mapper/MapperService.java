@@ -2,9 +2,11 @@ package com.kethableez.walkerapi.Utility.Mapper;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.kethableez.walkerapi.Dog.Model.DTO.DogCard;
 import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
@@ -210,7 +212,12 @@ public class MapperService {
         List<WalkInfo> pastWalks = new ArrayList<>();
         walkRepository.findByWalkDateTimeLessThanAndOwnerIdAndIsBooked(LocalDateTime.now(), ownerId, true).stream().forEach(walk -> pastWalks.add(walkInfoMapper(walk.getId())));
 
-        List<String> images = new ArrayList<>();
+        List<String> images = dogs.stream()
+        .map(dog -> dog.getId())
+        .map(dogId -> reviewImageRepository.findAllByDogId(dogId))
+        .flatMap(Collection::stream)
+        .map(reviewImage -> String.format(UrlBase, "d", reviewImage.getDogId(), reviewImage.getFileName()))
+        .collect(Collectors.toList());
 
         Owner owner = new Owner(ownerCard, dogs, plannedWalks, pastWalks, images);
         return owner;

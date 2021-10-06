@@ -9,6 +9,13 @@ import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 import { CurrentUserStoreService } from './../../../../../core/services/store/current-user-store.service';
 import { DogInfo } from './../../../../../models/dogs/dog-info.model';
 import { RegularUser } from './../../../../../models/users/regular-user.model';
+import { OwnerData } from 'src/app/models/users/owner.model';
+import { findFirst } from 'src/app/core/services/utility/utility.model';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { SitterService } from 'src/app/core/services/models/sitter.service';
+import { OwnerService } from 'src/app/core/services/models/owner.service';
+import { Observable } from 'rxjs';
+import { SitterReviewCard } from 'src/app/models/reviews/sitter-review-card.model';
 
 enum Options {
   GALLERY = 'GALLERY',
@@ -23,11 +30,12 @@ enum Options {
 export class ProfileComponent implements OnInit {
   user!: User;
   dogs?: DogInfo[];
+  images?: string[];
   walks?: WalkInfo[];
-
-
-  sitterData?: SitterData;
-
+  reviews?: SitterReviewCard[];
+  sitterData!: Observable<SitterData>;
+  ownerData!: Observable<OwnerData>;
+  userData!: Observable<User>;
   mainRole?: Role;
   isCurrentUserProfile = true;
   selectedOption = Options.GALLERY;
@@ -36,29 +44,92 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private sitterService: SitterService,
+    private ownerService: OwnerService,
     private route: ActivatedRoute,
     private userStore: CurrentUserStoreService,
     private sitterStore: SitterStoreService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const username = this.route.snapshot.paramMap.get('username');
     if (username && username != this.userStore.regularUser.username) {
       this.isCurrentUserProfile = false;
-      this.userService
-        .getUserDataParam(username)
-        .subscribe((response: RegularUser) => {
-          this.user = (response as unknown as User),
-          this.mainRole = this.user.roles.filter(role => role != Role.ROLE_USER)[0];
-        });
+      console.log(username);
+      this.userService.getUserRole(username).subscribe(
+        (res: Role) => {
+          this.mainRole = res;
+          switch (this.mainRole) {
+            case Role.ROLE_SITTER:
+              this.sitterData = this.sitterService.getSitterDataByUsername(username);
+              this.sitterData.subscribe(
+                res => {
+                  this.images = res.images;
+                  this.reviews = res.reviews;
+                  this.user = res.sitter;
+                }
+              )
+              break;
+
+            case Role.ROLE_OWNER:
+              this.ownerData = this.ownerService.getOwnerDataByUsername(username);
+              this.ownerData.subscribe(res => {
+                this.images = res.dogImages;
+                this.dogs = res.dogs;
+                this.user = res.user;
+              })
+              break;
+
+            default:
+              this.userData = this.userService.getUserDataParam(username);
+              this.userData.subscribe(res => this.user = res);
+          }
+        }
+      )
     } else {
       this.isCurrentUserProfile = true;
       this.mainRole = this.userStore.role;
-      if(this.mainRole === Role.ROLE_SITTER) {
-        this.sitterData = this.sitterStore.sitterData;
+      switch (this.mainRole) {
+        case Role.ROLE_SITTER:
+          this.sitterData = this.sitterService.getSitterData();
+          this.sitterData.subscribe(
+            res => {
+              this.images = res.images;
+              this.reviews = res.reviews;
+              this.user = res.sitter;
+            }
+          )
+          break;
 
-        this.user = this.sitterData.sitter;
+        case Role.ROLE_OWNER:
+          this.ownerData = this.ownerService.getOwnerData();
+          this.ownerData.subscribe(res => {
+            this.images = res.dogImages;
+            this.dogs = res.dogs;
+            this.user = res.user;
+          })
+          break;
+
+        default:
+          this.userData = this.userService.getUserData();
+          this.userData.subscribe(res => this.user = res);
       }
+    }
+  }
+
+  getUserInfo() {
+    switch (this.mainRole) {
+      case Role.ROLE_SITTER:
+        return this.sitterData?.pipe(
+          map(data => { return data.sitter })
+        )
+
+      case Role.ROLE_OWNER:
+        return this.ownerData?.pipe(
+          map(data => { return data.user })
+        )
+      default:
+        return this.userData;
     }
   }
 

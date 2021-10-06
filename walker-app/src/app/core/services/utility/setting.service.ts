@@ -54,6 +54,7 @@ export class SettingService {
 
   private injectParams(call: string, params?: any): string {
     const callWithParams: string[] = [];
+    console.log(params);
 
     call.split('/').forEach(el => callWithParams.push(el.startsWith(':') ? params[el.replace(':', '')] : el));
 

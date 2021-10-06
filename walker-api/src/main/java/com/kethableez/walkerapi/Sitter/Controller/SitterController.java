@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,6 +48,12 @@ public class SitterController {
     @GetMapping("/sitterData")
     public ResponseEntity<Sitter> getSitterData(UsernamePasswordAuthenticationToken token) {
         Sitter sitter = sitterService.getSitterData(userService.getIdFromToken(token));
+        return new ResponseEntity<>(sitter, HttpStatus.OK);
+    }
+
+    @GetMapping("/sitterData/{username}")
+    public ResponseEntity<Sitter> getSitterData(@PathVariable String username) {
+        Sitter sitter = sitterService.getSitterData(userService.getIdFromUsername(username));
         return new ResponseEntity<>(sitter, HttpStatus.OK);
     }
 

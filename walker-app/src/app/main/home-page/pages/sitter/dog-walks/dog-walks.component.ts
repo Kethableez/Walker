@@ -28,7 +28,10 @@ export class DogWalksComponent implements OnInit {
   isMessageBoxVisible = false;
 
   ngOnInit(): void {
-    this.walkService.getWalksWithFilters().subscribe((res: WalkWithFilters) => this.allWalks = res.walks);
+    this.walkService.getWalksWithFilters().subscribe((res: WalkWithFilters) => {
+      this.allWalks = res.walks;
+      console.log(res);
+    } );
   }
 
 

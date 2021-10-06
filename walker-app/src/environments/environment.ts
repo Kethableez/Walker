@@ -26,12 +26,15 @@ const urls: { [key: string]: any } = {
       changeData: 'change_data',
       changePassword: 'change_password',
       changeDescription: 'change_description',
-      changeAvatar: 'change_avatar'
+      changeAvatar: 'change_avatar',
+      getRole: 'role/:username'
     },
   },
   owner: {
     prefix: 'owner',
     calls: {
+      getData: 'ownerData',
+      getDataByUsername: 'ownerData/:username',
       getDogs: 'dogs',
       getHistory: 'history',
       getSitters: 'sitters',
@@ -42,6 +45,7 @@ const urls: { [key: string]: any } = {
     prefix: 'sitter',
     calls: {
       getData: 'sitterData',
+      getDataByUsername: 'sitterData/:username',
       getDogs: 'dogs',
       getHistory: 'history',
       getWalks: 'walks',

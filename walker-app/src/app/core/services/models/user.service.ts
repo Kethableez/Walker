@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActionResponse } from 'src/app/models/action-response.model';
+import { Role } from 'src/app/models/enums/role.model';
 import { RegularUser } from 'src/app/models/users/regular-user.model';
+import { User } from 'src/app/models/users/user.model';
 import { SettingService } from './../utility/setting.service';
 
 @Injectable({
@@ -13,16 +15,22 @@ export class UserService {
   constructor(private http: HttpClient,
     private setting: SettingService) { }
 
-  getUserData(): Observable<RegularUser> {
+  getUserData(): Observable<User> {
     const url = this.setting.getUserUrl('getLoggedUserData');
 
-    return this.http.get<RegularUser>(url);
+    return this.http.get<User>(url);
   }
 
-  getUserDataParam(username: string): Observable<RegularUser> {
+  getUserRole(username: string): Observable<Role> {
+    const url = this.setting.getUserUrl('getRole', {username: username});
+
+    return this.http.get<Role>(url);
+  }
+
+  getUserDataParam(username: string): Observable<User> {
     const url = this.setting.getUserUrl('getUserData', { username: username });
 
-    return this.http.get<RegularUser>(url);
+    return this.http.get<User>(url);
   }
 
   chagneData(data: any): Observable<ActionResponse> {

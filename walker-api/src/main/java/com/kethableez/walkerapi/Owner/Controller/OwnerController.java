@@ -7,6 +7,8 @@ import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
 import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
 import com.kethableez.walkerapi.Dog.Service.DogService;
 import com.kethableez.walkerapi.Image.Service.ImageService;
+import com.kethableez.walkerapi.Owner.Model.Owner;
+import com.kethableez.walkerapi.Owner.Service.OwnerService;
 import com.kethableez.walkerapi.User.Service.UserService;
 import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkInfo;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
@@ -18,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,6 +43,21 @@ public class OwnerController {
 
     @Autowired
     private final ImageService imageService;
+
+    @Autowired
+    private final OwnerService ownerService;
+
+    @GetMapping("/ownerData")
+    public ResponseEntity<Owner> getOwnerData(UsernamePasswordAuthenticationToken token) {
+        Owner owner = ownerService.getData(userService.getIdFromToken(token));
+        return new ResponseEntity<>(owner, HttpStatus.OK);
+    }
+
+    @GetMapping("/ownerData/{username}")
+    public ResponseEntity<Owner> getOwnerData(@PathVariable String username) {
+        Owner owner = ownerService.getData(userService.getIdFromUsername(username));
+        return new ResponseEntity<>(owner, HttpStatus.OK);
+    }
 
     @GetMapping("/dogs")
     public ResponseEntity<List<DogInfo>> getDogs(UsernamePasswordAuthenticationToken token) {
