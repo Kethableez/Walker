@@ -10,11 +10,11 @@ import { CurrentUserStoreService } from './../../../../../core/services/store/cu
 import { DogInfo } from './../../../../../models/dogs/dog-info.model';
 import { RegularUser } from './../../../../../models/users/regular-user.model';
 import { OwnerData } from 'src/app/models/users/owner.model';
-import { findFirst } from 'src/app/core/services/utility/utility.model';
+import { exists, findFirst } from 'src/app/core/services/utility/utility.model';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { SitterService } from 'src/app/core/services/models/sitter.service';
 import { OwnerService } from 'src/app/core/services/models/owner.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SitterReviewCard } from 'src/app/models/reviews/sitter-review-card.model';
 
 enum Options {
@@ -28,6 +28,11 @@ enum Options {
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
+
+  username = this.prepareProfileView();
+  userData = this.userService.getUserData(this.username);
+  mainRole = this.userService.getUserRole(this.username);
+
   user!: User;
   dogs?: DogInfo[];
   images?: string[];
@@ -35,8 +40,8 @@ export class ProfileComponent implements OnInit {
   reviews?: SitterReviewCard[];
   sitterData!: Observable<SitterData>;
   ownerData!: Observable<OwnerData>;
-  userData!: Observable<User>;
-  mainRole?: Role;
+  // userData!: Observable<User>;
+  // mainRole?: Role;
   isCurrentUserProfile = true;
   selectedOption = Options.GALLERY;
   isSettingsOpened = false;
@@ -52,85 +57,48 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const username = this.route.snapshot.paramMap.get('username');
-    if (username && username != this.userStore.regularUser.username) {
-      this.isCurrentUserProfile = false;
-      console.log(username);
-      this.userService.getUserRole(username).subscribe(
-        (res: Role) => {
-          this.mainRole = res;
-          switch (this.mainRole) {
-            case Role.ROLE_SITTER:
-              this.sitterData = this.sitterService.getSitterDataByUsername(username);
-              this.sitterData.subscribe(
-                res => {
-                  this.images = res.images;
-                  this.reviews = res.reviews;
-                  this.user = res.sitter;
-                }
-              )
-              break;
-
-            case Role.ROLE_OWNER:
-              this.ownerData = this.ownerService.getOwnerDataByUsername(username);
-              this.ownerData.subscribe(res => {
-                this.images = res.dogImages;
-                this.dogs = res.dogs;
-                this.user = res.user;
-              })
-              break;
-
-            default:
-              this.userData = this.userService.getUserDataParam(username);
-              this.userData.subscribe(res => this.user = res);
-          }
-        }
-      )
-    } else {
-      this.isCurrentUserProfile = true;
-      this.mainRole = this.userStore.role;
-      switch (this.mainRole) {
+    this.userData.subscribe(res => console.log(res));
+    this.mainRole.subscribe((role: Role) => {
+      switch (role) {
         case Role.ROLE_SITTER:
-          this.sitterData = this.sitterService.getSitterData();
-          this.sitterData.subscribe(
-            res => {
-              this.images = res.images;
-              this.reviews = res.reviews;
-              this.user = res.sitter;
-            }
+          this.sitterData = this.sitterService.getSitterData(this.username);
+          this.sitterData.subscribe((sitter: SitterData) => {
+            this.images = sitter.images;
+          }
           )
           break;
 
         case Role.ROLE_OWNER:
-          this.ownerData = this.ownerService.getOwnerData();
-          this.ownerData.subscribe(res => {
-            this.images = res.dogImages;
-            this.dogs = res.dogs;
-            this.user = res.user;
+          this.ownerData = this.ownerService.getOwnerData(this.username);
+          this.ownerData.subscribe((owner: OwnerData) => {
+            this.images = owner.dogImages;
+
           })
           break;
-
-        default:
-          this.userData = this.userService.getUserData();
-          this.userData.subscribe(res => this.user = res);
       }
-    }
+    })
   }
 
-  getUserInfo() {
-    switch (this.mainRole) {
-      case Role.ROLE_SITTER:
-        return this.sitterData?.pipe(
-          map(data => { return data.sitter })
-        )
+  private prepareProfileView() {
+    const username = this.route.snapshot.paramMap.get('username');
+    this.isCurrentUserProfile = username ? false : true;
+    return username ? username : undefined;
+  }
 
-      case Role.ROLE_OWNER:
-        return this.ownerData?.pipe(
-          map(data => { return data.user })
-        )
-      default:
-        return this.userData;
-    }
+  private getObjectBasedOnRole(role: Role) {
+    if (role === Role.ROLE_OWNER) return this.ownerService.getOwnerData(this.username);
+    else if (role === Role.ROLE_SITTER) return this.sitterService.getSitterData(this.username);
+    else return null;
+  }
+
+  getImageList(): Observable<string[]> | null {
+    if (this.sitterData) return this.sitterData.pipe(
+      map(data => { return data.images })
+    );
+    else if (this.ownerData) return this.ownerData.pipe(
+      map(data => { return data.dogImages })
+    );
+    else return null;
   }
 
   openGallery() {

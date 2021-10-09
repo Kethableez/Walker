@@ -58,9 +58,14 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @GetMapping("/role")
+    public ResponseEntity<Role> getUserRole(UsernamePasswordAuthenticationToken token) {
+        return new ResponseEntity<>(userService.getUserRole(userService.getIdFromToken(token)), HttpStatus.OK);
+    }
+
     @GetMapping("/role/{username}")
     public ResponseEntity<Role> getUserRole(@PathVariable String username) {
-        return new ResponseEntity<>(userService.getUserRole(username), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserRole(userService.getIdFromUsername(username)), HttpStatus.OK);
     }
 
     @GetMapping("/get_data")

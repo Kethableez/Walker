@@ -40,8 +40,8 @@ export class OwnerService {
     return this.http.get<PastWalkInfo[]>(url);
   }
 
-  getOwnerData() {
-    const url = this.setting.getOwnerUrl('getData');
+  getOwnerData(username?: string) {
+    const url = this.setting.getOwnerUrl('getData', {username: username});
 
     return this.http.get<OwnerData>(url);
   }

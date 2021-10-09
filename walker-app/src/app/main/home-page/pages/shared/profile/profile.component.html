@@ -1,9 +1,9 @@
 <div class="container">
   <div class="page-header" *ngIf="isCurrentUserProfile">Twój profil</div>
-  <div class="page-header" *ngIf="!isCurrentUserProfile">asd</div>
+  <div class="page-header" *ngIf="!isCurrentUserProfile"> {{username}}</div>
 
   <div class="main-container">
-    <div class="profile-column" *ngIf="user">
+    <div class="profile-column" *ngIf="userData | async as user">
       <div class="photo">
         <img class="profile-photo" [src]="user.avatar">
         <svg (click)="openEditForm('AVATAR')" *ngIf="isCurrentUserProfile" class="icon"
@@ -57,7 +57,7 @@
       </div> -->
     </div>
 
-    <div class="information-column">
+    <div class="information-column"  *ngIf="userData | async as user">
       <div class="description-box">
         <div class="page-header">
           Opis
@@ -69,21 +69,21 @@
           </svg>
 
         </div>
-        <span *ngIf="user?.description">{{user?.description}}</span>
-        <span *ngIf="!user?.description">Brak opisu</span>
+        <span *ngIf="user.description">{{user.description}}</span>
+        <span *ngIf="!user.description">Brak opisu</span>
       </div>
 
       <div class="switch-box">
-        <div class="buttons">
+        <div class="buttons" *ngIf="mainRole | async as role">
           <div class="button" (click)="openGallery()">Galeria</div>
-          <div class="button" (click)="openReviews()" *ngIf="mainRole === 'ROLE_SITTER'">Opinie</div>
-          <div class="button" (click)="openPets()" *ngIf="mainRole === 'ROLE_OWNER'">Zwierzaki</div>
+          <div class="button" (click)="openReviews()" *ngIf="role === 'ROLE_SITTER'">Opinie</div>
+          <div class="button" (click)="openPets()" *ngIf="role === 'ROLE_OWNER'">Zwierzaki</div>
         </div>
 
         <div class="switch-body" [ngSwitch]="selectedOption">
           <div *ngSwitchCase="'GALLERY'">
-            <div *ngIf="images">
-              <div class="photo" *ngFor="let image of images">
+            <div class="photos" *ngIf="images">
+              <div  *ngFor="let image of images">
                 <img class="profile-photo" [src]="image">
               </div>
             </div>
@@ -106,37 +106,33 @@
                   <div class="text-1">
                     {{review.reviewBody}}
                   </div>
-
                 </div>
               </div>
-
             </div>
-
-
           </div>
           <div *ngSwitchCase="'PETS'">
-            <div *ngFor="let dog of dogs">
-              <div class="dog-card">
-                <img class="photo" [src]="dog.dogPhoto">
-                <div class="card-container">
-                  <div class="text-1">{{dog.dogName}}</div>
+            <div *ngIf="ownerData | async as ownerInfo">
+              <div *ngFor="let dog of ownerInfo.dogs">
+                <div class="dog-card">
+                  <img class="photo" [src]="dog.dogPhoto">
+                  <div class="card-container">
+                    <div class="text-1">{{dog.dogName}}</div>
+                  </div>
+                  <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                    [routerLink]="['/home/dog', dog.id]">
+                    <path
+                      d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                  </svg>
                 </div>
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
-                  [routerLink]="['/home/dog', dog.id]">
-                  <path
-                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-                </svg>
               </div>
             </div>
+
           </div>
         </div>
       </div>
     </div>
   </div>
-  <ktbz-modal
-  *ngIf="isSettingsOpened"
-  [settingSelector]="setting"
-  (closeModal)="toggleSettings($event)"
-  (upadtedData)="updateData($event)">
+  <ktbz-modal *ngIf="isSettingsOpened" [settingSelector]="setting" (closeModal)="toggleSettings($event)"
+    (upadtedData)="updateData($event)">
   </ktbz-modal>
 </div>

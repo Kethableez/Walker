@@ -1086,8 +1086,6 @@ ktbz-profile {
 
     .switch-body {
       height: 27.5rem;
-      // flex-grow: 1;
-
       display: flex;
       flex-flow: row wrap;
       overflow: auto;
@@ -1098,6 +1096,19 @@ ktbz-profile {
         width: 10rem;
         height: 10rem;
         background-color: $primaryBrass;
+      }
+
+      .photos {
+        padding: .5rem;
+        display: flex;
+        flex-flow: row wrap;
+
+        .profile-photo {
+          margin: .5rem;;
+          width: 10em;
+          height: 10rem;
+          object-fit: cover;
+        }
       }
 
       .dog-card {
@@ -1167,7 +1178,7 @@ ktbz-profile {
 
         .comment-info {
           margin: 0 0.5rem;
-          width: 7rem;
+          width: 15rem;
           display: flex;
           flex-flow: column;
           justify-content: center;

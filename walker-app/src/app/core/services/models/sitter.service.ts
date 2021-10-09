@@ -39,8 +39,8 @@ export class SitterService {
     return this.http.get(url);
   }
 
-  getSitterData() {
-    const url = this.setting.getSitterUrl('getData');
+  getSitterData(username?: string) {
+    const url = this.setting.getSitterUrl('getData', { username: username });
 
     return this.http.get<SitterData>(url);
   }

@@ -15,13 +15,14 @@ export class UserService {
   constructor(private http: HttpClient,
     private setting: SettingService) { }
 
-  getUserData(): Observable<User> {
-    const url = this.setting.getUserUrl('getLoggedUserData');
+  getUserData(username?: string): Observable<User> {
+    const url = this.setting.getUserUrl('getUserData', {username: username});
+    console.log(url);
 
     return this.http.get<User>(url);
   }
 
-  getUserRole(username: string): Observable<Role> {
+  getUserRole(username?: string): Observable<Role> {
     const url = this.setting.getUserUrl('getRole', {username: username});
 
     return this.http.get<Role>(url);
