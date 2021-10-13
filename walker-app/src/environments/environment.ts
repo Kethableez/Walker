@@ -4,7 +4,12 @@ const urls: { [key: string]: any } = {
     calls: {
       getUsers: 'users',
       getDogs: 'dogs',
-      getWalks: 'walks'
+      getWalks: 'walks',
+      blockUser: 'block/:userId',
+      unblockUser: 'unblock/:userId',
+      banUser: 'ban/:userId',
+      unbanUser: 'unban/:userId',
+      removeUser: 'remove/:userId'
     }
   },
   auth: {

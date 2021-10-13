@@ -1,46 +1,123 @@
+import { ActionResponse } from 'src/app/models/action-response.model';
+import { UserWithInfo } from './../../../../../models/users/user-with-info.model';
 import { AdminService } from './../../../../../core/services/models/admin.service';
-import { Component, OnInit } from '@angular/core';
-import { UserInfo } from 'src/app/models/users/user-info.model';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { removeById } from 'src/app/core/services/utility/utility.model';
+import { map, tap } from 'rxjs/operators';
+import { modalName } from '../../../components/shared/modal/modal.component';
+import { CurrentUserStoreService } from 'src/app/core/services/store/current-user-store.service';
 
+export enum AdminAction {
+  BLOCK = 'BLOCK',
+  UNBLOCK = 'UNBLOCK',
+  BAN = 'BAN',
+  UNBAN = 'UNBAN',
+  REMOVE = 'REMOVE',
+}
 @Component({
   selector: 'ktbz-users',
-  templateUrl: './users.component.html'
+  templateUrl: './users.component.html',
 })
-export class UsersComponent implements OnInit {
 
-  constructor(private adminService: AdminService) { }
+// TODO: Ikony, messageBox, scrollBar
 
-  users = this.adminService.usersList;
-  tempUsers: UserInfo[] = [];
+export class UsersComponent {
+  constructor(
+    private adminService: AdminService,
+    private userStore: CurrentUserStoreService
+  ) {}
 
-  ngOnInit(): void {
-    this.users.subscribe(
-      res => {
-        for (let i = 0; i < 20; i++) {
-          this.tempUsers.push(res[0]);
-        }
-      }
-    )
+  modalSetting = modalName.EMAIL_SENDER;
+  users = this.adminService.usersList.pipe(
+    map(users => removeById(users, this.userStore.user.id))
+    );
+  isModalOpened = false;
+  selectedUserId!: string;
+
+  get Action() {
+    return AdminAction;
   }
 
-  blockUser(userId: string) {
-    console.log('user with id: ' + userId + 'was blocked');
+  toggleModal(event: boolean, userId?: string): void {
+    this.isModalOpened = event;
+    if (userId) this.selectedUserId = userId;
   }
 
-  banUser(userId: string) {
-    console.log('user with id: ' + userId + 'was banned');
+  doAdminAction(action: AdminAction, user: UserWithInfo) {
+    switch (action) {
+      case this.Action.BLOCK:
+        this.blockUser(user);
+        break;
+
+      case this.Action.BAN:
+        this.banUser(user);
+        break;
+
+      case this.Action.UNBLOCK:
+        this.unblockUser(user);
+        break;
+
+      case this.Action.UNBAN:
+        this.unbanUser(user);
+        break;
+
+      case this.Action.REMOVE:
+        this.deleteUser(user);
+        break;
+    }
   }
 
-  unblockUser(userId: string) {
-    console.log('user with id: ' + userId + 'was unblocked');
+  private blockUser(user: UserWithInfo) {
+    this.adminService.blockUser(user.id).subscribe(
+      (response: ActionResponse) => {
+        console.log(response);
+        user.blocked = true;
+      },
+      (error) => console.log(error)
+    );
   }
 
-  unbanUser(userId: string) {
-    console.log('user with id: ' + userId + 'was unbanned');
+  private banUser(user: UserWithInfo) {
+    this.adminService.banUser(user.id).subscribe(
+      (response: ActionResponse) => {
+        console.log(response);
+        user.banned = true;
+      },
+      (error) => console.log(error)
+    );
   }
 
-  deleteUser(userId: string) {
-    console.log('user with id: ' + userId + 'was removed');
+  private unblockUser(user: UserWithInfo) {
+    this.adminService.unblockUser(user.id).subscribe(
+      (response: ActionResponse) => {
+        console.log(response);
+        user.blocked = false;
+      },
+      (error) => console.log(error)
+    );
   }
 
+  private unbanUser(user: UserWithInfo) {
+    this.adminService.unbanUser(user.id).subscribe(
+      (response: ActionResponse) => {
+        console.log(response);
+        user.banned = false;
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  private deleteUser(user: UserWithInfo) {
+    this.adminService.removeUser(user.id).subscribe(
+      (response: ActionResponse) => {
+        console.log(response);
+        this.users = this.users.pipe(
+          map((users: UserWithInfo[]) => {
+            return removeById(users, user.id);
+          })
+        );
+      },
+      (error) => console.log(error)
+    );
+  }
 }

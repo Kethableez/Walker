@@ -29,6 +29,7 @@ import com.kethableez.walkerapi.User.Model.Entity.UserRole;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.Utility.Enum.Role;
 import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkInfo;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkAdminInfo;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
 import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
 import com.kethableez.walkerapi.Walk.Repository.WalkRepository;
@@ -103,7 +104,8 @@ public class MapperService {
 
     public DogInfo dogInfoMapper(String dogId) {
         Dog dog = dogRepository.findById(dogId).get();
-        DogInfo dogInfo = new DogInfo(dog.getId(), dog.getName(), dog.getDogPhoto());
+        User owner = userRepository.findById(dog.getOwnerId()).get();
+        DogInfo dogInfo = new DogInfo(dog.getId(), dog.getName(), dog.getDogPhoto(), owner.getFirstName());
         return dogInfo;
     }
 
@@ -123,6 +125,21 @@ public class MapperService {
         );
 
         return walkInfo;
+    }
+
+    public WalkAdminInfo walkAdminInfoMapper(String walkId) {
+        Walk walk = walkRepository.findById(walkId).get();
+        Dog dog = dogRepository.findById(walk.getDogId()).get();
+        User owner = userRepository.findById(dog.getOwnerId()).get();
+
+        return new WalkAdminInfo(
+            walk.getId(), 
+            owner.getAvatar(), 
+            owner.getFirstName(), 
+            dog.getName(), 
+            walk.isBooked(), 
+            walk.getWalkDateTime(), 
+            walk.getCity());
     }
 
     public PastWalkInfo pastWalkInfoMapper(String walkId) {

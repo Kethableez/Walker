@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { AdminService } from 'src/app/core/services/models/admin.service';
 
 @Component({
@@ -9,8 +10,8 @@ export class DogsComponent implements OnInit {
 
   constructor(private adminService: AdminService) { }
 
-  dogs = this.adminService.dogList;
-  walks = this.adminService.walkList;
+  dogs = this.adminService.dogList.pipe(tap(d => console.log(d)));
+  walks = this.adminService.walkList.pipe(tap(d => console.log(d)));
   switchButton = false;
 
   ngOnInit(): void {

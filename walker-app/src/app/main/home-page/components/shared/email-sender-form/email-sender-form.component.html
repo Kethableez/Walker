@@ -1,0 +1,5 @@
+<form [formGroup]="emailForm">
+  <input type="text" formControlName="emailSubject" placeholder="Temat">
+  <textarea formControlName="emailBody" placeholder="Treść"></textarea>
+  <div [ngClass]="emailForm.valid  ? 'button' : 'button-disabled'" (click)="sendEmail()">Wyślij</div>
+</form>

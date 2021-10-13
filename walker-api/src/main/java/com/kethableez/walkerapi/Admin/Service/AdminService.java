@@ -2,7 +2,10 @@ package com.kethableez.walkerapi.Admin.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
 import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
 import com.kethableez.walkerapi.Dog.Repository.DogRepository;
 import com.kethableez.walkerapi.User.Model.DTO.UserWithAdditionalInfo;
@@ -10,6 +13,7 @@ import com.kethableez.walkerapi.User.Model.Entity.User;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.Utility.Mapper.MapperService;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkAdminInfo;
 import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
 import com.kethableez.walkerapi.Walk.Repository.WalkRepository;
 
@@ -39,12 +43,16 @@ public class AdminService {
             );
     }
 
-    public List<Walk> getWalksList() {
-        return walkRepository.findAll();
+    public List<WalkAdminInfo> getWalksList() {
+        return walkRepository.findAll().stream()
+        .map(walk -> mapperService.walkAdminInfoMapper(walk.getId()))
+        .collect(Collectors.toList());
     }
 
-    public List<Dog> getDogsList() {
-        return dogRepository.findAll();
+    public List<DogInfo> getDogsList() {
+        return dogRepository.findAll().stream()
+        .map(dog -> mapperService.dogInfoMapper(dog.getId()))
+        .collect(Collectors.toList());
     }
 
     public ActionResponse blockUserById(String userId) {

@@ -73,7 +73,7 @@
         <span *ngIf="!user.description">Brak opisu</span>
       </div>
 
-      <div class="switch-box">
+      <div class="switch-box" *ngIf="isSwitchBoxDisplayed">
         <div class="buttons" *ngIf="mainRole | async as role">
           <div class="button" (click)="openGallery()">Galeria</div>
           <div class="button" (click)="openReviews()" *ngIf="role === 'ROLE_SITTER'">Opinie</div>

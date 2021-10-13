@@ -40,11 +40,10 @@ export class ProfileComponent implements OnInit {
   reviews?: SitterReviewCard[];
   sitterData!: Observable<SitterData>;
   ownerData!: Observable<OwnerData>;
-  // userData!: Observable<User>;
-  // mainRole?: Role;
   isCurrentUserProfile = true;
   selectedOption = Options.GALLERY;
   isSettingsOpened = false;
+  isSwitchBoxDisplayed?: boolean;
   setting = '';
 
   constructor(
@@ -61,6 +60,7 @@ export class ProfileComponent implements OnInit {
     this.mainRole.subscribe((role: Role) => {
       switch (role) {
         case Role.ROLE_SITTER:
+          this.isSwitchBoxDisplayed = true;
           this.sitterData = this.sitterService.getSitterData(this.username);
           this.sitterData.subscribe((sitter: SitterData) => {
             this.images = sitter.images;
@@ -69,26 +69,25 @@ export class ProfileComponent implements OnInit {
           break;
 
         case Role.ROLE_OWNER:
+          this.isSwitchBoxDisplayed = true;
           this.ownerData = this.ownerService.getOwnerData(this.username);
           this.ownerData.subscribe((owner: OwnerData) => {
             this.images = owner.dogImages;
-
           })
+          break;
+
+        default:
+          this.isSwitchBoxDisplayed = false;
           break;
       }
     })
   }
 
+
   private prepareProfileView() {
     const username = this.route.snapshot.paramMap.get('username');
     this.isCurrentUserProfile = username ? false : true;
     return username ? username : undefined;
-  }
-
-  private getObjectBasedOnRole(role: Role) {
-    if (role === Role.ROLE_OWNER) return this.ownerService.getOwnerData(this.username);
-    else if (role === Role.ROLE_SITTER) return this.sitterService.getSitterData(this.username);
-    else return null;
   }
 
   getImageList(): Observable<string[]> | null {

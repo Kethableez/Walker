@@ -1,3 +1,4 @@
+import { modalName } from './components/shared/modal/modal.component';
 import { CurrentUserStoreService } from './../../core/services/store/current-user-store.service';
 import { Component, OnInit } from '@angular/core';
 import { ActionResponse } from '../../models/action-response.model';
@@ -13,7 +14,9 @@ import { User } from 'src/app/models/users/user.model';
 })
 export class HomePageComponent implements OnInit {
 
+  modalSetting = modalName.REPORT_PROBLEM;
   isLoggedIn = false;
+  isModalOpened = false;
   currentUser: any;
   response?: ActionResponse;
 
@@ -23,5 +26,13 @@ export class HomePageComponent implements OnInit {
     if (this.token.getToken()) {
       this.isLoggedIn = true;
     }
+  }
+
+  reportProblem(): void {
+
+  }
+
+  toggleModal(event: boolean) {
+    this.isModalOpened = event;
   }
 }

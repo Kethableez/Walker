@@ -2,12 +2,14 @@ import { CurrentUserStoreService } from './../../../../../core/services/store/cu
 import { RegularUser } from 'src/app/models/users/regular-user.model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-enum modalName {
+export enum modalName {
   AVATAR = 'AVATAR',
   DATA = 'DATA',
   DESCRIPTION = 'DESCRIPTION',
   SITTER_REVIEW = 'SITTER_REVIEW',
-  DOG_REVIEW = 'DOG_REVIEW'
+  DOG_REVIEW = 'DOG_REVIEW',
+  REPORT_PROBLEM = 'REPORT_PROBLEM',
+  EMAIL_SENDER = 'EMAIL_SENDER'
 }
 
 @Component({
@@ -21,6 +23,9 @@ export class ModalComponent implements OnInit {
 
   @Input()
   walkId: string = '';
+
+  @Input()
+  userId: string = '';
 
   @Output()
   closeModal = new EventEmitter<boolean>();
@@ -54,6 +59,14 @@ export class ModalComponent implements OnInit {
 
       case modalName.DOG_REVIEW:
         this.modalName = 'Oceń psa';
+        break;
+
+      case modalName.REPORT_PROBLEM:
+        this.modalName = 'Zgłoś problem';
+        break;
+
+      case modalName.EMAIL_SENDER:
+        this.modalName = 'Wyślij wiadomość';
         break;
     }
   }

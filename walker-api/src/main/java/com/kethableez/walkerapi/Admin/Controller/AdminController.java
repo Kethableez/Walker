@@ -3,12 +3,14 @@ package com.kethableez.walkerapi.Admin.Controller;
 import java.util.List;
 
 import com.kethableez.walkerapi.Admin.Service.AdminService;
+import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
 import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
 import com.kethableez.walkerapi.Report.Model.Report;
 import com.kethableez.walkerapi.Report.Model.ReportStatus;
 import com.kethableez.walkerapi.Report.Service.ReportService;
 import com.kethableez.walkerapi.User.Model.DTO.UserWithAdditionalInfo;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkAdminInfo;
 import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +45,14 @@ public class AdminController {
     }
 
     @GetMapping("/walks")
-    public ResponseEntity<List<Walk>> getWalks() {
-        List<Walk> walks = adminService.getWalksList();
+    public ResponseEntity<List<WalkAdminInfo>> getWalks() {
+        List<WalkAdminInfo> walks = adminService.getWalksList();
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 
     @GetMapping("/dogs")
-    public ResponseEntity<List<Dog>> getDogs() {
-        List<Dog> dogs = adminService.getDogsList();
+    public ResponseEntity<List<DogInfo>> getDogs() {
+        List<DogInfo> dogs = adminService.getDogsList();
         return new ResponseEntity<>(dogs, HttpStatus.OK);
     }
 

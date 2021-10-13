@@ -5,3 +5,7 @@ export function findFirst<T>(array: T[]): T {
 export function exists<T>(obj: T): boolean {
   return !!obj;
 }
+
+export function removeById(array: any[], id: string): any[] {
+  return array.filter(obj => obj.id !== id);
+}

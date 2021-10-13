@@ -26,6 +26,14 @@
         <ktbz-dog-review-form [walkId]="walkId"></ktbz-dog-review-form>
       </div>
 
+      <div *ngSwitchCase="'EMAIL_SENDER'">
+        <ktbz-email-sender-form [userId]="userId"></ktbz-email-sender-form>
+      </div>
+
+      <div *ngSwitchCase="'REPORT_PROBLEM'">
+        <ktbz-problem-report-form></ktbz-problem-report-form>
+      </div>
+
     </div>
 
 

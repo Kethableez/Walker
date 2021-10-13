@@ -2,6 +2,88 @@
   <div class="page-header">Dashboard</div>
 
   <div class="main-container">
+    <div [ngSwitch]="userRole">
+      <div class="admin-layout" *ngSwitchCase="role.ROLE_ADMIN">
+        <div class="box">
+          <div class="page-header">System</div>
+          <div class="box-body">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci
+            sit amet hic. Doloremque maiores debitis cumque excepturi quam et
+            reiciendis necessitatibus libero. Voluptas id, illum modi cupiditate
+            quaerat omnis quibusdam ullam repellat, totam quae quis ipsum
+            corporis ipsam mollitia amet voluptate suscipit placeat sunt ipsa
+            quo hic?
+          </div>
+          <div class="button">
+            <svg id="donut_large_black_24dp" xmlns="http://www.w3.org/2000/svg" width="40.067" height="40.067" viewBox="0 0 40.067 40.067">
+              <path id="Path_79" data-name="Path 79" d="M0,0H40.067V40.067H0Z" fill="none"/>
+              <path id="Path_80" data-name="Path 80" d="M22.151,7.3a11.745,11.745,0,0,1,7.7,7.7A2.48,2.48,0,0,0,32.2,16.781h.067a2.479,2.479,0,0,0,2.387-3.189A16.774,16.774,0,0,0,23.536,2.473a2.471,2.471,0,0,0-3.172,2.387v.067A2.484,2.484,0,0,0,22.151,7.3Zm7.7,14.608a11.711,11.711,0,0,1-7.7,7.7,2.48,2.48,0,0,0-1.786,2.354v.067a2.479,2.479,0,0,0,3.189,2.387A16.774,16.774,0,0,0,34.672,23.292,2.477,2.477,0,0,0,32.3,20.1h-.083a2.52,2.52,0,0,0-2.371,1.8ZM17.025,31.99a2.535,2.535,0,0,0-1.82-2.4,11.662,11.662,0,0,1,0-22.271,2.535,2.535,0,0,0,1.82-2.4V4.894A2.5,2.5,0,0,0,13.8,2.49a16.692,16.692,0,0,0,0,31.92A2.505,2.505,0,0,0,17.025,31.99Z" transform="translate(1.339 1.583)" fill="#fff"/>
+            </svg>
 
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="page-header">Błędy</div>
+          <div class="box-body">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci
+            sit amet hic. Doloremque maiores debitis cumque excepturi quam et
+            reiciendis necessitatibus libero. Voluptas id, illum modi cupiditate
+            quaerat omnis quibusdam ullam repellat, totam quae quis ipsum
+            corporis ipsam mollitia amet voluptate suscipit placeat sunt ipsa
+            quo hic?
+          </div>
+          <div class="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+              <g id="quickreply_black_24dp" transform="translate(-0.165 -0.165)">
+                <g id="Group_34" data-name="Group 34">
+                  <rect id="Rectangle_449" data-name="Rectangle 449" width="40" height="40" transform="translate(0.165 0.165)" fill="none"/>
+                  <rect id="Rectangle_450" data-name="Rectangle 450" width="40" height="40" transform="translate(0.165 0.165)" fill="none"/>
+                </g>
+                <g id="Group_38" data-name="Group 38" transform="translate(3.361 3.361)">
+                  <g id="Group_37" data-name="Group 37">
+                    <g id="Group_35" data-name="Group 35">
+                      <path id="Path_83" data-name="Path 83" d="M35.608,5.361A3.371,3.371,0,0,0,32.248,2H5.361A3.356,3.356,0,0,0,2.017,5.361L2,35.608l6.722-6.722H23.845V17.124a1.685,1.685,0,0,1,1.68-1.68H35.608Z" transform="translate(-2 -2)" fill="#fff"/>
+                    </g>
+                    <g id="Group_36" data-name="Group 36" transform="translate(25.206 16.804)">
+                      <path id="Path_84" data-name="Path 84" d="M24.881,18.722H22.545L24.9,13.176A.845.845,0,0,0,24.125,12H17.84a.832.832,0,0,0-.84.84v8.4a.832.832,0,0,0,.84.84h2.521V28.7a.416.416,0,0,0,.79.185l4.47-8.957A.83.83,0,0,0,24.881,18.722Z" transform="translate(-17 -12)" fill="#fff"/>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+
+
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="page-header">Baza użytkowników</div>
+          <div class="box-body">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci
+            sit amet hic. Doloremque maiores debitis cumque excepturi quam et
+            reiciendis necessitatibus libero. Voluptas id, illum modi cupiditate
+            quaerat omnis quibusdam ullam repellat, totam quae quis ipsum
+            corporis ipsam mollitia amet voluptate suscipit placeat sunt ipsa
+            quo hic?
+          </div>
+          <div class="button">
+            <svg id="people_black_24dp" xmlns="http://www.w3.org/2000/svg" width="40.875" height="40.875" viewBox="0 0 40.875 40.875">
+              <path id="Path_81" data-name="Path 81" d="M0,0H40.875V40.875H0Z" fill="none"/>
+              <path id="Path_82" data-name="Path 82" d="M26.547,15.219a5.109,5.109,0,1,0-5.109-5.109A5.088,5.088,0,0,0,26.547,15.219Zm-13.625,0a5.109,5.109,0,1,0-5.109-5.109A5.088,5.088,0,0,0,12.922,15.219Zm0,3.406C8.954,18.625,1,20.618,1,24.586v2.555a1.708,1.708,0,0,0,1.7,1.7H23.141a1.708,1.708,0,0,0,1.7-1.7V24.586C24.844,20.618,16.89,18.625,12.922,18.625Zm13.625,0c-.494,0-1.056.034-1.652.085.034.017.051.051.068.068a7.084,7.084,0,0,1,3.287,5.808v2.555a5.117,5.117,0,0,1-.307,1.7h8.822a1.708,1.708,0,0,0,1.7-1.7V24.586C38.469,20.618,30.515,18.625,26.547,18.625Z" transform="translate(0.703 3.516)" fill="#fff"/>
+            </svg>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="sitter-layout" *ngSwitchCase="role.ROLE_SITTER">
+
+      </div>
+      <div class="owner-layout" *ngSwitchCase="role.ROLE_OWNER">
+
+
+      </div>
+    </div>
   </div>
 </div>

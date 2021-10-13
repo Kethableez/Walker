@@ -471,6 +471,54 @@ ktbz-sidebar {
   cursor: pointer;
 }
 
+ktbz-dashboard {
+  .main-container {
+    flex-grow: 1;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .admin-layout {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+
+      .box {
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+        margin: .5rem;
+        width: 20rem;
+        height: 40rem;
+        background-color: $primaryLight;
+        border-radius: 5px;
+        box-shadow: $shadow;
+        .box-body {
+          margin: .5rem;
+        }
+
+        .page-header {
+          font-size: 1.3rem;
+          padding: .5rem;
+        }
+
+        .button {
+          padding: .5rem;
+
+          .icon {
+            width: 3rem;
+            height: 3rem;
+            fill: $primaryLight;
+          }
+        }
+      }
+    }
+  }
+
+}
+
 ktbz-users {
   .main-container {
     overflow-y: scroll;
@@ -493,6 +541,7 @@ ktbz-users {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid $primaryDark;
+    user-select: none;
 
     .image {
       border-radius: 5px;
@@ -505,6 +554,8 @@ ktbz-users {
     .text-1 {
       font-size: 1.5rem;
       font-weight: bold;
+      width: 15rem;
+      text-align: center;
     }
 
     .badge {
@@ -527,13 +578,40 @@ ktbz-users {
       flex-direction: row;
       justify-content: space-evenly;
       align-items: center;
-
       .icon {
         margin: 0 .25rem;
         width: 1.7rem;
         height: 1.7rem;
         fill: $primaryDark;
         cursor: pointer;
+        outline: none;
+        transition: 0.2s ease;
+      }
+      .icon:hover {
+        fill: $primaryTeal;
+      }
+
+      .icon-block {
+        margin: 0 .25rem;
+        width: 1.7rem;
+        height: 1.7rem;
+        fill: $primaryDark;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+      .icon-block:hover {
+        fill: $error;
+      }
+      .icon-ban {
+        // margin: 0 .15rem;
+        width: 2.3rem;
+        height: 2.3rem;
+        fill: $primaryDark;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+      .icon-ban:hover {
+        fill: $error;
       }
     }
   }
@@ -752,6 +830,21 @@ ktbz-home-page {
     margin-inline: 8vw;
     box-shadow: 0 3px 6px rgba($color: #000000, $alpha: 0.2);
   }
+
+  .report {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+
+    .icon {
+      width: 2rem;
+      height: 2rem;
+      fill: $primaryDark;
+      cursor: pointer;
+    }
+  }
+
+
 }
 
 // SHARED
@@ -1962,6 +2055,103 @@ ktbz-planner {
     box-shadow: $shadow;
     opacity: 0.5;
     border-radius: 5px;
+  }
+}
+
+ktbz-dogs {
+  .container {
+    position: relative;
+    .buttons {
+      user-select: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      margin: 0;
+      height: 2.5rem;
+      padding: 0 0.5rem;
+
+      .text-2 {
+        font-size: 1.5rem;
+        margin-right: 2rem;
+      }
+
+      .icon {
+        cursor: pointer;
+        fill: $primaryDark;
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+
+    .main-container {
+      overflow-y: scroll;
+    }
+
+    .main-container::-webkit-scrollbar {
+      width: 1rem;
+    }
+
+    .main-container:-webkit-scrollbar-thumb {
+      background-color: $primaryDark;
+      border-radius: 1rem;
+    }
+
+    .row {
+      display: flex;
+      flex-flow: row;
+      justify-content: space-between;
+      align-items: center;
+      margin: .5rem 2rem;
+      padding: .5rem 0;
+      border-bottom: 1px solid $primaryDark;
+      user-select: none;
+
+      .image {
+        width: 5rem;
+        height: 5rem;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      .text-1 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        width: 15rem;
+        text-align: center;
+      }
+
+      .marker-taken {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 2rem;
+        background-color: $error;
+        box-shadow: $shadow;
+      }
+
+      .marker-available {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 2rem;
+        background-color: $success;
+        box-shadow: $shadow;
+      }
+
+      .icon {
+        margin: 0 .25rem;
+        width: 1.7rem;
+        height: 1.7rem;
+        fill: $primaryDark;
+        cursor: pointer;
+        outline: none;
+        transition: 0.2s ease;
+      }
+      .icon:hover {
+        fill: $primaryTeal;
+      }
+    }
   }
 }
 

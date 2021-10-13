@@ -11,4 +11,5 @@ public class DogInfo {
     private String id;
     private String dogName;
     private String dogPhoto;
+    private String ownerName;
 }

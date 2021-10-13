@@ -1,36 +1,50 @@
 <div class="container">
+
   <div class="page-header">Użytkownicy</div>
 
   <div class="main-container">
     <div class="row" *ngFor="let user of users | async">
       <img class="image" [src]="user.avatar">
       <div class="text-1"> {{ user.firstName }} {{user.lastName }}</div>
-      <div class="badge"> Admin </div>
+      <div class="badge"> {{user.mainRole}} </div>
       <div class="action-buttons">
-        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" [routerLink]="['/home/profile', user.username]">
           <path d="M0 0h24v24H0V0z" fill="none" />
           <path
             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1s1 .45 1 1v4c0 .55-.45 1-1 1zm1-8h-2V7h2v2z" />
         </svg>
 
-        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" (click)="toggleModal(true, user.id)">
           <path d="M0 0h24v24H0V0z" fill="none" />
           <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
         </svg>
 
-        <svg (click)="blockUser(user.id)" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M0 0h24v24H0V0z" fill="none" />
-          <path
-            d="M7 12c0 .55.45 1 1 1h8c.55 0 1-.45 1-1s-.45-1-1-1H8c-.55 0-1 .45-1 1zm5-10C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+        <svg *ngIf="!user.blocked" (click)="doAdminAction(Action.BLOCK, user)" class="icon-block" id="remove_circle_outline_black_24dp_1_" data-name="remove_circle_outline_black_24dp (1)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path id="Path_90" data-name="Path 90" d="M0,0H24V24H0Z" fill="none"/>
+          <path id="Path_91" data-name="Path 91" d="M7,12a1,1,0,0,0,1,1h8a1,1,0,0,0,0-2H8A1,1,0,0,0,7,12ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z"/>
         </svg>
 
-        <svg (click)="banUser(user.id)" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M0 0h24v24H0V0z" fill="none" />
-          <path
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z" />
+        <svg *ngIf="user.blocked" (click)="doAdminAction(Action.UNBLOCK, user)" class="icon-block" id="remove_circle_black_24dp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path id="Path_92" data-name="Path 92" d="M0,0H24V24H0Z" fill="none"/>
+          <path id="Path_93" data-name="Path 93" d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm4,11H8a1,1,0,0,1,0-2h8a1,1,0,0,1,0,2Z"/>
         </svg>
 
-        <svg (click)="deleteUser(user.id)" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <svg *ngIf="!user.banned" (click)="doAdminAction(Action.BAN, user)" class="icon-ban" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.784 32.785">
+          <g id="remove_circle_outline_black_24dp_1_" data-name="remove_circle_outline_black_24dp (1)" transform="translate(0 12) rotate(-30)">
+            <path id="Path_90" data-name="Path 90" d="M0,0H24V24H0Z" fill="none"/>
+            <path id="Path_91" data-name="Path 91" d="M7,12a1,1,0,0,0,1,1h8a1,1,0,0,0,0-2H8A1,1,0,0,0,7,12ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z"/>
+          </g>
+        </svg>
+
+          <svg *ngIf="user.banned" (click)="doAdminAction(Action.UNBAN, user)" class="icon-ban" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.784 32.785">
+            <g id="remove_circle_black_24dp" transform="translate(0 12) rotate(-30)">
+              <path id="Path_92" data-name="Path 92" d="M0,0H24V24H0Z" fill="none"/>
+              <path id="Path_93" data-name="Path 93" d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm4,11H8a1,1,0,0,1,0-2h8a1,1,0,0,1,0,2Z"/>
+            </g>
+          </svg>
+
+
+        <svg (click)="doAdminAction(Action.REMOVE, user)" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M0 0h24v24H0V0z" fill="none" />
           <path
             d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" />
@@ -39,3 +53,7 @@
     </div>
   </div>
 </div>
+
+<ktbz-modal *ngIf="isModalOpened" [settingSelector]="modalSetting" [userId]="selectedUserId" (closeModal)="toggleModal(false)">
+
+</ktbz-modal>
