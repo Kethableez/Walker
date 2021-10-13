@@ -43,6 +43,7 @@ import { SitterReviewFormComponent } from './main/home-page/components/owner/sit
 import { DogReviewFormComponent } from './main/home-page/components/sitter/dog-review-form/dog-review-form.component';
 import { ProblemReportFormComponent } from './main/home-page/components/shared/problem-report-form/problem-report-form.component';
 import { EmailSenderFormComponent } from './main/home-page/components/shared/email-sender-form/email-sender-form.component';
+import { ImageComponent } from './main/home-page/components/shared/image/image.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { EmailSenderFormComponent } from './main/home-page/components/shared/ema
     DogReviewFormComponent,
     ProblemReportFormComponent,
     EmailSenderFormComponent,
+    ImageComponent,
   ],
   imports: [
     BrowserModule,
