@@ -1,11 +1,15 @@
-package com.kethableez.walkerapi.Activity.Repository;
+package com.kethableez.walkerapi.Utility.Repository;
 
-import com.kethableez.walkerapi.Activity.Model.Activity;
+
+import java.util.List;
+
+import com.kethableez.walkerapi.Utility.Model.Activity;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ActivityRepository extends MongoRepository<Activity, String> {
+    List<Activity> findByOrderByTimestampAsc();
     
 }

@@ -7,7 +7,6 @@ import { UserService } from 'src/app/core/services/models/user.service';
 import { Role } from 'src/app/models/enums/role.model';
 import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 import { CurrentUserStoreService } from './../../../../../core/services/store/current-user-store.service';
-import { DogInfo } from './../../../../../models/dogs/dog-info.model';
 import { RegularUser } from './../../../../../models/users/regular-user.model';
 import { OwnerData } from 'src/app/models/users/owner.model';
 import { exists, findFirst } from 'src/app/core/services/utility/utility.model';
@@ -16,6 +15,7 @@ import { SitterService } from 'src/app/core/services/models/sitter.service';
 import { OwnerService } from 'src/app/core/services/models/owner.service';
 import { Observable, of } from 'rxjs';
 import { SitterReviewCard } from 'src/app/models/reviews/sitter-review-card.model';
+import { DogCard } from 'src/app/models/dogs/dog-card.model';
 
 enum Options {
   GALLERY = 'GALLERY',
@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
   mainRole = this.userService.getUserRole(this.username);
 
   user!: User;
-  dogs?: DogInfo[];
+  dogs?: DogCard[];
   images?: string[];
   walks?: WalkInfo[];
   reviews?: SitterReviewCard[];

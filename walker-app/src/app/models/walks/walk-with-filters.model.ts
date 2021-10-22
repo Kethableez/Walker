@@ -1,7 +1,7 @@
 import { Filters } from "./filters.model";
-import { WalkInfo } from "./walk-info.model";
+import { WalkCard } from "./walk-card.model";
 
 export interface WalkWithFilters {
-  walks: WalkInfo[];
+  walks: WalkCard[];
   filters: Filters;
 }

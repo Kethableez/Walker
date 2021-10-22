@@ -6,7 +6,6 @@ import com.kethableez.walkerapi.User.Service.UserService;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
 import com.kethableez.walkerapi.Utility.Response.MessageResponse;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkCard;
-import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
 import com.kethableez.walkerapi.Walk.Model.DTO.WalkWithFilters;
 import com.kethableez.walkerapi.Walk.Model.Request.WalkRequest;
 import com.kethableez.walkerapi.Walk.Service.WalkService;
@@ -40,8 +39,8 @@ public class WalkController {
     private final UserService userService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<WalkInfo>> getWalks() {
-        List<WalkInfo> walks = walkService.getAllAvailableWalkInfo();
+    public ResponseEntity<List<WalkCard>> getWalks() {
+        List<WalkCard> walks = walkService.getAllAvailableWalkCards();
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 

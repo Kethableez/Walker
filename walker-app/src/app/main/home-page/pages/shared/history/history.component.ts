@@ -21,7 +21,7 @@ export class HistoryComponent implements OnInit {
   ) {}
 
   roleView = this.userStore.role;
-  walkHistory: PastWalkInfo[] = [];
+  walkHistory: WalkCard[] = [];
   reviewedWalkId = '';
   setting = '';
   isSettingsOpened = false;
@@ -40,7 +40,7 @@ export class HistoryComponent implements OnInit {
       this.ownerService.getHistory().subscribe(
         (res) => {
           this.walkHistory = res;
-          console.log(res);
+          console.log('hist', res);
         }
       )
     }

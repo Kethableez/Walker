@@ -13,6 +13,7 @@ import com.kethableez.walkerapi.User.Model.Request.UserPasswordRequest;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.User.Service.UserService;
 import com.kethableez.walkerapi.Utility.Enum.Role;
+import com.kethableez.walkerapi.Utility.Model.Notification;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
 import com.kethableez.walkerapi.Utility.Response.MessageResponse;
 
@@ -56,14 +57,27 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @GetMapping("/notifications")
+    public ResponseEntity<List<Notification>> getUserNotifications(UsernamePasswordAuthenticationToken token) {
+        List<Notification> notifications = userService.getUserNotifications(userService.getIdFromToken(token));
+        return new ResponseEntity<>(notifications, HttpStatus.OK);
+    }
+
+    @PostMapping("/notifications/{notificationId}/markAsRead")
+    public ResponseEntity<?> markNotificationAsRead(@PathVariable String notificationId) {
+        this.userService.markAsRead(notificationId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @GetMapping("/role")
     public ResponseEntity<Role> getUserRole(UsernamePasswordAuthenticationToken token) {
-        return new ResponseEntity<>(userService.getUserRole(userService.getIdFromToken(token)), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserRole(userService.getUserCard(userService.getIdFromToken(token))), HttpStatus.OK);
     }
 
     @GetMapping("/role/{username}")
     public ResponseEntity<Role> getUserRole(@PathVariable String username) {
-        return new ResponseEntity<>(userService.getUserRole(userService.getIdFromUsername(username)), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserRole(userService.getUserCard(userService.getIdFromUsername(username))), HttpStatus.OK);
     }
 
     @GetMapping("/get_data")

@@ -3,11 +3,13 @@ package com.kethableez.walkerapi.User.Model.Entity;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.kethableez.walkerapi.Utility.Enum.Gender;
+import com.kethableez.walkerapi.Utility.Enum.Role;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -92,5 +94,13 @@ public class User {
 
     public String getAvatar() {
         return "http://localhost:8080/image/user/" + this.id + "/" + this.avatar;
+    }
+
+    public Set<Role> getRoles() {
+        return this.roles.stream().map(role -> role.getRole()).collect(Collectors.toSet());
+    }
+
+    public Set<UserRole> getUserRoles() {
+        return this.roles;
     }
 }

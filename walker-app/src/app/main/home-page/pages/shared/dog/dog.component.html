@@ -40,6 +40,8 @@
     <div class="column">
       <div class="switch-body">
         <div class="buttons">
+          <div *ngIf="walkCard | async as walkCard " [ngClass]="option === options.WALK ? 'button-active' : 'button-inactive'"
+          (click)="changeOption(options.WALK)">Spacer</div>
           <div [ngClass]="option === options.IMAGES ? 'button-active' : 'button-inactive'"
             (click)="changeOption(options.IMAGES)">Galeria</div>
           <div [ngClass]="option === options.WALKS ? 'button-active' : 'button-inactive'"
@@ -49,8 +51,8 @@
         </div>
         <div [ngSwitch]="option">
           <div *ngSwitchCase="options.WALKS">
-            <div *ngFor="let walk of dogCard.incomingWalks">
-              <div class="walk" [routerLink]="['/home/walk', walk.id]">
+            <div *ngFor="let walkCard of dogCard.incomingWalks">
+              <div class="walk" [routerLink]="['/home/dog', walkCard.dog.id, walkCard.walk.id]">
                 <div class="text-1">
                   <svg id="fmd_good_black_24dp" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 32 32">
                     <g id="Group_28" data-name="Group 28">
@@ -63,7 +65,7 @@
                     </g>
                   </svg>
 
-                  <div class="text-2">{{walk.city}}, {{walk.adress}}</div>
+                  <div class="text-2">{{walkCard.walk.city}}, {{walkCard.walk.address}}</div>
                 </div>
 
                 <div class="text-1">
@@ -75,7 +77,7 @@
                       transform="translate(0.667 0.333)" fill="#3e403b" />
                   </svg>
 
-                  <div class="text-2">{{walk.walkDateTime | date:'dd.MM.yyyyr, HH:mm'}}</div>
+                  <div class="text-2">{{walkCard.walk.walkDateTime | date:'dd.MM.yyyyr, HH:mm'}}</div>
                 </div>
               </div>
             </div>
@@ -92,8 +94,36 @@
                 <div class="text-2">  {{review.reviewDate | date: 'dd/MM/yyyy'}}</div>
               </div>
               <div class="text-1">
-                Ergonomia użytkowania połączona z szykownym designem? Tak, to możliwe! Fotel gamingowy Gamvis Phantom to odpowiedź na oczekiwania nawet najbardziej wymagającego gracza. Elegancka, czarna kolorystyka przełamana przez czerwone detale. Test test test test
+                {{review.reviewBody}}
               </div>
+            </div>
+          </div>
+          <div class="walk-card" *ngSwitchCase="options.WALK">
+            <div *ngIf="walkCard | async as walkCard">
+              <div class="text-1">
+                <svg id="fmd_good_black_24dp" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 32 32">
+                  <g id="Group_28" data-name="Group 28">
+                    <path id="Path_67" data-name="Path 67" d="M0,0H32V32H0Z" fill="none"/>
+                  </g>
+                  <g id="Group_29" data-name="Group 29" transform="translate(5.333 2.667)">
+                    <path id="Path_68" data-name="Path 68" d="M14.667,2A10.606,10.606,0,0,0,4,12.933q0,6.36,9.787,14.973a1.356,1.356,0,0,0,1.773,0q9.76-8.62,9.773-14.973A10.606,10.606,0,0,0,14.667,2Zm0,13.333a2.667,2.667,0,1,1,2.667-2.667A2.675,2.675,0,0,1,14.667,15.333Z" transform="translate(-4 -2)" fill="#3e403b"/>
+                  </g>
+                </svg>
+
+                <div class="text-2">{{walkCard.walk.city}}, {{walkCard.walk.address}}</div>
+              </div>
+
+              <div class="text-1">
+                <svg id="calendar_today_black_24dp_1_" data-name="calendar_today_black_24dp (1)" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 32 32">
+                  <path id="Path_69" data-name="Path 69" d="M0,0H32V32H0Z" fill="none"/>
+                  <path id="Path_70" data-name="Path 70" d="M26,3.667H24.667V2.333a1.333,1.333,0,0,0-2.667,0V3.667H8.667V2.333A1.333,1.333,0,1,0,6,2.333V3.667H4.667A2.675,2.675,0,0,0,2,6.333V27.667a2.675,2.675,0,0,0,2.667,2.667H26a2.675,2.675,0,0,0,2.667-2.667V6.333A2.675,2.675,0,0,0,26,3.667Zm-1.333,24H6a1.337,1.337,0,0,1-1.333-1.333v-16H26v16A1.337,1.337,0,0,1,24.667,27.667Z" transform="translate(0.667 0.333)" fill="#3e403b"/>
+                </svg>
+
+                <div class="text-2">{{walkCard?.walk?.walkDateTime | date:'dd.MM.yyyyr, HH:mm'}}</div>
+            </div>
+
+            <div class="page-header" *ngIf="walkCard.walk.walkDescription">Dodatkowe informacje</div>
+            <div class="text-2 height" *ngIf="walkCard.walk.walkDescription" >{{walkCard.walk.walkDescription}}</div>
             </div>
           </div>
         </div>

@@ -4,9 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { catchError, flatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { exists } from 'src/app/core/services/utility/utility.model';
+import { WalkCard } from 'src/app/models/walks/walk-card.model';
+import { WalkService } from 'src/app/core/services/models/walk.service';
 
 enum ProfileOptions {
+  WALK = 'WALK',
   WALKS = 'WALKS',
   IMAGES = 'IMAGES',
   REVIEWS = 'REVIEWS'
@@ -19,35 +21,34 @@ export class DogComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private dogService: DogService
+    private dogService: DogService,
+    private walkService: WalkService
   ) {}
 
 
+  isWalkViewEnabled: boolean = false;
+  option = ProfileOptions.WALKS;
     dogCard: Observable<DogCard> = this.getDogCard().pipe(
       tap(dogCard => {
-        dogCard.images.push(dogCard.images[0]);
-        dogCard.images.push(dogCard.images[0])
-        dogCard.images.push(dogCard.images[0])
-        dogCard.images.push(dogCard.images[0])
-        dogCard.images.push(dogCard.images[0])
-
-        console.log(dogCard.images);
-        dogCard.reviews.push(dogCard.reviews[0])
-        dogCard.reviews.push(dogCard.reviews[0])
-        dogCard.reviews.push(dogCard.reviews[0])
-        dogCard.reviews.push(dogCard.reviews[0])
-        dogCard.reviews.push(dogCard.reviews[0])
-
-
       },
       error => this.router.navigate(['/home/dashboard']))
     );
-    option = ProfileOptions.WALKS;
+    walkCard?: Observable<WalkCard>;
+    //   tap(
+    //     () => {
+    //       console.log('walk');
+    //       this.isWalkViewEnabled = true;
+    //       this.option = ProfileOptions.WALK;
+    //     },
+    //     () => this.isWalkViewEnabled = false
+    //   )
+    // );
     isGalleryOpen = false;
     selectedPhoto: string = '';
 
   ngOnInit(): void {
-    console.log(this.option, this.option === this.options.WALKS)
+    // console.log(this.option, this.option === this.options.WALKS)
+    console.log(this.route.snapshot.paramMap.get('walkId'));
   }
 
   get options() {
@@ -67,9 +68,24 @@ export class DogComponent implements OnInit {
     return this.route.paramMap.pipe(
       mergeMap(paraMap => {
         const id = paraMap.get('id') as string;
+        const walkId = paraMap.get('walkId');
+        if (walkId) {
+          this.isWalkViewEnabled = true;
+          this.option = ProfileOptions.WALK;
+          this.walkCard = this.walkService.getWalk(walkId);
+        }
         return this.dogService.getDog(id);
       })
     );
+  }
+
+  private getWalkCard(): Observable<WalkCard> {
+    return this.route.paramMap.pipe(
+      mergeMap(paraMap => {
+        const walkId = paraMap.get('walkId') as string;
+        return this.walkService.getWalk(walkId);
+      })
+    )
   }
 
 }

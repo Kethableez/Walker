@@ -16,33 +16,39 @@ import com.kethableez.walkerapi.Review.Model.Request.SitterReviewRequest;
 import com.kethableez.walkerapi.Review.Repository.DogReviewRepository;
 import com.kethableez.walkerapi.Review.Repository.SitterReviewRepository;
 import com.kethableez.walkerapi.Utility.Mapper.MapperService;
+import com.kethableez.walkerapi.Utility.Model.ActivityType;
+import com.kethableez.walkerapi.Utility.Model.NotificationType;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
+import com.kethableez.walkerapi.Utility.Services.ActivityService;
+import com.kethableez.walkerapi.Utility.Services.NotificationService;
 import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
 import com.kethableez.walkerapi.Walk.Repository.WalkRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class ReviewService {
+
+    
+    private final SitterReviewRepository sitterReviewRepository;
+    private final DogReviewRepository dogReviewRepository;
+    private final WalkRepository walkRepository;
+    private final DogRepository dogRepository;
+    private final MapperService mapper;
+    private final ActivityService activityService;
+    private final NotificationService notificationService;
     
     @Autowired
-    private final SitterReviewRepository sitterReviewRepository;
-
-    @Autowired
-    private final DogReviewRepository dogReviewRepository;
-
-    @Autowired
-    private final WalkRepository walkRepository;
-
-    @Autowired
-    private final DogRepository dogRepository;
-
-    @Autowired
-    private final MapperService mapper;
+    public ReviewService(SitterReviewRepository sitterReviewRepository, DogReviewRepository dogReviewRepository, WalkRepository walkRepository, DogRepository dogRepository, MapperService mapper, ActivityService activityService, NotificationService notificationService) {
+        this.sitterReviewRepository = sitterReviewRepository;
+        this.dogReviewRepository = dogReviewRepository;
+        this.walkRepository = walkRepository;
+        this.dogRepository = dogRepository;
+        this.mapper = mapper;
+        this.activityService = activityService;
+        this.notificationService = notificationService;
+    }
 
     public ActionResponse addSitterReview(String ownerId, SitterReviewRequest request) {
         if(checkDataCorrectness(ownerId, request.getWalkId())) {
@@ -58,16 +64,16 @@ public class ReviewService {
                 LocalDateTime.now()
             );
             walk.setSitterReviewed(true);
-    
             sitterReviewRepository.save(review);
             walkRepository.save(walk);
+            activityService.reportActivity(ownerId, ActivityType.SITTER_REVIEW);
+            notificationService.createNotification(ownerId, walk.getSitterId(), walk.getId(), NotificationType.SITTER_REVIEW);
             return new ActionResponse(true, "Dodano ocenę opiekuna");
         }
         else return new ActionResponse(false, "Niepoprawne dane");
     }
 
     public ActionResponse addDogReview(String sitterId, DogReviewRequest request) {
-
         if(checkDogReviewDataCorrectness(sitterId, request.getWalkId())) {
             Walk walk = walkRepository.findById(request.getWalkId()).get();
 
@@ -81,9 +87,10 @@ public class ReviewService {
             );
     
             walk.setDogReviewed(true);
-    
             dogReviewRepository.save(review);
             walkRepository.save(walk);
+            activityService.reportActivity(sitterId, ActivityType.DOG_REVIEW);
+            notificationService.createNotification(sitterId, walk.getOwnerId(), walk.getId(), NotificationType.DOG_REVIEW);
             return new ActionResponse(true, review.getId());
         }
         else return new ActionResponse(false, "Niepoprawne dane");

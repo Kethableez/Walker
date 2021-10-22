@@ -12,6 +12,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class WalkWithFilters {
-    private List<WalkInfo> walks;
+    private List<WalkCard> walks;
     private WalkFilter filters;
 }

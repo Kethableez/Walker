@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
 import { ActionResponse } from 'src/app/models/action-response.model';
 import { Role } from 'src/app/models/enums/role.model';
+import { WalkCard } from 'src/app/models/walks/walk-card.model';
 
 @Component({
   selector: 'ktbz-login',
@@ -108,11 +109,11 @@ export class LoginComponent implements OnInit {
   // Przenieść do store
   private storeSitterItems() {
     this.sitterService.getWalks().subscribe(
-      (response: WalkInfo[]) => this.sitterStore.saveIncomingWalks(response)
+      (response: WalkCard[]) => this.sitterStore.saveIncomingWalks(response)
     )
 
     this.sitterService.getHistory().subscribe(
-      (response: PastWalkInfo[]) => this.sitterStore.savePastWalks(response)
+      (response: WalkCard[]) => this.sitterStore.savePastWalks(response)
     )
 
     this.sitterService.getSitterData().subscribe(

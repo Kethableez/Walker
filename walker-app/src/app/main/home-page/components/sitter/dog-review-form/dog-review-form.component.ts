@@ -19,7 +19,7 @@ export class DogReviewFormComponent implements OnInit {
 
   dogReviewForm = this.builder.group({
     dogPhoto: ['', Validators.required],
-    reivewBody: ['', Validators.required],
+    reviewBody: ['', Validators.required],
     walkId: ['', Validators.required],
   })
 

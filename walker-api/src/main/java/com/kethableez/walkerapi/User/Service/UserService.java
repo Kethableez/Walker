@@ -3,6 +3,7 @@ package com.kethableez.walkerapi.User.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -24,36 +25,48 @@ import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.User.Repository.UserRoleRepository;
 import com.kethableez.walkerapi.Utility.Enum.Role;
 import com.kethableez.walkerapi.Utility.Mapper.MapperService;
+import com.kethableez.walkerapi.Utility.Model.ActivityType;
+import com.kethableez.walkerapi.Utility.Model.Notification;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
+import com.kethableez.walkerapi.Utility.Services.ActivityService;
+import com.kethableez.walkerapi.Utility.Services.NotificationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class UserService {
 
-        @Autowired
         private final UserRepository userRepository;
-
-        @Autowired
         private final UserRoleRepository roleRepository;
-
-        @Autowired
         private final TokenStorageRepository tokenStorageRepository;
-
-        @Autowired
         private final PasswordEncoder encoder;
-
-        @Autowired
         private final MapperService mapper;
+        private final ImageService imageService;
+        private final ActivityService activityService;
+        private final NotificationService notificationService;
 
         @Autowired
-        private final ImageService imageService;
+        public UserService(
+                UserRepository userRepository, 
+                UserRoleRepository roleRepository,
+                TokenStorageRepository tokenStorageRepository, 
+                PasswordEncoder encoder, 
+                MapperService mapper,
+                ImageService imageService, 
+                ActivityService activityService,
+                NotificationService notificationService) {
+                this.userRepository = userRepository;
+                this.roleRepository = roleRepository;
+                this.tokenStorageRepository = tokenStorageRepository;
+                this.encoder = encoder;
+                this.mapper = mapper;
+                this.imageService = imageService;
+                this.activityService = activityService;
+                this.notificationService = notificationService;
+        }
 
         public String registerUser(RegisterRequest request) {
                 Random rnd = new Random();
@@ -61,13 +74,14 @@ public class UserService {
 
                 User newUser = new User(request.getUsername(), request.getEmail(),
                                 encoder.bCryptPasswordEncoder().encode(request.getPassword()), request.getFirstName(),
-                                request.getLastName(), request.getBirthdate(), request.getCity(), request.getAvatar(), request.getGender(),
-                                false, request.getIsSubscribed(), false, false);
+                                request.getLastName(), request.getBirthdate(), request.getCity(), request.getAvatar(),
+                                request.getGender(), true, request.getIsSubscribed(), false, false);
                 Set<UserRole> roles = new HashSet<>();
+                Role role = (request.getRole().equals(Role.ROLE_OWNER)) ? Role.ROLE_OWNER : Role.ROLE_SITTER;
                 roles.add(roleRepository.findByRole(Role.ROLE_USER).orElseThrow());
+                roles.add(roleRepository.findByRole(role).orElseThrow());
                 newUser.setRoles(roles);
 
-                Role role = (request.getRole().equals(Role.ROLE_OWNER)) ? Role.ROLE_OWNER : Role.ROLE_SITTER;
                 String token = UUID.randomUUID().toString();
 
                 TokenStorage userToken = new TokenStorage(request.getUsername(), role, token,
@@ -76,6 +90,7 @@ public class UserService {
 
                 tokenStorageRepository.save(userToken);
                 userRepository.save(newUser);
+                this.activityService.reportActivity(newUser.getId(), ActivityType.REGISTER);
                 return newUser.getId();
         }
 
@@ -84,10 +99,11 @@ public class UserService {
                 int code = rnd.nextInt(999999);
                 User newUser = new User(request.getUsername(), request.getEmail(),
                                 encoder.bCryptPasswordEncoder().encode(request.getPassword()), request.getFirstName(),
-                                request.getLastName(), request.getBirthdate(), request.getCity(), request.getAvatar(), request.getGender(),
-                                false, request.getIsSubscribed(), false, false);
+                                request.getLastName(), request.getBirthdate(), request.getCity(), request.getAvatar(),
+                                request.getGender(), true, request.getIsSubscribed(), false, false);
                 Set<UserRole> roles = new HashSet<>();
                 roles.add(roleRepository.findByRole(request.getRole()).orElseThrow());
+                roles.add(roleRepository.findByRole(Role.ROLE_ADMIN).orElseThrow());
                 newUser.setRoles(roles);
 
                 TokenStorage token = new TokenStorage(request.getUsername(), Role.ROLE_ADMIN,
@@ -96,6 +112,7 @@ public class UserService {
 
                 tokenStorageRepository.save(token);
                 userRepository.save(newUser);
+                this.activityService.reportActivity(newUser.getId(), ActivityType.REGISTER);
                 return newUser.getId();
         }
 
@@ -107,17 +124,17 @@ public class UserService {
                                 if (userToken.get().getCode().equals(code)) {
                                         if (LocalDateTime.now().isBefore(userToken.get().getExpiredAt())) {
                                                 switch (userToken.get().getRole()) {
-                                                        case ROLE_ADMIN:
-                                                                confirmAdmin(userToken.get());
-                                                                break;
-                                                        case ROLE_OWNER:
-                                                                confirmOwner(userToken.get());
-                                                                break;
-                                                        case ROLE_SITTER:
-                                                                confirmSitter(userToken.get());
-                                                                break;
-                                                        default:
-                                                                return new ActionResponse(false, "Error!");
+                                                case ROLE_ADMIN:
+                                                        confirmAdmin(userToken.get());
+                                                        break;
+                                                case ROLE_OWNER:
+                                                        confirmOwner(userToken.get());
+                                                        break;
+                                                case ROLE_SITTER:
+                                                        confirmSitter(userToken.get());
+                                                        break;
+                                                default:
+                                                        return new ActionResponse(false, "Error!");
                                                 }
                                                 userToken.get().setConfirmed(true);
                                                 tokenStorageRepository.save(userToken.get());
@@ -134,7 +151,7 @@ public class UserService {
 
         public User confirmAdmin(TokenStorage token) {
                 User admin = userRepository.findByUsername(token.getUsername()).orElseThrow();
-                Set<UserRole> roles = admin.getRoles();
+                Set<UserRole> roles = admin.getUserRoles();
                 roles.add(roleRepository.findByRole(Role.ROLE_ADMIN).orElseThrow());
                 admin.setRoles(roles);
                 admin.setIsActive(true);
@@ -143,7 +160,7 @@ public class UserService {
 
         public User confirmOwner(TokenStorage token) {
                 User owner = userRepository.findByUsername(token.getUsername()).orElseThrow();
-                Set<UserRole> roles = owner.getRoles();
+                Set<UserRole> roles = owner.getUserRoles();
                 roles.add(roleRepository.findByRole(Role.ROLE_OWNER).orElseThrow());
                 owner.setRoles(roles);
                 owner.setIsActive(true);
@@ -153,7 +170,7 @@ public class UserService {
 
         public User confirmSitter(TokenStorage token) {
                 User sitter = userRepository.findByUsername(token.getUsername()).orElseThrow();
-                Set<UserRole> roles = sitter.getRoles();
+                Set<UserRole> roles = sitter.getUserRoles();
                 roles.add(roleRepository.findByRole(Role.ROLE_SITTER).orElseThrow());
                 sitter.setRoles(roles);
                 sitter.setIsActive(true);
@@ -201,12 +218,20 @@ public class UserService {
 
         public ActionResponse changeAvatar(String userId, MultipartFile file) {
                 try {
-                       return this.imageService.changeUserPhoto(file, userId);
+                        return this.imageService.changeUserPhoto(file, userId);
                 } catch (IOException e) {
                         e.printStackTrace();
                         return new ActionResponse(false, "Wystąpił error");
                 }
 
+        }
+
+        public List<Notification> getUserNotifications(String userId) {
+                return this.notificationService.getUserNotifications(userId);
+        }
+
+        public void markAsRead(String notificationId) {
+                this.notificationService.markAsRead(notificationId);
         }
 
         public String getIdFromToken(UsernamePasswordAuthenticationToken token) {
@@ -225,15 +250,8 @@ public class UserService {
                 return mapper.userInfoMapper(userId);
         }
 
-        public Optional<UserRole> getRole(User user) {
-                return user.getRoles().stream().filter(r -> r.getRole() != Role.ROLE_USER).findFirst();
+        public Role getUserRole(UserCard user) {
+                return mapper.getMainRole(user.getRoles());
         }
 
-        public Role getUserRole(String userId) {
-                Optional<Role> mainRole = userRepository.findById(userId).get().getRoles().stream()
-                .map(userRole -> userRole.getRole())
-                .filter(role -> role != Role.ROLE_USER).findFirst();
-
-                return mainRole.isPresent() ? mainRole.get() : Role.ROLE_USER;
-        }
 }

@@ -2,9 +2,12 @@ const urls: { [key: string]: any } = {
   admin: {
     prefix: 'admin',
     calls: {
-      getUsers: 'users',
+      getActivity: 'activities',
       getDogs: 'dogs',
+      getUsers: 'users',
       getWalks: 'walks',
+      getReportsByStatus: 'report/:status',
+      changeReportStatus: 'report/:reportId/:status',
       blockUser: 'block/:userId',
       unblockUser: 'unblock/:userId',
       banUser: 'ban/:userId',
@@ -27,11 +30,14 @@ const urls: { [key: string]: any } = {
       getUser: ':id',
       getAllUsers: 'all',
       getUserData: 'get_data/:username',
+      getNotifications: 'notifications',
+      getRole: 'role/:username',
       changeData: 'change_data',
       changePassword: 'change_password',
       changeDescription: 'change_description',
       changeAvatar: 'change_avatar',
-      getRole: 'role/:username'
+      markNotificationAsRead: 'notifications/:notificationId/markAsRead',
+      postReport: 'report'
     },
   },
   owner: {
@@ -40,17 +46,18 @@ const urls: { [key: string]: any } = {
       getData: 'ownerData/:username',
       getDogs: 'dogs',
       getHistory: 'history',
-      getSitters: 'sitters',
       getWalks: 'walks',
+      getOwnerImages: 'images'
     },
   },
   sitter: {
     prefix: 'sitter',
     calls: {
       getData: 'sitterData/:username',
-      getDogs: 'dogs',
       getHistory: 'history',
       getWalks: 'walks',
+      getSitterImages: 'images',
+      getSitterReviews: 'reviews'
     },
   },
   dog: {

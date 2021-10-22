@@ -15,10 +15,10 @@ export class WalkService {
   constructor(private http: HttpClient,
     private setting: SettingService) {}
 
-  getAll(): Observable<WalkInfo[]> {
+  getAll(): Observable<WalkCard[]> {
     const url = this.setting.getWalkUrl('getAllWalks');
 
-    return this.http.get<WalkInfo[]>(url);
+    return this.http.get<WalkCard[]>(url);
   }
 
   getWalksWithFilters(): Observable<WalkWithFilters> {

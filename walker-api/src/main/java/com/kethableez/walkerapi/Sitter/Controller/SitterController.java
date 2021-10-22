@@ -8,8 +8,7 @@ import com.kethableez.walkerapi.Review.Service.ReviewService;
 import com.kethableez.walkerapi.Sitter.Model.Sitter;
 import com.kethableez.walkerapi.Sitter.Service.SitterService;
 import com.kethableez.walkerapi.User.Service.UserService;
-import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkInfo;
-import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkCard;
 import com.kethableez.walkerapi.Walk.Service.WalkService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,14 +57,14 @@ public class SitterController {
     }
 
     @GetMapping("/walks")
-    public ResponseEntity<List<WalkInfo>> getSitterWalks(UsernamePasswordAuthenticationToken token) {
-        List<WalkInfo> walks = this.walkService.getSitterWalkInfos(userService.getIdFromToken(token));
+    public ResponseEntity<List<WalkCard>> getSitterWalks(UsernamePasswordAuthenticationToken token) {
+        List<WalkCard> walks = this.walkService.getSitterWalks(userService.getIdFromToken(token));
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 
     @GetMapping("/history")
-    public ResponseEntity<List<PastWalkInfo>> getWalkHistory(UsernamePasswordAuthenticationToken token) {
-        List<PastWalkInfo> walks = walkService.getSitterHistoryWalkInfo(userService.getIdFromToken(token));
+    public ResponseEntity<List<WalkCard>> getWalkHistory(UsernamePasswordAuthenticationToken token) {
+        List<WalkCard> walks = walkService.getSitterPastWalks(userService.getIdFromToken(token));
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 

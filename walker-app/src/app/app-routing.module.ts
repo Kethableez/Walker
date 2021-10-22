@@ -59,6 +59,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
       { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
       { path: 'walk/:id', component: WalkComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+      { path: 'dog/:id/:walkId', component: DogComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
       { path: 'dog/:id', component: DogComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
       { path: 'error404', component: PageNotFoundComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
       { path: '**', redirectTo: 'error404'}

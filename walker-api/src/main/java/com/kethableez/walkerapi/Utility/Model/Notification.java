@@ -1,4 +1,4 @@
-package com.kethableez.walkerapi.Notification.Model;
+package com.kethableez.walkerapi.Utility.Model;
 
 import java.time.LocalDateTime;
 
@@ -8,29 +8,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
 import lombok.Setter;
 
+@Document(collection = "notification")
 @Getter
 @Setter
-@Document(collection = "notifications")
 public class Notification {
-    
     @Id
     private String id;
-
     private String senderId;
-
     private String recieverId;
-
-    private Action action;
-
+    private String additionalId;
+    private NotificationType type;
     private LocalDateTime timestamp;
+    private Boolean isRead;
 
-    private boolean isRead;
 
-
-    public Notification(String senderId, String recieverId, Action action, LocalDateTime timestamp, boolean isRead) {
+    public Notification(String senderId, String recieverId, String additionalId, NotificationType type, LocalDateTime timestamp, Boolean isRead) {
         this.senderId = senderId;
         this.recieverId = recieverId;
-        this.action = action;
+        this.additionalId = additionalId;
+        this.type = type;
         this.timestamp = timestamp;
         this.isRead = isRead;
     }

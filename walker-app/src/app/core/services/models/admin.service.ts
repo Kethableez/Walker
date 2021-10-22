@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 import { SettingService } from './../utility/setting.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
-import { DogInfo } from 'src/app/models/dogs/dog-info.model';
 import { WalkAdminInfo } from 'src/app/models/walks/walk-admin-info.model';
+import { DogCard } from 'src/app/models/dogs/dog-card.model';
+import { WalkCard } from 'src/app/models/walks/walk-card.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,16 +23,16 @@ export class AdminService {
     return this.http.get<UserWithInfo[]>(url);
   }
 
-  get dogList(): Observable<DogInfo[]> {
+  get dogList(): Observable<DogCard[]> {
     const url = this.settings.getAdminUrl('getDogs');
 
-    return this.http.get<DogInfo[]>(url);
+    return this.http.get<DogCard[]>(url);
   }
 
-  get walkList(): Observable<WalkAdminInfo[]> {
+  get walkList(): Observable<WalkCard[]> {
     const url = this.settings.getAdminUrl('getWalks');
 
-    return this.http.get<WalkAdminInfo[]>(url);
+    return this.http.get<WalkCard[]>(url);
   }
 
   banUser(userId: string): Observable<ActionResponse> {

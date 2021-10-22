@@ -1,11 +1,9 @@
-import { DogInfo } from "../dogs/dog-info.model";
+import { DogCard } from "../dogs/dog-card.model";
 import { WalkInfo } from "../walks/walk-info.model";
 import { User } from "./user.model";
 
 export interface OwnerData {
   user: User;
-  dogs: DogInfo[];
-  plannedWalks: WalkInfo[];
-  pastWalks: WalkInfo[];
+  dogs: DogCard[];
   dogImages: string[];
 }

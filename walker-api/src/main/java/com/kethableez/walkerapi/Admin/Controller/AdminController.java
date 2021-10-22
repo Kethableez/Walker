@@ -3,15 +3,14 @@ package com.kethableez.walkerapi.Admin.Controller;
 import java.util.List;
 
 import com.kethableez.walkerapi.Admin.Service.AdminService;
-import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
-import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
+import com.kethableez.walkerapi.Dog.Model.DTO.DogCard;
 import com.kethableez.walkerapi.Report.Model.Report;
 import com.kethableez.walkerapi.Report.Model.ReportStatus;
 import com.kethableez.walkerapi.Report.Service.ReportService;
 import com.kethableez.walkerapi.User.Model.DTO.UserWithAdditionalInfo;
+import com.kethableez.walkerapi.Utility.Model.Activity;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
-import com.kethableez.walkerapi.Walk.Model.DTO.WalkAdminInfo;
-import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkCard;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,15 +44,21 @@ public class AdminController {
     }
 
     @GetMapping("/walks")
-    public ResponseEntity<List<WalkAdminInfo>> getWalks() {
-        List<WalkAdminInfo> walks = adminService.getWalksList();
+    public ResponseEntity<List<WalkCard>> getWalks() {
+        List<WalkCard> walks = adminService.getWalksList();
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 
     @GetMapping("/dogs")
-    public ResponseEntity<List<DogInfo>> getDogs() {
-        List<DogInfo> dogs = adminService.getDogsList();
+    public ResponseEntity<List<DogCard>> getDogs() {
+        List<DogCard> dogs = adminService.getDogsList();
         return new ResponseEntity<>(dogs, HttpStatus.OK);
+    }
+
+    @GetMapping("/activities")
+    public ResponseEntity<List<Activity>> getActivities() {
+        List<Activity> activities = adminService.getUserActivities();
+        return new ResponseEntity<>(activities, HttpStatus.OK);
     }
 
     @PostMapping("/block/{userId}")

@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 import { PastWalkInfo } from './../../../models/walks/past-walk-info.model';
 import { SitterData } from 'src/app/models/users/sitter.model';
+import { WalkCard } from 'src/app/models/walks/walk-card.model';
 
 const INCOMING_WALKS = 'incoming_walks'
 const PAST_WALKS = 'past_walks'
@@ -18,17 +19,17 @@ export class SitterStoreService {
 
   constructor (private userStore: CurrentUserStoreService) {}
 
-  saveIncomingWalks(walks: WalkInfo[]) {
+  saveIncomingWalks(walks: WalkCard[]) {
     window.sessionStorage.removeItem(INCOMING_WALKS);
     window.sessionStorage.setItem(INCOMING_WALKS, JSON.stringify(walks));
   }
 
-  savePastWalks(walks: PastWalkInfo[]) {
+  savePastWalks(walks: WalkCard[]) {
     window.sessionStorage.removeItem(PAST_WALKS);
     window.sessionStorage.setItem(PAST_WALKS, JSON.stringify(walks));
   }
 
-  saveEnrollAction(walk: WalkInfo) {
+  saveEnrollAction(walk: WalkCard) {
     const walks = this.incomingWalks;
     walks.push(this.prepareWalkForEnroll(walk));
     this.saveIncomingWalks(walks);
@@ -44,9 +45,9 @@ export class SitterStoreService {
     window.sessionStorage.setItem(SITTER_DATA, JSON.stringify(sitterData))
   }
 
-  saveDisenrollAction(walk: WalkInfo) {
-    const walks = this.incomingWalks.filter(w => w.id !== walk.id);
-    this.prepareWalkForDisenroll(walk);
+  saveDisenrollAction(walkCard: WalkCard) {
+    const walks = this.incomingWalks.filter(w => w.walk.id !== walkCard.walk.id);
+    this.prepareWalkForDisenroll(walkCard);
     this.saveIncomingWalks(walks);
   }
 
@@ -55,21 +56,21 @@ export class SitterStoreService {
   }
 
   get incomingWalks() {
-    return JSON.parse(sessionStorage.getItem(INCOMING_WALKS) as string) as WalkInfo[];
+    return JSON.parse(sessionStorage.getItem(INCOMING_WALKS) as string) as WalkCard[];
   }
 
   get pastWalks() {
     return JSON.parse(sessionStorage.getItem(PAST_WALKS) as string) as PastWalkInfo[];
   }
 
-  private prepareWalkForEnroll(walk: WalkInfo) {
-    walk.isBooked = true;
-    walk.sitterId = this.userStore.regularUser.id
-    return walk;
+  private prepareWalkForEnroll(walkCard: WalkCard) {
+    walkCard.walk.booked = true;
+    walkCard.walk.sitterId = this.userStore.regularUser.id
+    return walkCard;
   }
 
-  private prepareWalkForDisenroll(walk: WalkInfo) {
-    walk.isBooked = false;
-    walk.sitterId = '';
+  private prepareWalkForDisenroll(walkCard: WalkCard) {
+    walkCard.walk.booked = false;
+    walkCard.walk.sitterId = '';
   }
 }

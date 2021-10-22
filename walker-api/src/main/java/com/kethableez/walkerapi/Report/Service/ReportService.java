@@ -7,7 +7,9 @@ import java.util.Optional;
 import com.kethableez.walkerapi.Report.Model.Report;
 import com.kethableez.walkerapi.Report.Model.ReportStatus;
 import com.kethableez.walkerapi.Report.Repository.ReportRepository;
+import com.kethableez.walkerapi.Utility.Model.ActivityType;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
+import com.kethableez.walkerapi.Utility.Services.ActivityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +17,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReportService {
     private final ReportRepository reportRepository;
+    private final ActivityService activityService;
 
     @Autowired
-    private ReportService(ReportRepository reportRepository) {
+    private ReportService(ReportRepository reportRepository, ActivityService activityService) {
         this.reportRepository = reportRepository;
+        this.activityService = activityService;
     }
 
     public ActionResponse createReport(String reportBody, String reporterId) {
         Report report = new Report(reportBody, LocalDateTime.now(), ReportStatus.NEW, reporterId);
         reportRepository.save(report);
+        activityService.reportActivity(reporterId, ActivityType.REPORT);
         return new ActionResponse(true, "Dodano zgłoszenie");
     }
 

@@ -5,8 +5,8 @@
   <div class="page-header">Wybierz psa</div>
   <form [formGroup]="walkForm">
     <div class="dog-container" *ngIf="ownerDogs.length !== 0">
-      <div *ngFor="let dog of ownerDogs">
-        <img [ngClass]="dog.id === walkForm.get('dogId')?.value ? 'dog-selected' : 'dog'" [src]="dog.dogPhoto" (click)="selectDog(dog.id)">
+      <div *ngFor="let dogCard of ownerDogs">
+        <img [ngClass]="dogCard.dog.id === walkForm.get('dogId')?.value ? 'dog-selected' : 'dog'" [src]="dogCard.dog.dogPhoto" (click)="selectDog(dogCard.dog.id)">
       </div>
     </div>
       <div class="dog-container" *ngIf="ownerDogs.length === 0">

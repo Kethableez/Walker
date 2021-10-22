@@ -2,9 +2,8 @@ package com.kethableez.walkerapi.Review.Model.DTO;
 
 import java.time.LocalDateTime;
 
-import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
 import com.kethableez.walkerapi.User.Model.DTO.UserInfo;
-import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkCard;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,8 +15,7 @@ import lombok.Setter;
 public class SitterReviewCard {
     private String id;
     private UserInfo owner;
-    private DogInfo dog;
-    private WalkInfo walk;
+    private WalkCard walkCard;
     private Float rating;
     private String reviewBody;
     private LocalDateTime reviewDate;

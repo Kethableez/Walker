@@ -3,15 +3,13 @@ package com.kethableez.walkerapi.Owner.Controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
-import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
+import com.kethableez.walkerapi.Dog.Model.DTO.DogCard;
 import com.kethableez.walkerapi.Dog.Service.DogService;
 import com.kethableez.walkerapi.Image.Service.ImageService;
 import com.kethableez.walkerapi.Owner.Model.Owner;
 import com.kethableez.walkerapi.Owner.Service.OwnerService;
 import com.kethableez.walkerapi.User.Service.UserService;
-import com.kethableez.walkerapi.Walk.Model.DTO.PastWalkInfo;
-import com.kethableez.walkerapi.Walk.Model.DTO.WalkInfo;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkCard;
 import com.kethableez.walkerapi.Walk.Service.WalkService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,28 +58,28 @@ public class OwnerController {
     }
 
     @GetMapping("/dogs")
-    public ResponseEntity<List<DogInfo>> getDogs(UsernamePasswordAuthenticationToken token) {
-        List<DogInfo> dogCards = this.dogService.getOwnerDogsInfo(userService.getIdFromToken(token));
+    public ResponseEntity<List<DogCard>> getDogs(UsernamePasswordAuthenticationToken token) {
+        List<DogCard> dogCards = this.dogService.getOwnerDogs(userService.getIdFromToken(token));
         return new ResponseEntity<>(dogCards, HttpStatus.OK);
     }
 
     @GetMapping("/walks")
-    public ResponseEntity<List<WalkInfo>> getWalks(UsernamePasswordAuthenticationToken token) {
-        List<WalkInfo> walks = this.walkService.getOwnerWalksInfo(userService.getIdFromToken(token));
+    public ResponseEntity<List<WalkCard>> getWalks(UsernamePasswordAuthenticationToken token) {
+        List<WalkCard> walks = this.walkService.getOwnerIncomingWalks(userService.getIdFromToken(token));
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 
     @GetMapping("/history")
-    public ResponseEntity<List<PastWalkInfo>> getOwnerHistory(UsernamePasswordAuthenticationToken token) {
-        List<PastWalkInfo> history = this.walkService.getOwnerHistory(userService.getIdFromToken(token));
+    public ResponseEntity<List<WalkCard>> getOwnerHistory(UsernamePasswordAuthenticationToken token) {
+        List<WalkCard> history = this.walkService.getOwnerPastWalks(userService.getIdFromToken(token));
         return new ResponseEntity<>(history, HttpStatus.OK);
     }
 
     @GetMapping("/images")
     public ResponseEntity<List<String>> getImages(UsernamePasswordAuthenticationToken token) {
         List<String> images = new ArrayList<>();
-        for (Dog d : this.dogService.getOwnerDogs(userService.getIdFromToken(token))) {
-            images.addAll(imageService.getDogReviewImages(d.getId()));
+        for (DogCard d : this.dogService.getOwnerDogs(userService.getIdFromToken(token))) {
+            images.addAll(imageService.getDogReviewImages(d.getDog().getId()));
         }
         return new ResponseEntity<>(images, HttpStatus.OK);
     }

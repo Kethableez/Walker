@@ -1,7 +1,7 @@
 package com.kethableez.walkerapi.User.Model.DTO;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 import com.kethableez.walkerapi.Utility.Enum.Gender;
 import com.kethableez.walkerapi.Utility.Enum.Role;
@@ -25,5 +25,5 @@ public class UserCard {
     private String avatar;
     private Gender gender;
     private String description;
-    private List<Role> roles;
+    private Set<Role> roles;
 }

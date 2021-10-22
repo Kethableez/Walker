@@ -2,19 +2,18 @@ package com.kethableez.walkerapi.Admin.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import com.kethableez.walkerapi.Dog.Model.DTO.DogInfo;
-import com.kethableez.walkerapi.Dog.Model.Entity.Dog;
+import com.kethableez.walkerapi.Dog.Model.DTO.DogCard;
 import com.kethableez.walkerapi.Dog.Repository.DogRepository;
 import com.kethableez.walkerapi.User.Model.DTO.UserWithAdditionalInfo;
 import com.kethableez.walkerapi.User.Model.Entity.User;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.Utility.Mapper.MapperService;
+import com.kethableez.walkerapi.Utility.Model.Activity;
 import com.kethableez.walkerapi.Utility.Response.ActionResponse;
-import com.kethableez.walkerapi.Walk.Model.DTO.WalkAdminInfo;
-import com.kethableez.walkerapi.Walk.Model.Entity.Walk;
+import com.kethableez.walkerapi.Utility.Services.ActivityService;
+import com.kethableez.walkerapi.Walk.Model.DTO.WalkCard;
 import com.kethableez.walkerapi.Walk.Repository.WalkRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,15 @@ public class AdminService {
     private final DogRepository dogRepository;
     private final WalkRepository walkRepository;
     private final MapperService mapperService;
+    private final ActivityService activityService;
 
     @Autowired
-    public AdminService(UserRepository userRepository, DogRepository dogRepository, WalkRepository walkRepository, MapperService mapperService) {
+    public AdminService(UserRepository userRepository, DogRepository dogRepository, WalkRepository walkRepository, MapperService mapperService, ActivityService activityService) {
         this.userRepository = userRepository;
         this.dogRepository = dogRepository;
         this.walkRepository = walkRepository;
         this.mapperService = mapperService;
+        this.activityService = activityService;
     }
 
     public List<UserWithAdditionalInfo> getUsersList() {
@@ -43,16 +44,20 @@ public class AdminService {
             );
     }
 
-    public List<WalkAdminInfo> getWalksList() {
+    public List<WalkCard> getWalksList() {
         return walkRepository.findAll().stream()
-        .map(walk -> mapperService.walkAdminInfoMapper(walk.getId()))
+        .map(walk -> mapperService.walkCardMapper(walk.getId()))
         .collect(Collectors.toList());
     }
 
-    public List<DogInfo> getDogsList() {
+    public List<DogCard> getDogsList() {
         return dogRepository.findAll().stream()
-        .map(dog -> mapperService.dogInfoMapper(dog.getId()))
+        .map(dog -> mapperService.dogCardMapper(dog.getId()))
         .collect(Collectors.toList());
+    }
+
+    public List<Activity> getUserActivities() {
+        return activityService.getAllActivities();
     }
 
     public ActionResponse blockUserById(String userId) {

@@ -1,4 +1,3 @@
-import { DogInfo } from './../../../../../models/dogs/dog-info.model';
 import { WalkService } from './../../../../../core/services/models/walk.service';
 import { FormBuilder, Validator, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +17,7 @@ export class WalkPlannerComponent implements OnInit {
 
   response?: ActionResponse;
   isMessageBoxVisible = false;
-  ownerDogs: DogInfo[] = [];
+  ownerDogs: DogCard[] = [];
 
   walkForm = this.builder.group({
     address: ['', Validators.required],
@@ -49,7 +48,7 @@ export class WalkPlannerComponent implements OnInit {
 
   ngOnInit(): void {
     this.ownerService.getDogs().subscribe(
-      (response: DogInfo[]) => this.ownerDogs = response
+      (response: DogCard[]) => this.ownerDogs = response
     )
   }
 

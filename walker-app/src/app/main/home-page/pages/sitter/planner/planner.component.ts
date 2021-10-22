@@ -8,7 +8,7 @@ import { DateService } from './../../../../../core/services/utility/date.service
 
 export interface WalkCardMapper {
   day: number;
-  walkInfo: WalkInfo[];
+  walkInfo: WalkCard[];
 }
 
 @Component({
@@ -38,18 +38,18 @@ export class PlannerComponent implements OnInit {
     this.mapWithDay(this.sitterStore.incomingWalks, this.calendar);
   }
 
-  mapWithDay(walk: WalkInfo[], calendar: WalkCardMapper[][]): void {
-    walk
+  mapWithDay(walkCard: WalkCard[], calendar: WalkCardMapper[][]): void {
+    walkCard
       .filter(
-        (walk) =>
-          new Date(walk.walkDateTime).getMonth() == this.currentDay.getMonth()
+        (card) =>
+          new Date(card.walk.walkDateTime).getMonth() == this.currentDay.getMonth()
       )
-      .forEach(dog => {
-        let walkDate = new Date(dog.walkDateTime);
-        console.log(dog.walkDateTime)
+      .forEach(c => {
+        let walkDate = new Date(c.walk.walkDateTime);
+        console.log(c.walk.walkDateTime)
         console.log(walkDate.getDate())
         calendar.forEach((week) => {
-          week.find((day) => day.day == walkDate.getDate())?.walkInfo.push(dog);
+          week.find((day) => day.day == walkDate.getDate())?.walkInfo.push(c);
         });
       });
   }

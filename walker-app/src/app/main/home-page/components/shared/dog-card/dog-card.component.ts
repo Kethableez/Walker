@@ -17,7 +17,7 @@ import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 export class DogCardComponent implements OnInit {
 
   @Input()
-  walkInfo?: WalkInfo;
+  walkCard?: WalkCard;
 
   @Output()
   actionEmitter = new EventEmitter<void>();
@@ -37,20 +37,20 @@ export class DogCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  action(walk: WalkInfo) {
-    if (walk.isBooked && walk.sitterId === this.userStore.regularUser.id){
-      this.disenroll(walk);
+  action(walkCard: WalkCard) {
+    if (walkCard.walk.booked && walkCard.walk.sitterId === this.userStore.regularUser.id){
+      this.disenroll(walkCard);
     }
-    else if (!walk.isBooked) {
-      this.enroll(walk);
+    else if (!walkCard.walk.booked) {
+      this.enroll(walkCard);
     }
   }
 
 
-  enroll(walk: WalkInfo) {
-    this.walkService.enroll(walk.id).subscribe(
+  enroll(walkCard: WalkCard) {
+    this.walkService.enroll(walkCard.walk.id).subscribe(
       (res: any) => {
-        this.sitterStore.saveEnrollAction(walk);
+        this.sitterStore.saveEnrollAction(walkCard);
         this.actionEmitter.emit();
         this.response = {
           message: res.message,
@@ -68,10 +68,10 @@ export class DogCardComponent implements OnInit {
     );
   }
 
-  disenroll(walk: WalkInfo) {
-    this.walkService.disenroll(walk.id).subscribe(
+  disenroll(walkCard: WalkCard) {
+    this.walkService.disenroll(walkCard.walk.id).subscribe(
       (res: any) => {
-        this.sitterStore.saveDisenrollAction(walk);
+        this.sitterStore.saveDisenrollAction(walkCard);
         this.actionEmitter.emit();
         this.response = {
           message: res.message,

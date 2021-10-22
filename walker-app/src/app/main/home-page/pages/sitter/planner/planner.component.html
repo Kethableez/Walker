@@ -38,8 +38,8 @@
               {{week.day | number: '2.0-0'}}
             </div>
             <div class="walks">
-              <div class="dog-photo" *ngFor="let info of week.walkInfo" [routerLink]="['/home/walk', info.id]">
-                <img class="photo" [src]="info.dogPhoto">
+              <div class="dog-photo" *ngFor="let walkCard of week.walkInfo" [routerLink]="['/home/dog', walkCard.dog.id, walkCard.walk.id]">
+                <img class="photo" [src]="walkCard.dog.dogPhoto">
               </div>
             </div>
           </div>
@@ -59,12 +59,12 @@
         </div>
 
         <div class="walks">
-          <div *ngFor="let info of walkInfo.walkInfo">
+          <div *ngFor="let walkCard of walkInfo.walkInfo">
             <div class="walk-card">
               <div class="header">
-                <img class="photo" [src]="info.dogPhoto">
+                <img class="photo" [src]="walkCard.dog.dogPhoto">
                 <div class="text-1">
-                  {{info.dogName}}
+                  {{walkCard.dog.name}}
                 </div>
               </div>
 
@@ -81,7 +81,7 @@
                   </g>
                 </svg>
                 <div class="text">
-                  {{info.city}}
+                  {{walkCard.walk.city}}
                 </div>
               </div>
 
@@ -94,10 +94,10 @@
                     transform="translate(-0.208 -0.104)" fill="#3e403b" />
                 </svg>
                 <div class="text">
-                  {{info.walkDateTime | date:'HH:mm'}}
+                  {{walkCard.walk.walkDateTime| date:'HH:mm'}}
                 </div>
               </div>
-              <div class="icon" [routerLink]="['/home/walk', info.id]">
+              <div class="icon" [routerLink]="['/home/dog', walkCard.dog.id, walkCard.walk.id]">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.548 22.548">
                   <g id="info_black_24dp_1_" data-name="info_black_24dp (1)" transform="translate(0 0)">
                     <path id="Path_49" data-name="Path 49" d="M0,0H22.548V22.548H0Z" transform="translate(0 0)"

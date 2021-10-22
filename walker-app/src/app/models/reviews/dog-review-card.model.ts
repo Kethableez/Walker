@@ -1,11 +1,9 @@
-import { WalkInfo } from './../walks/walk-info.model';
-import { DogInfo } from './../dogs/dog-info.model';
 import { UserInfo } from './../users/user-info.model';
+import { WalkCard } from '../walks/walk-card.model';
 export interface DogReviewCard {
   id: string;
   sitter: UserInfo;
-  dog: DogInfo;
-  walk: WalkInfo;
+  walkCard: WalkCard;
   photo: String;
   reviewBody: String;
   reviewDate: Date;

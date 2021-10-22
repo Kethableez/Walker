@@ -17,9 +17,9 @@ export class DogWalksComponent implements OnInit {
     private sitterStore: SitterStoreService,
     private changes: ChangeDetectorRef
   ) { }
-  allWalks: WalkInfo[] = [];
+  allWalks: WalkCard[] = [];
   walksWithFilters?: WalkWithFilters;
-  sitterWalks: WalkInfo[] = this.sitterStore.incomingWalks;
+  sitterWalks: WalkCard[] = this.sitterStore.incomingWalks;
 
   allView = true;
   currentView = 'Wszystkie';
