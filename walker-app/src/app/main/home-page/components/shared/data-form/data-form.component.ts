@@ -36,10 +36,8 @@ export class DataFormComponent implements OnInit {
   submitData() {
     this.userService.chagneData(this.dataForm.value).subscribe(
       (res: ActionResponse) => {
-        console.log(res);
         this.dataEmitter.emit(this.dataForm.value);
-      },
-      () => console.log('error')
+      }
     )
 
     this.dataEmitter.emit(this.dataForm.value);
@@ -47,10 +45,7 @@ export class DataFormComponent implements OnInit {
 
   submitPassword() {
     this.userService.changePassword(this.passwordForm.value).subscribe(
-      (res: ActionResponse) => {
-        console.log(res);
-      },
-      () => console.log('error')
+
     )
   }
   // @Output()

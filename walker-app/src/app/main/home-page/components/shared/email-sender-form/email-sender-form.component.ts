@@ -24,7 +24,6 @@ export class EmailSenderFormComponent implements OnInit {
   }
 
   sendEmail() {
-    console.log(this.emailForm.value);
   }
 
 }

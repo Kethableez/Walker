@@ -1,5 +1,6 @@
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/core/services/models/user.service';
 
 @Component({
   selector: 'ktbz-problem-report-form',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProblemReportFormComponent implements OnInit {
 
-  constructor(private builder: FormBuilder) { }
+  constructor(private builder: FormBuilder, private userService: UserService) { }
 
   reportForm = this.builder.group({
     reportBody: ['', Validators.required]
@@ -17,6 +18,6 @@ export class ProblemReportFormComponent implements OnInit {
   }
 
   submitReport() {
-    console.log('tehe');
+    this.userService.postReport(this.reportForm.get('reportBody')?.value).subscribe(() => console.log('dodano'));
   }
 }

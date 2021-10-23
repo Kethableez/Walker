@@ -1,5 +1,7 @@
 <div class="container" *ngIf="dogCard | async as dogCard">
-  <div class="walk-header">{{dogCard.dog.name}}</div>
+  <div class="walk-header">{{dogCard.dog.name}}
+    <div class="button" (click)="dispatchAction()" *ngIf="isButtonEnabled"> {{buttonKey}}</div>
+  </div>
 
   <img class="dog-photo" [src]="dogCard.dog.dogPhoto">
 

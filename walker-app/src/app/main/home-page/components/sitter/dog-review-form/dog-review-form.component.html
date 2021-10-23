@@ -3,5 +3,4 @@
   <input type="text" formControlName="reivewBody" placeholder="Komentarz">
   <div [ngClass]="dogReviewForm.valid  ? 'button' : 'button-disabled'" (click)="submitReview()">Zmień dane</div>
 
-  {{ dogReviewForm.value | json}}
 </form>

@@ -97,8 +97,11 @@ public class MapperService {
         Walk walk = walkRepository.findById(walkId).get();
         Dog dog = dogRepository.findById(walk.getDogId()).get();
         UserCard owner = userCardMapper(walk.getOwnerId());
-
-        return new WalkCard(walk, dog, owner);
+        if (walk.isBooked() && !walk.getSitterId().isEmpty()) {
+            UserCard sitter = userCardMapper(walk.getSitterId());
+            return new WalkCard(walk, dog, owner, sitter);
+        }
+        else return new WalkCard(walk, dog, owner);
     }
 
 

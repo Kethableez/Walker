@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActionResponse } from 'src/app/models/action-response.model';
 import { Role } from 'src/app/models/enums/role.model';
-import { RegularUser } from 'src/app/models/users/regular-user.model';
+import { Notification } from 'src/app/models/notification.model';
 import { User } from 'src/app/models/users/user.model';
 import { SettingService } from './../utility/setting.service';
 
@@ -17,7 +17,6 @@ export class UserService {
 
   getUserData(username?: string): Observable<User> {
     const url = this.setting.getUserUrl('getUserData', {username: username});
-    console.log(url);
 
     return this.http.get<User>(url);
   }
@@ -32,6 +31,18 @@ export class UserService {
     const url = this.setting.getUserUrl('getUserData', { username: username });
 
     return this.http.get<User>(url);
+  }
+
+  getNotifications(): Observable<Notification[]> {
+    const url = this.setting.getUserUrl('getNotifications');
+
+    return this.http.get<Notification[]>(url);
+  }
+
+  markAsRead(notificationId: string) {
+    const url = this.setting.getUserUrl('markNotificationAsRead', { notificationId: notificationId });
+
+    return this.http.post<any>(url, {});
   }
 
   chagneData(data: any): Observable<ActionResponse> {
@@ -56,5 +67,11 @@ export class UserService {
     const url = this.setting.getUserUrl('changeAvatar');
 
     return this.http.put<any>(url, data);
+  }
+
+  postReport(reportBody: any) {
+    const url = this.setting.getUserUrl('postReport');
+
+    return this.http.post(url, reportBody);
   }
 }

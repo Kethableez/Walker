@@ -29,10 +29,8 @@ export class AvatarFormComponent implements OnInit {
     userPhoto.append('imageFile', this.selectedFile);
     this.userService.changeAvatar(userPhoto).subscribe(
       (res: ActionResponse) => {
-        console.log(res);
         this.avatarEmitter.emit(this.avatarForm.value);
-      },
-      () => console.log('error')
+      }
     )
 
 

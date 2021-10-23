@@ -7,6 +7,9 @@ import { TokenStorageService } from 'src/app/core/services/auth/token-storage.se
 import { Component, OnInit } from '@angular/core';
 import { OwnerService } from 'src/app/core/services/models/owner.service';
 import { PastWalkCard } from 'src/app/models/walks/past-walk-card.model';
+import { Observable } from 'rxjs';
+import { Activity } from 'src/app/models/walks/activity.model';
+import { AdminService } from 'src/app/core/services/models/admin.service';
 
 @Component({
   selector: 'ktbz-history',
@@ -17,7 +20,8 @@ export class HistoryComponent implements OnInit {
     // private tokenService: TokenStorageService,
     private userStore: CurrentUserStoreService,
     private sitterService: SitterService,
-    private ownerService: OwnerService
+    private ownerService: OwnerService,
+    private adminService: AdminService
   ) {}
 
   roleView = this.userStore.role;
@@ -26,12 +30,13 @@ export class HistoryComponent implements OnInit {
   setting = '';
   isSettingsOpened = false;
 
+  activities: Observable<Activity[]> = this.adminService.activity;
+
   ngOnInit(): void {
     if (this.roleView === Role.ROLE_SITTER) {
       this.sitterService.getHistory().subscribe(
         (res) => {
           (this.walkHistory = res);
-          console.log(res);
         }
       );
     }
@@ -40,7 +45,6 @@ export class HistoryComponent implements OnInit {
       this.ownerService.getHistory().subscribe(
         (res) => {
           this.walkHistory = res;
-          console.log('hist', res);
         }
       )
     }
@@ -53,7 +57,6 @@ export class HistoryComponent implements OnInit {
   openReviewForm(setting: string, walkId: string) {
     this.setting = setting;
     this.reviewedWalkId = walkId;
-    console.log(this.reviewedWalkId, this.setting);
     this.toggleSettings(true);
   }
 }

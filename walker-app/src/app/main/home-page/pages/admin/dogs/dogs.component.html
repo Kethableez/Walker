@@ -42,10 +42,10 @@
     </div>
     <div *ngIf="!switchButton">
       <div class="row" *ngFor="let walkCard of walks | async">
-        <img class="image" [src]="walkCard.userCard.avatar">
+        <img class="image" [src]="walkCard.owner.avatar">
         <div class="text-1"> {{ walkCard.dog.name }}</div>
-        <div class="text-1"> {{ walkCard.userCard.firstName }}</div>
-        <div class="text-1"> {{ walkCard.userCard.city }}</div>
+        <div class="text-1"> {{ walkCard.owner.firstName }}</div>
+        <div class="text-1"> {{ walkCard.owner.city }}</div>
         <div [ngClass]="walkCard.walk.booked ? 'marker-taken' : 'marker-available'"></div>
         <div class="text-1"> {{ walkCard.walk.walkDateTime | date:'dd/MM/yyyy' }}</div>
         <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" [routerLink]="['/home/dog', walkCard.walk.dogId, walkCard.walk.id]">

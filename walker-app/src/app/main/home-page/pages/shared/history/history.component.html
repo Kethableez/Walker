@@ -1,5 +1,7 @@
 <div class="container">
-  <div class="page-header">Historia spacerów</div>
+  <div class="page-header" *ngIf="roleView !== 'ROLE_ADMIN'">Historia spacerów</div>
+  <div class="page-header" *ngIf="roleView === 'ROLE_ADMIN'">Aktywność użytkowników</div>
+
   <div class="main-container" *ngIf="roleView === 'ROLE_SITTER'">
     <div class="page-header">
       <div class="text-2">
@@ -67,8 +69,8 @@
     <div *ngFor="let walkCard of walkHistory">
       <div class="row">
         <div class="sitter">
-          <!-- <img class="image" [src]="walkCard.userCard.avatar"> -->
-          <!-- <div class="text-1"> {{ walkCard.userCard.firstName }} </div> -->
+          <img class="image" [src]="walkCard.sitter.avatar">
+          <div class="text-1"> {{ walkCard.sitter.firstName }} </div>
         </div>
 
         <div class="dog">
@@ -98,6 +100,22 @@
       </div>
     </div>
   </div>
+
+  <div class="main-container" *ngIf="roleView === 'ROLE_ADMIN'">
+    <div class = "row" *ngFor="let activity of activities | async">
+      <div class="text-2">
+        {{activity.userId}}
+      </div>
+      <div class="text-2">
+        {{activity.type}}
+      </div>
+      <div class="text-2">
+        {{activity.timestamp | date: 'dd/MM/yyyy, HH:mm'}}
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <ktbz-modal *ngIf="isSettingsOpened" [settingSelector]="setting" [walkId]="reviewedWalkId" (closeModal)="toggleSettings($event)">

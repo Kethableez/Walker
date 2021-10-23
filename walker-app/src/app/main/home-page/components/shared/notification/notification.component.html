@@ -1,0 +1,18 @@
+<div class="notification-box" [ngClass]="{'not-read': !notification.isRead}" (click)="markAsRead()">
+  <div [ngSwitch]="notification.type">
+    <span class="notification-date"> {{ notification.timestamp | date:'dd/MM/yyyy HH:mm'}} </span>
+    <div class="notification-body" *ngSwitchCase="notificationType.WALK_ENROLLMENT">
+      Użytkownik {{notification.senderName}} zapisał(a) się na spacer
+    </div>
+    <div class="notification-body" *ngSwitchCase="notificationType.WALK_DISENROLLMENT">
+      Użytkownik {{notification.senderName}} wypisał(a) się ze spaceru
+    </div>
+    <div class="notification-body" *ngSwitchCase="notificationType.DOG_REVIEW">
+      Użytkownik {{notification.senderName}} dodał(a) komentarz do twojego zwierzaka
+
+    </div>
+    <div class="notification-body" *ngSwitchCase="notificationType.SITTER_REVIEW">
+      Użytkownik {{notification.senderName}} dodał(a) ocenę
+    </div>
+  </div>
+</div>

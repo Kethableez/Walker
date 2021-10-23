@@ -29,7 +29,6 @@ export class PlannerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.currentDay)
     this.calendar = this.dateService.listOfDays(
       this.currentDay.getFullYear(),
       this.currentDay.getMonth()
@@ -46,8 +45,6 @@ export class PlannerComponent implements OnInit {
       )
       .forEach(c => {
         let walkDate = new Date(c.walk.walkDateTime);
-        console.log(c.walk.walkDateTime)
-        console.log(walkDate.getDate())
         calendar.forEach((week) => {
           week.find((day) => day.day == walkDate.getDate())?.walkInfo.push(c);
         });

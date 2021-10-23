@@ -1,0 +1,12 @@
+<div class="report-body">
+  <div class="date"> {{report.reportDateTime | date: 'dd/MM/yyyy HH:mm'}} </div>
+  <div class="body"> {{report.reportBody}} </div>
+  <div *ngIf="!isDashboardView">
+    <span class="text">Zmień status</span>
+    <div class="buttons">
+      <div (click)="changeStatus(report.id, reportStatus.NEW)" class="button" *ngIf="report.status !== 'NEW'" >Nowy</div>
+      <div (click)="changeStatus(report.id, reportStatus.IN_PROGRESS)" class="button" *ngIf="report.status !== 'IN_PROGRESS'">W toku</div>
+      <div (click)="changeStatus(report.id, reportStatus.DONE)" class="button" *ngIf="report.status !== 'DONE'">Rozwiązane</div>
+    </div>
+  </div>
+</div>

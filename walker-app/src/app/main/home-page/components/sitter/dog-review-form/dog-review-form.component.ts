@@ -33,17 +33,13 @@ export class DogReviewFormComponent implements OnInit {
   submitReview() {
     this.reviewService.addDogReview(this.dogReviewForm.value).subscribe(
       (success: ActionResponse) => {
-        console.log(success.message);
         let reviewId = success.message;
         let dogPhoto = new FormData();
         dogPhoto.append('imageFile', this.selectedFile);
 
         this.imageService.uploadDogReviewImage(dogPhoto, reviewId).subscribe(
-          success => console.log(success),
-          error => console.log(error)
         )
       },
-      error => console.log(error)
     )
   }
 

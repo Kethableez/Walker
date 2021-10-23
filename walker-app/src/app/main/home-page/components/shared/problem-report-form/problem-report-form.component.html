@@ -1,4 +1,8 @@
 <form [formGroup]="reportForm">
   <textarea formControlName="reportBody" placeholder="Opis problemu"></textarea>
-  <div [ngClass]="reportForm.valid  ? 'button' : 'button-disabled'" (click)="submitReport()">Zmień opis</div>
+  <div [ngClass]="reportForm.valid  ? 'button' : 'button-disabled'" (click)="submitReport()">Zgłoś problem</div>
+
+  <pre>
+    {{reportForm.value | json}}
+  </pre>
 </form>

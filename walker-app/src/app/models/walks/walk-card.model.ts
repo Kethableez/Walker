@@ -5,5 +5,6 @@ import { Walk } from "./walk.model";
 export interface WalkCard {
   walk: Walk;
   dog: Dog;
-  userCard: UserCard;
+  owner: UserCard;
+  sitter: UserCard;
 }

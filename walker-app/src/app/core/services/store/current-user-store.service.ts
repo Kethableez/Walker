@@ -51,7 +51,6 @@ export class CurrentUserStoreService {
   }
 
   private saveRoles(user: RegularUser) {
-    console.log(user.roles);
     const roles = user.roles;
     window.sessionStorage.removeItem(ROLES);
     window.sessionStorage.setItem(ROLES, JSON.stringify(roles));

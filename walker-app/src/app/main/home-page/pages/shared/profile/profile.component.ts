@@ -45,6 +45,8 @@ export class ProfileComponent implements OnInit {
   isSettingsOpened = false;
   isSwitchBoxDisplayed?: boolean;
   setting = '';
+  isGalleryOpen = false;
+  selectedPhoto: string = '';
 
   constructor(
     private userService: UserService,
@@ -56,7 +58,7 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userData.subscribe(res => console.log(res));
+    this.userData.subscribe();
     this.mainRole.subscribe((role: Role) => {
       switch (role) {
         case Role.ROLE_SITTER:
@@ -98,6 +100,11 @@ export class ProfileComponent implements OnInit {
       map(data => { return data.dogImages })
     );
     else return null;
+  }
+
+  toggleGallery(value: boolean, selectedPhoto?: string): void {
+    this.isGalleryOpen = value;
+    if (selectedPhoto) this.selectedPhoto = selectedPhoto;
   }
 
   openGallery() {

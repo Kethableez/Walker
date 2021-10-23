@@ -39,7 +39,6 @@ export class ModalComponent implements OnInit {
   userData = this.userStore.regularUser;
 
   ngOnInit(): void {
-    console.log(this.walkId);
     switch (this.settingSelector) {
       case modalName.AVATAR:
         this.modalName = 'Edytuj avatar';

@@ -25,10 +25,8 @@ export class DescriptionFormComponent implements OnInit {
   submitData() {
     this.userService.changeDescription(this.descriptionForm.value).subscribe(
       (res: ActionResponse) => {
-        console.log(res);
         this.dataEmitter.emit(this.descriptionForm.value);
-      },
-      () => console.log('error')
+      }
     )
 
   }

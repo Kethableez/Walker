@@ -30,7 +30,6 @@ export class DogWalksComponent implements OnInit {
   ngOnInit(): void {
     this.walkService.getWalksWithFilters().subscribe((res: WalkWithFilters) => {
       this.allWalks = res.walks;
-      console.log(res);
     } );
   }
 
@@ -45,7 +44,5 @@ export class DogWalksComponent implements OnInit {
 
   getActionEvent() {
     this.sitterWalks = this.sitterStore.incomingWalks;
-    console.log(this.sitterWalks, this.sitterStore.incomingWalks);
-    console.log('action detected');
   }
 }

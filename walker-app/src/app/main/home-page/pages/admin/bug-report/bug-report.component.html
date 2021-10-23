@@ -1,6 +1,24 @@
 <div class="container">
   <div class="page-header">Zgłoszone błędy</div>
-
   <div class="main-container">
+    <div class="row">
+      <div class="page-header">Nowe</div>
+      <div *ngFor="let report of newReports | async">
+        <ktbz-report [report]="report" [isDashboardView]="false"></ktbz-report>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="page-header">W toku</div>
+      <div *ngFor="let report of inProgressReports | async">
+        <ktbz-report [report]="report" [isDashboardView]="false" ></ktbz-report>
+      </div>
+    </div>
+    <div class="row">
+      <div class="page-header">Rozwiązane</div>
+      <div *ngFor="let report of doneReports | async">
+        <ktbz-report [report]="report" [isDashboardView]="false"></ktbz-report>
+      </div>
+    </div>
   </div>
 </div>

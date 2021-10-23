@@ -2,11 +2,11 @@ const urls: { [key: string]: any } = {
   admin: {
     prefix: 'admin',
     calls: {
-      getActivity: 'activities',
+      getActivities: 'activities',
       getDogs: 'dogs',
       getUsers: 'users',
       getWalks: 'walks',
-      getReportsByStatus: 'report/:status',
+      getReportsByStatus: 'reports/:status',
       changeReportStatus: 'report/:reportId/:status',
       blockUser: 'block/:userId',
       unblockUser: 'unblock/:userId',

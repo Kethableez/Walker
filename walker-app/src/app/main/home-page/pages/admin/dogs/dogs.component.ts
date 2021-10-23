@@ -10,8 +10,8 @@ export class DogsComponent implements OnInit {
 
   constructor(private adminService: AdminService) { }
 
-  dogs = this.adminService.dogList.pipe(tap(d => console.log(d)));
-  walks = this.adminService.walkList.pipe(tap(d => console.log(d)));
+  dogs = this.adminService.dogList.pipe();
+  walks = this.adminService.walkList.pipe();
   switchButton = false;
 
   ngOnInit(): void {

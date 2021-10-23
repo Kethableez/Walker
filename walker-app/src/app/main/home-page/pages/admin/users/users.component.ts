@@ -70,54 +70,44 @@ export class UsersComponent {
   private blockUser(user: UserWithInfo) {
     this.adminService.blockUser(user.id).subscribe(
       (response: ActionResponse) => {
-        console.log(response);
         user.blocked = true;
-      },
-      (error) => console.log(error)
+      }
     );
   }
 
   private banUser(user: UserWithInfo) {
     this.adminService.banUser(user.id).subscribe(
       (response: ActionResponse) => {
-        console.log(response);
         user.banned = true;
       },
-      (error) => console.log(error)
     );
   }
 
   private unblockUser(user: UserWithInfo) {
     this.adminService.unblockUser(user.id).subscribe(
       (response: ActionResponse) => {
-        console.log(response);
         user.blocked = false;
       },
-      (error) => console.log(error)
     );
   }
 
   private unbanUser(user: UserWithInfo) {
     this.adminService.unbanUser(user.id).subscribe(
       (response: ActionResponse) => {
-        console.log(response);
         user.banned = false;
       },
-      (error) => console.log(error)
     );
   }
 
   private deleteUser(user: UserWithInfo) {
     this.adminService.removeUser(user.id).subscribe(
       (response: ActionResponse) => {
-        console.log(response);
         this.users = this.users.pipe(
           map((users: UserWithInfo[]) => {
             return removeById(users, user.id);
           })
         );
       },
-      (error) => console.log(error)
     );
   }
 }

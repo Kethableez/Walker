@@ -41,7 +41,6 @@ export class OwnerService {
   }
 
   getOwnerDataByUsername(username: string) {
-    console.log(username);
     const url = this.setting.getOwnerUrl('getDataByUsername', { username: username });
 
     return this.http.get<OwnerData>(url);

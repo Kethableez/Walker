@@ -44,6 +44,9 @@ import { DogReviewFormComponent } from './main/home-page/components/sitter/dog-r
 import { ProblemReportFormComponent } from './main/home-page/components/shared/problem-report-form/problem-report-form.component';
 import { EmailSenderFormComponent } from './main/home-page/components/shared/email-sender-form/email-sender-form.component';
 import { ImageComponent } from './main/home-page/components/shared/image/image.component';
+import { NotificationComponent } from './main/home-page/components/shared/notification/notification.component';
+import { ReportComponent } from './main/home-page/components/admin/report/report.component';
+import { ActivityComponent } from './main/home-page/components/admin/activity/activity.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +89,9 @@ import { ImageComponent } from './main/home-page/components/shared/image/image.c
     ProblemReportFormComponent,
     EmailSenderFormComponent,
     ImageComponent,
+    NotificationComponent,
+    ReportComponent,
+    ActivityComponent,
   ],
   imports: [
     BrowserModule,

@@ -473,50 +473,145 @@ ktbz-sidebar {
 
 ktbz-dashboard {
   .main-container {
-    flex-grow: 1;
+    width: 100%;
     margin: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    .admin-layout {
+    .text-1 {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .text-2 {
+      width: 10rem;
+      text-align: center;
+    }
+
+    .image {
+      margin: 0 1rem;
+      width: 4rem;
+      height: 4rem;
+      box-shadow: $shadow;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+
+    .row,
+    .dog {
+      cursor: pointer;
       display: flex;
-      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 1rem;
+    }
+
+    .dog {
+      text-align: center;
+      width: 15rem;
+    }
+
+    .row {
+      border-bottom: 1px solid $primaryDark;
+      padding: 0.5rem 0;
+    }
+
+    .actions {
+      display: flex;
       justify-content: space-around;
       align-items: center;
+    }
 
-      .box {
-        display: flex;
-        flex-flow: column;
-        justify-content: space-between;
-        margin: .5rem;
-        width: 20rem;
-        height: 40rem;
-        background-color: $primaryLight;
+    .icon {
+      width: 2rem;
+      height: 2rem;
+      // margin: 0 rem;
+      cursor: pointer;
+    }
+
+  .sitter-layout, .owner-layout, .admin-layout {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    .walks {
+      overflow-y: scroll;
+      margin: 1rem 2rem;
+      border-radius: 5px;
+      background-color: $primaryLight;
+      box-shadow: $shadow;
+      width: 50rem;
+      height: 44rem;
+
+      .page-header {
+        font-size: 1.3rem;
+        padding: .5rem;
+      }
+    }
+    .notification {
+      overflow-y: scroll;
+
+      margin: 1rem 2rem;
+      border-radius: 5px;
+      background-color: $primaryLight;
+      box-shadow: $shadow;
+
+      width: 30rem;
+      height: 44rem;
+      flex-grow: 1;
+
+      .page-header {
+        font-size: 1.3rem;
+        padding: .5rem;
+      }
+
+      .activity {
+        margin: 1rem;
+        background-color: $secondaryDark;
         border-radius: 5px;
         box-shadow: $shadow;
-        .box-body {
-          margin: .5rem;
+        padding: .5rem;
+        .date {
+          text-align: right;
+          font-style: italic;
+          font-size: 0.8rem;
         }
-
-        .page-header {
-          font-size: 1.3rem;
-          padding: .5rem;
-        }
-
-        .button {
-          padding: .5rem;
-
-          .icon {
-            width: 3rem;
-            height: 3rem;
-            fill: $primaryLight;
-          }
+        .text-1, .text-2 {
+          font-size: 1rem;
         }
       }
     }
   }
+}
+}
 
+ktbz-notification {
+  .notification-box {
+    background-color: $secondaryLight;
+    box-shadow: $shadow;
+    border-radius: 5px;
+    padding: .5rem;
+    margin: .5rem;
+    cursor: pointer;
+    transition: .2s ease;
+
+    .notification-date {
+      font-size: .8rem;
+    font-weight: bold;
+
+    }
+  }
+
+  .notification-box:hover {
+    background-color: $secondaryTeal;
+
+  }
+  .not-read {
+    font-weight: bold;
+  }
 }
 
 ktbz-users {
@@ -745,11 +840,17 @@ ktbz-history {
   .main-container {
     width: 80%;
     // background-color: #1d861f;
+    overflow-y: scroll;
     margin: 0 auto;
 
     .text-1 {
       font-size: 1.5rem;
       font-weight: bold;
+    }
+
+    .table {
+      height: 30rem;
+      overflow-y: scroll;
     }
 
     .text-2 {
@@ -861,6 +962,40 @@ ktbz-home-page {
   font-size: 1rem;
   padding: 0.5rem;
   border-bottom: 1px solid $primaryDark;
+}
+
+ktbz-report {
+  .report-body {
+    margin: 1rem;
+    background-color: $secondaryDark;
+    border-radius: 5px;
+    box-shadow: $shadow;
+    padding: 1rem;
+
+
+    .date {
+      text-align: right;
+      font-style: italic;
+    }
+    .body {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    .text {
+      font-weight: bold;
+    }
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+
+      .button {
+        font-weight: bold;
+        font-size: 1.2rem;
+        padding: 0 0.2rem;
+      }
+    }
+  }
 }
 
 ktbz-box-message {
@@ -1271,7 +1406,7 @@ ktbz-profile {
 
         .comment-info {
           margin: 0 0.5rem;
-          width: 15rem;
+          width: 7rem;
           display: flex;
           flex-flow: column;
           justify-content: center;
@@ -1290,6 +1425,7 @@ ktbz-profile {
 
         .comment-body {
           margin: 0 0.5rem;
+          width: 25rem;
           .rating {
             color: $primaryBrass;
             font-size: 2rem;
@@ -1349,6 +1485,31 @@ ktbz-profile {
   }
 }
 
+ktbz-bug-report {
+  .main-container {
+    position: relative;
+    flex-grow: 1;
+    margin: 1rem;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+
+    .row {
+      border-radius: 5px;
+      overflow-y: scroll;
+      border: 1px solid $primaryDark;
+      box-shadow: $shadow;
+      margin: 1rem;
+      width: 27rem;
+      height: 45rem;
+
+      .page-header {
+        font-size: 1.3rem;
+        padding: .5rem;
+      }
+    }
+}
+}
 // OWNER
 ktbz-dog-creator {
   .main-container {
@@ -1478,6 +1639,7 @@ ktbz-walk,
 ktbz-dog {
   .walk-header {
     background-color: $primaryBrass;
+    position: relative;
     color: $primaryLight;
     font-size: 3rem;
     font-weight: bold;
@@ -1485,6 +1647,12 @@ ktbz-dog {
     text-align: center;
     border-radius: 5px;
     box-shadow: $shadow;
+
+    .button {
+      position: absolute;
+      top: 0.5rem;
+      right: 4rem;
+    }
   }
 
   .dog-photo {

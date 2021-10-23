@@ -32,8 +32,6 @@ export class SitterReviewFormComponent implements OnInit {
 
   submitReview() {
     this.reviewService.addSitterReview(this.sitterReviewForm.value).subscribe(
-      (response: ActionResponse) => console.log(response),
-      (error: ActionResponse) => console.log(error)
     )
   }
 }

@@ -58,7 +58,7 @@ public class SitterController {
 
     @GetMapping("/walks")
     public ResponseEntity<List<WalkCard>> getSitterWalks(UsernamePasswordAuthenticationToken token) {
-        List<WalkCard> walks = this.walkService.getSitterWalks(userService.getIdFromToken(token));
+        List<WalkCard> walks = this.walkService.getSitterIncomingWalks(userService.getIdFromToken(token));
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 

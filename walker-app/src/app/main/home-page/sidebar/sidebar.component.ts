@@ -31,7 +31,6 @@ export class SidebarComponent implements OnInit, OnChanges, DoCheck {
     ) { }
 
   ngOnInit(): void {
-    console.log(this.mainRole);
   }
 
   ngOnChanges(changes: SimpleChanges) {

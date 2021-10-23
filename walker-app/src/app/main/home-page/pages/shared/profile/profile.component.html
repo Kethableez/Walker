@@ -84,7 +84,7 @@
           <div *ngSwitchCase="'GALLERY'">
             <div class="photos" *ngIf="images">
               <div  *ngFor="let image of images">
-                <img class="profile-photo" [src]="image">
+                <img class="profile-photo" [src]="image" (click)="toggleGallery(true, image)">
               </div>
             </div>
           </div>
@@ -136,3 +136,7 @@
     (upadtedData)="updateData($event)">
   </ktbz-modal>
 </div>
+
+<ktbz-image *ngIf="isGalleryOpen" [image]="selectedPhoto" (isGalleryOpen)="toggleGallery($event)">
+
+</ktbz-image>
