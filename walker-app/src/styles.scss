@@ -119,7 +119,7 @@ ktbz-landing-page {
     // background-color: #e6e6e6;
   }
 
-  .container {
+  .ktbz-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -359,7 +359,7 @@ ktbz-register {
     background-color: $primaryBrass;
   }
 
-  .row {
+  .ktbz-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -392,13 +392,37 @@ ktbz-register {
   }
 }
 
+ngb-rating {
+  font-size: 2rem;
+  color: $primaryBrass;
+  margin: auto;
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 2rem;
+  color: #B8A17D;
+}
+
+.full {
+  color: #B8A17D;
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #B8A17D;
+}
+
 // SIDEBAR
 ktbz-sidebar {
-  .sidebar {
+  .ktbz-sidebar {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 0.2fr 1fr;
     width: 4.5rem;
-    height: 99.5vh;
+    height: 100vh;
     background-color: #65858c;
     padding-top: 0.25vh;
     padding-bottom: 0.25vh;
@@ -457,7 +481,7 @@ ktbz-sidebar {
   height: 2rem;
 }
 
-.sidebar-button {
+.ktbz-sidebar-button {
   display: flex;
   background-color: $primaryTeal;
   height: 2.5rem;
@@ -498,7 +522,7 @@ ktbz-dashboard {
       object-fit: cover;
     }
 
-    .row,
+    .ktbz-row,
     .dog {
       cursor: pointer;
       display: flex;
@@ -512,7 +536,7 @@ ktbz-dashboard {
       width: 15rem;
     }
 
-    .row {
+    .ktbz-row {
       border-bottom: 1px solid $primaryDark;
       padding: 0.5rem 0;
     }
@@ -628,7 +652,7 @@ ktbz-users {
     border-radius: 1rem;
   }
 
-  .row {
+  .ktbz-row {
     margin: .5rem 2rem;
     padding: .5rem 0;
     display: flex;
@@ -712,7 +736,7 @@ ktbz-users {
   }
 }
 
-.sidebar-button:hover {
+.ktbz-sidebar-button:hover {
   background-color: $secondaryTeal;
   box-shadow: $shadow;
 }
@@ -737,9 +761,9 @@ ktbz-users {
   box-shadow: $shadow;
 }
 
-.tooltip {
+.ktbz-tooltip {
   position: relative;
-  .tooltiptext {
+  .ktbz-tooltiptext {
     font-family: "Century Gothic";
     color: #fff;
     visibility: hidden;
@@ -751,7 +775,7 @@ ktbz-users {
     border-radius: 5px;
     padding: 0.5rem 0.5rem;
 
-    /* Position the tooltip */
+    /* Position the ktbz-tooltip */
     position: absolute;
     z-index: 1;
     top: 0.125rem;
@@ -759,11 +783,11 @@ ktbz-users {
   }
 }
 
-.tooltiptext {
+.ktbz-tooltiptext {
   transition: opacity 0.2s ease;
 }
-.tooltip:hover {
-  .tooltiptext {
+.ktbz-tooltip:hover {
+  .ktbz-tooltiptext {
     opacity: 1;
     visibility: visible;
   }
@@ -875,7 +899,7 @@ ktbz-history {
       justify-content: space-between;
     }
 
-    .row,
+    .ktbz-row,
     .dog,
     .sitter {
       display: flex;
@@ -891,7 +915,7 @@ ktbz-history {
       width: 15rem;
     }
 
-    .row {
+    .ktbz-row {
       border-bottom: 1px solid $primaryDark;
       padding: 0.5rem 0;
     }
@@ -1136,7 +1160,7 @@ ktbz-page-not-found {
   }
 }
 
-.container {
+.ktbz-container {
   display: flex;
   flex-flow: column;
   width: 100%;
@@ -1494,7 +1518,7 @@ ktbz-bug-report {
     flex-flow: row;
     justify-content: space-around;
 
-    .row {
+    .ktbz-row {
       border-radius: 5px;
       overflow-y: scroll;
       border: 1px solid $primaryDark;
@@ -1665,7 +1689,7 @@ ktbz-dog {
     border-radius: 55rem;
   }
 
-  .container {
+  .ktbz-container {
     position: relative;
     display: flex;
     flex-flow: column;
@@ -1868,7 +1892,7 @@ ktbz-image {
 }
 
 ktbz-walk-planner {
-  .container {
+  .ktbz-container {
     position: relative;
     .form-error {
       position: absolute;
@@ -1977,7 +2001,7 @@ ktbz-walk-planner {
 
 // SITTER
 ktbz-dog-walks {
-  .container {
+  .ktbz-container {
     position: relative;
     display: flex;
     flex-flow: column;
@@ -2143,7 +2167,7 @@ ktbz-dog-card {
 
 // PLANNER
 ktbz-planner {
-  .container {
+  .ktbz-container {
     position: relative;
     .buttons {
       user-select: none;
@@ -2356,7 +2380,7 @@ ktbz-planner {
 }
 
 ktbz-dogs {
-  .container {
+  .ktbz-container {
     position: relative;
     .buttons {
       user-select: none;
@@ -2396,7 +2420,7 @@ ktbz-dogs {
       border-radius: 1rem;
     }
 
-    .row {
+    .ktbz-row {
       display: flex;
       flex-flow: row;
       justify-content: space-between;
@@ -2454,3 +2478,6 @@ ktbz-dogs {
 
 // ADMIN
 
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

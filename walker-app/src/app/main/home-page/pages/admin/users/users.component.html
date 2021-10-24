@@ -1,9 +1,9 @@
-<div class="container">
+<div class="ktbz-container">
 
   <div class="page-header">Użytkownicy</div>
 
   <div class="main-container">
-    <div class="row" *ngFor="let user of users | async">
+    <div class="ktbz-row" *ngFor="let user of users | async">
       <img class="image" [src]="user.avatar">
       <div class="text-1"> {{ user.firstName }} {{user.lastName }}</div>
       <div class="badge"> {{user.mainRole}} </div>

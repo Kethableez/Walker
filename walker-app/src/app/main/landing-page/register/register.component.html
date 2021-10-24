@@ -1,7 +1,7 @@
 
 <form [formGroup]="registerForm">
   <input type="file" (change)="onSelectFile($event)">
-  <div class="row">
+  <div class="ktbz-row">
     <input type="text" formControlName="firstName" placeholder="Imię">
     <input type="text" formControlName="lastName" placeholder="Nazwisko">
   </div>
@@ -12,7 +12,7 @@
   <input type="password" formControlName="confirmPassword" placeholder="Powtórz hasło">
   <input type="text" formControlName="city" placeholder="Miasto">
   <input type="date" formControlName="birthdate">
-  <div class="row">
+  <div class="ktbz-row">
     <select formControlName="gender">
       <option value="" disabled selected>Wybierz płeć</option>
       <option value="MALE">Mężczyzna</option>

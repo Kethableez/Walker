@@ -30,25 +30,25 @@ export class DogComponent implements OnInit {
     private dogService: DogService,
     private walkService: WalkService,
     private userStore: CurrentUserStoreService
-  ) {}
+  ) { }
 
 
   isWalkViewEnabled: boolean = false;
   walkId?: string;
 
   option = ProfileOptions.WALKS;
-    dogCard: Observable<DogCard> = this.getDogCard().pipe(
-      tap(dogCard => {
-      },
-      error => this.router.navigate(['/home/dashboard']))
-    );
-    walkCard?: Observable<WalkCard>;
-    isGalleryOpen = false;
-    selectedPhoto: string = '';
+  dogCard: Observable<DogCard> = this.getDogCard().pipe(
+    tap(
+      () => { },
+      () => this.router.navigate(['/home/dashboard']))
+  );
+  walkCard?: Observable<WalkCard>;
+  isGalleryOpen = false;
+  selectedPhoto: string = '';
 
-    buttonState?: ButtonState;
-    isButtonEnabled: boolean = false;
-    buttonKey: string = '';
+  buttonState?: ButtonState;
+  isButtonEnabled: boolean = false;
+  buttonKey: string = '';
 
   ngOnInit(): void {
 
@@ -78,13 +78,13 @@ export class DogComponent implements OnInit {
           this.option = ProfileOptions.WALK;
           this.walkCard = this.walkService.getWalk(walkId).pipe(tap(
             card => {
-              if(this.userStore.role === Role.ROLE_SITTER) {
+              if (this.userStore.role === Role.ROLE_SITTER) {
                 console.log(card.walk.booked, card.walk.sitterId, this.userStore.role, this.userStore.regularUser.id);
                 if (!card.walk.booked) this.prepareButton(true, 'Zapisz się', ButtonState.ENROLL);
                 else if (card.walk.booked && card.walk.sitterId === this.userStore.regularUser.id) this.prepareButton(true, 'Wypisz się', ButtonState.DISENROLL);
                 else this.prepareButton(false, '');
               }
-                else this.prepareButton(false, '');
+              else this.prepareButton(false, '');
             }
           ));
         }
@@ -94,7 +94,7 @@ export class DogComponent implements OnInit {
   }
 
   dispatchAction() {
-    if(this.buttonState === ButtonState.ENROLL) {
+    if (this.buttonState === ButtonState.ENROLL) {
       this.walkService.enroll(this.walkId as string).subscribe(
         () => this.prepareButton(true, 'wypisz się', this.buttonState = ButtonState.DISENROLL)
       )

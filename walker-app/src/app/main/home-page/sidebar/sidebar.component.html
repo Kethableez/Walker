@@ -1,10 +1,10 @@
-<div class="sidebar">
+<div class="ktbz-sidebar">
   <div class="logo"></div>
   <!-- <hr> -->
   <img class="avatar" [src]="avatar">
   <!-- <hr> -->
 
-  <div class="sidebar-buttons" [ngSwitch]="mainRole">
+  <div class="ktbz-sidebar-buttons" [ngSwitch]="mainRole">
     <ktbz-admin-buttons *ngSwitchCase="'ROLE_ADMIN'"> </ktbz-admin-buttons>
 
     <ktbz-owner-buttons *ngSwitchCase="'ROLE_OWNER'"></ktbz-owner-buttons>
@@ -12,7 +12,7 @@
     <ktbz-sitter-buttons *ngSwitchCase="'ROLE_SITTER'"> </ktbz-sitter-buttons>
   </div>
 
-  <div class="logout-button tooltip" (click)="logoutUser()">
+  <div class="logout-button ktbz-tooltip" (click)="logoutUser()">
     <svg class="icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24">
       <g>
         <path d="M0,0h24v24H0V0z" fill="none" />
@@ -26,7 +26,7 @@
         </g>
       </g>
     </svg>
-    <span class="tooltiptext">Wyloguj się</span>
+    <span class="ktbz-tooltiptext">Wyloguj się</span>
   </div>
   <!-- <hr> -->
   <div class="repo">

@@ -1,7 +1,6 @@
 <form [formGroup]="sitterReviewForm">
-  <input type="number" formControlName="rating">
+  <ngb-rating [max]="5" formControlName="rating" ></ngb-rating>
   <input type="text" formControlName="reivewBody" placeholder="Komentarz">
   <div [ngClass]="sitterReviewForm.valid  ? 'button' : 'button-disabled'" (click)="submitReview()">Oceń opiekuna</div>
-
 </form>
 

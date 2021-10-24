@@ -1,4 +1,4 @@
-<div class="container">
+<div class="ktbz-container">
   <div class="page-header" *ngIf="roleView !== 'ROLE_ADMIN'">Historia spacerów</div>
   <div class="page-header" *ngIf="roleView === 'ROLE_ADMIN'">Aktywność użytkowników</div>
 
@@ -18,7 +18,7 @@
     </div>
 
     <div *ngFor="let walkCard of walkHistory">
-      <div class="row">
+      <div class="ktbz-row">
         <div class="dog">
           <img class="image" [src]="walkCard.dog.dogPhoto">
           <div class="text-1"> {{walkCard.dog.name}} </div>
@@ -67,7 +67,7 @@
     </div>
 
     <div *ngFor="let walkCard of walkHistory">
-      <div class="row">
+      <div class="ktbz-row">
         <div class="sitter">
           <img class="image" [src]="walkCard.sitter.avatar">
           <div class="text-1"> {{ walkCard.sitter.firstName }} </div>
@@ -102,7 +102,7 @@
   </div>
 
   <div class="main-container" *ngIf="roleView === 'ROLE_ADMIN'">
-    <div class = "row" *ngFor="let activity of activities | async">
+    <div class = "ktbz-row" *ngFor="let activity of activities | async">
       <div class="text-2">
         {{activity.userId}}
       </div>

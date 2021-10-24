@@ -1,4 +1,4 @@
-<div class="container">
+<div class="ktbz-container">
   <div class="buttons">
     <div class="text-2">Tryb wyświetlania:</div>
     <div class="icon" *ngIf="!switchButton" (click)="click()">
@@ -29,7 +29,7 @@
 
   <div class="main-container">
     <div *ngIf="switchButton">
-      <div class="row" *ngFor="let dogCard of dogs | async">
+      <div class="ktbz-row" *ngFor="let dogCard of dogs | async">
         <img class="image" [src]="dogCard.dog.dogPhoto">
         <div class="text-1"> {{ dogCard.dog.name }}</div>
         <div class="text-1"> {{ dogCard.owner.firstName }}</div>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div *ngIf="!switchButton">
-      <div class="row" *ngFor="let walkCard of walks | async">
+      <div class="ktbz-row" *ngFor="let walkCard of walks | async">
         <img class="image" [src]="walkCard.owner.avatar">
         <div class="text-1"> {{ walkCard.dog.name }}</div>
         <div class="text-1"> {{ walkCard.owner.firstName }}</div>

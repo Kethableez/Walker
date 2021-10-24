@@ -1,4 +1,4 @@
-<div class="container" *ngIf="dogCard | async as dogCard">
+<div class="ktbz-container" *ngIf="dogCard | async as dogCard">
   <div class="walk-header">{{dogCard.dog.name}}
     <div class="button" (click)="dispatchAction()" *ngIf="isButtonEnabled"> {{buttonKey}}</div>
   </div>

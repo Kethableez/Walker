@@ -1,4 +1,4 @@
-<div class="container">
+<div class="ktbz-container">
   <div class="page-header" *ngIf="isCurrentUserProfile">Twój profil</div>
   <div class="page-header" *ngIf="!isCurrentUserProfile"> {{username}}</div>
 
@@ -15,7 +15,19 @@
       </div>
 
       <!-- TODO: Rating -->
-      <div class="rating" *ngIf="sitterData | async as sitterInfo ">★ {{sitterInfo.rating}}</div>
+      <div *ngIf="sitterData | async as sitterInfo" >
+        <ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">★</span>☆
+          </span>
+        </ng-template>
+
+        <ngb-rating [(rate)]="sitterInfo.rating" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+
+      </div>
+
+      <!-- <div class="rating" *ngIf="sitterData | async as sitterInfo ">★ {{sitterInfo.rating}}</div> -->
+
       <div class="data-editable">
         <svg *ngIf="isCurrentUserProfile" (click)="openEditForm('DATA')" class="icon-edit"
           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -98,7 +110,7 @@
                 </div>
                 <div class="comment-body">
                   <div class="comment-row">
-                    <div class="rating"> {{review.rating}}</div>
+                    <ngb-rating [max]="5" [(rate)]="review.rating" [readonly]="true"></ngb-rating>
                     <div class="text-2">
                       Spacer w dniu {{review.walkCard.walk.walkDateTime | date:'dd.MM.yyyy'}} z {{review.walkCard.dog.name}}
                     </div>

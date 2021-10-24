@@ -1,4 +1,4 @@
-<div class="container">
+<div class="ktbz-container">
   <div class="page-header">Dashboard</div>
 
   <div class="main-container">
@@ -29,7 +29,7 @@
           <div class="page-header">Nadchodzące spacery</div>
           <div *ngFor="let walkCard of incomingWalks | async">
 
-            <div class="row" [routerLink]="['/home/dog', walkCard.dog.id, walkCard.walk.id]">
+            <div class="ktbz-row" [routerLink]="['/home/dog', walkCard.dog.id, walkCard.walk.id]">
               <div class="dog">
                 <img class="image" [src]="walkCard.dog.dogPhoto">
                 <div class="text-1"> {{walkCard.dog.name}} </div>
@@ -56,7 +56,7 @@
           <div class="page-header">Nadchodzące spacery</div>
           <div *ngFor="let walkCard of incomingWalks | async">
 
-            <div class="row" [routerLink]="['/home/dog', walkCard.dog.id, walkCard.walk.id]">
+            <div class="ktbz-row" [routerLink]="['/home/dog', walkCard.dog.id, walkCard.walk.id]">
               <div class="dog">
                 <img class="image" [src]="walkCard.dog.dogPhoto">
                 <div class="text-1"> {{walkCard.dog.name}} </div>

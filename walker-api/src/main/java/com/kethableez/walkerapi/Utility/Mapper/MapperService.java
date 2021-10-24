@@ -145,7 +145,7 @@ public class MapperService {
         UserCard sitterCard = userCardMapper(sitterId);
         List<SitterReviewCard> reviews = new ArrayList<>();
         sitterReviewRepository.findAllBySitterId(sitterId).stream().forEach(review -> reviews.add(sitterReviewMapper(review.getId())));
-        Float rating = (float)reviews.stream().mapToDouble(r -> r.getRating()).sum();
+        Float rating = (float)reviews.stream().mapToDouble(r -> r.getRating()).sum() / reviews.size();
         List<String> images = new ArrayList<>();
 
         reviewImageRepository.findAllBySitterId(sitterId).forEach(i -> images.add(String.format(UrlBase, "u", i.getSitterId(), i.getFileName())));

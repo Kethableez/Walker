@@ -47,6 +47,7 @@ import { ImageComponent } from './main/home-page/components/shared/image/image.c
 import { NotificationComponent } from './main/home-page/components/shared/notification/notification.component';
 import { ReportComponent } from './main/home-page/components/admin/report/report.component';
 import { ActivityComponent } from './main/home-page/components/admin/activity/activity.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { ActivityComponent } from './main/home-page/components/admin/activity/ac
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
