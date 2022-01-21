@@ -1,6 +1,5 @@
 <form [formGroup]="dogReviewForm">
   <input type="file" (change)="onSelectFile($event)" >
-  <input type="text" formControlName="reivewBody" placeholder="Komentarz">
+  <input type="text" formControlName="reviewBody" placeholder="Komentarz">
   <div [ngClass]="dogReviewForm.valid  ? 'button' : 'button-disabled'" (click)="submitReview()">Zmień dane</div>
-
 </form>

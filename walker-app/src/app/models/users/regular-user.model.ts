@@ -13,7 +13,10 @@ export interface RegularUser {
   firstName: string;
   lastName: string;
   birthdate: Date;
+  zipCode: string;
   city: string;
+  districtCode: string;
+  regionCode: string;
   avatar: string;
   description: string;
   gender: string;

@@ -3,8 +3,3 @@
   <input type="password" formControlName="password" placeholder="Hasło">
   <div [ngClass]="loginForm.valid  ? 'button' : 'button-disabled'" (click)="loginUser()">Zaloguj się</div>
 </form>
-
-<ktbz-box-message
-*ngIf="isMessageBoxVisible"
-[response]="response"
-(closeMessageBox)="closeMessageBox($event)"></ktbz-box-message>

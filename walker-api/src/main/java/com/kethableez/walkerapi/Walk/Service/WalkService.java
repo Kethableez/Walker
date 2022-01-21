@@ -10,6 +10,9 @@ import com.kethableez.walkerapi.Dog.Repository.DogRepository;
 import com.kethableez.walkerapi.User.Model.DTO.UserCard;
 import com.kethableez.walkerapi.User.Model.Entity.User;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
+import com.kethableez.walkerapi.Utility.Address.Controller.AddressController;
+import com.kethableez.walkerapi.Utility.Address.Model.District;
+import com.kethableez.walkerapi.Utility.Address.Service.AddressService;
 import com.kethableez.walkerapi.Utility.Enum.Role;
 import com.kethableez.walkerapi.Utility.Mapper.MapperService;
 import com.kethableez.walkerapi.Utility.Model.ActivityType;
@@ -37,29 +40,36 @@ public class WalkService {
     private final MapperService mapper;
     private final ActivityService activityService;
     private final NotificationService notificationService;
+    private final AddressService addressService;
 
     @Autowired
-    public WalkService(WalkRepository walkRepository, UserRepository userRepository, DogRepository dogRepository, MapperService mapper, ActivityService activityService, NotificationService notificationService) {
+    public WalkService(WalkRepository walkRepository, UserRepository userRepository, DogRepository dogRepository, MapperService mapper, ActivityService activityService, NotificationService notificationService, AddressService addressService) {
         this.walkRepository = walkRepository;
         this.userRepository = userRepository;
         this.dogRepository = dogRepository;
         this.mapper = mapper;
         this.activityService = activityService;
         this.notificationService = notificationService;
+        this.addressService = addressService;
     }
 
 
 
     public ActionResponse createWalk(UsernamePasswordAuthenticationToken token, WalkRequest request) {
         if (userRepository.findByUsername(token.getName()).isPresent()) {
+            System.out.println(request.getZipCode());
             User owner = userRepository.findByUsername(token.getName()).get();
+            District walkDistrict = addressService.findCity(request.getZipCode());
 
             if (owner.getRoles().stream().anyMatch(r -> r.equals(Role.ROLE_OWNER))) {
                 Walk walk = new Walk(
                     request.getDogId(), 
                     owner.getId(), 
-                    request.getWalkDateTime(), 
+                    request.getWalkDateTime(),
+                    request.getZipCode(),
                     request.getCity(),
+                    walkDistrict.getDistrictCode(),
+                    walkDistrict.getRegionCode(),
                     request.getAddress(), 
                     request.getWalkLat(), 
                     request.getWalkLon(), 
@@ -179,6 +189,14 @@ public class WalkService {
         return new WalkWithFilters(walkCards, new WalkFilter(walkCards));
     }
 
+    public WalkWithFilters getWalkWithFiltersByCity(String districtCode) {
+        List<WalkCard> walkCards = walkRepository.findByWalkDateTimeGreaterThanAndIsBooked(LocalDateTime.now(), false).stream()
+        .filter(walk -> walk.getDistrictCode().equals(districtCode))
+        .map(walk -> mapper.walkCardMapper(walk.getId()))
+        .collect(Collectors.toList());
+        return new WalkWithFilters(walkCards, new WalkFilter(walkCards));
+    }
+
     public List<WalkCard> getAllAvailableWalkCards() {
         List<WalkCard> walkInfos = new ArrayList<>();        
         this.getWalks().stream().forEach(w -> walkInfos.add(mapper.walkCardMapper(w.getId())));
@@ -204,7 +222,10 @@ public class WalkService {
             owner.getFirstName(),
             owner.getLastName(),
             owner.getBirthdate(),
+            owner.getZipCode(),
             owner.getCity(),
+            owner.getDistrictCode(),
+            owner.getRegionCode(),
             owner.getAvatar(),
             owner.getGender(),
             owner.getDescription(),

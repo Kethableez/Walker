@@ -13,6 +13,7 @@ public class WalkRequest {
     private String dogId;
     @DateTimeFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     private LocalDateTime walkDateTime;
+    private String zipCode;
     private String city;
     private String address;
     private Float walkLat;

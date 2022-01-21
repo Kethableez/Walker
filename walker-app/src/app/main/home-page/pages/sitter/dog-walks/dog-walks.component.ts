@@ -6,6 +6,9 @@ import { ActionResponse } from 'src/app/models/action-response.model';
 import { SitterService } from 'src/app/core/services/models/sitter.service';
 import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 import { WalkWithFilters } from 'src/app/models/walks/walk-with-filters.model';
+import { CurrentUserStoreService } from 'src/app/core/services/store/current-user-store.service';
+import { filterByKey } from 'src/app/core/services/utility/utility.model';
+import { Walk } from 'src/app/models/walks/walk.model';
 
 @Component({
   selector: 'ktbz-dog-walks',
@@ -28,9 +31,15 @@ export class DogWalksComponent implements OnInit {
   isMessageBoxVisible = false;
 
   ngOnInit(): void {
-    this.walkService.getWalksWithFilters().subscribe((res: WalkWithFilters) => {
-      this.allWalks = res.walks;
-    } );
+    // this.walkService.getWalksWithFilters().subscribe((res: WalkWithFilters) => {
+    //   console.log(res);
+    //   // this.allWalks = res.walks;
+    // } );
+
+    this.walkService.getAll().subscribe((res: WalkCard[]) => {
+      console.log(res);
+      this.allWalks = res;
+    })
   }
 
 

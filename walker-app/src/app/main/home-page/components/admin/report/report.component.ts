@@ -1,3 +1,4 @@
+import { NotificationService } from 'src/app/core/services/utility/notification.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { AdminService, ReportStatus } from 'src/app/core/services/models/admin.service';
 import { Report } from 'src/app/models/report.model';
@@ -14,13 +15,16 @@ export class ReportComponent implements OnInit {
   @Input()
   isDashboardView = true;
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private notification: NotificationService) { }
 
   ngOnInit(): void {
   }
 
   changeStatus(reportId: string, status: ReportStatus) {
-    this.adminService.changeReportStatus(reportId, status).subscribe();
+    this.adminService.changeReportStatus(reportId, status).subscribe(
+      response => this.notification.dispatchNotification(true, response.message, false),
+      error => this.notification.dispatchNotification(true, error.error, true)
+    );
   }
 
   get reportStatus() {

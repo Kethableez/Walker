@@ -2,8 +2,3 @@
   <input type="text" [formControl]='code' placeholder="Confirmation code">
   <div [ngClass]="code.valid  ? 'button' : 'button-disabled'" (click)="confirmAccount()">Submit</div>
 </form>
-
-<ktbz-box-message
-*ngIf="isMessageBoxVisible"
-[response]="response"
-(closeMessageBox)="closeMessageBox($event)"></ktbz-box-message>

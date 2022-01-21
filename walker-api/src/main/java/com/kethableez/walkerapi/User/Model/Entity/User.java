@@ -51,7 +51,13 @@ public class User {
     @NotBlank
     private LocalDate birthdate;
 
+    private String zipCode;
+
     private String city;
+
+    private String districtCode;
+    
+    private String regionCode;
 
     private String description;
 
@@ -75,21 +81,39 @@ public class User {
 
     private Boolean isBanned;
 
-    public User(String username, String email, String password, String firstName, String lastName, LocalDate birthdate,
-            String city, String avatar, Gender gender, Boolean isActive, Boolean isSubscribed, Boolean isBlocked, Boolean isBanned) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthdate = birthdate;
-        this.city = city;
-        this.avatar = avatar;
-        this.gender = gender;
-        this.isActive = isActive;
-        this.isSubscribed = isSubscribed;
-        this.isBlocked = isBlocked;
-        this.isBanned = isBanned;
+    public User(
+        String username, 
+        String email, 
+        String password, 
+        String firstName, 
+        String lastName, 
+        LocalDate birthdate,
+        String zipCode,
+        String city,
+        String districtCode,
+        String regionCode, 
+        String avatar, 
+        Gender gender, 
+        Boolean isActive, 
+        Boolean isSubscribed, 
+        Boolean isBlocked, 
+        Boolean isBanned) {
+            this.username = username;
+            this.email = email;
+            this.password = password;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.birthdate = birthdate;
+            this.zipCode = zipCode;
+            this.city = city;
+            this.districtCode = districtCode;
+            this.regionCode = regionCode;
+            this.avatar = avatar;
+            this.gender = gender;
+            this.isActive = isActive;
+            this.isSubscribed = isSubscribed;
+            this.isBlocked = isBlocked;
+            this.isBanned = isBanned;
     }
 
     public String getAvatar() {

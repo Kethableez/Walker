@@ -23,6 +23,8 @@ import com.kethableez.walkerapi.User.Model.Request.UserPasswordRequest;
 import com.kethableez.walkerapi.User.Repository.TokenStorageRepository;
 import com.kethableez.walkerapi.User.Repository.UserRepository;
 import com.kethableez.walkerapi.User.Repository.UserRoleRepository;
+import com.kethableez.walkerapi.Utility.Address.Model.District;
+import com.kethableez.walkerapi.Utility.Address.Service.AddressService;
 import com.kethableez.walkerapi.Utility.Enum.Role;
 import com.kethableez.walkerapi.Utility.Mapper.MapperService;
 import com.kethableez.walkerapi.Utility.Model.ActivityType;
@@ -47,17 +49,13 @@ public class UserService {
         private final ImageService imageService;
         private final ActivityService activityService;
         private final NotificationService notificationService;
+        private final AddressService addressService;
 
         @Autowired
-        public UserService(
-                UserRepository userRepository, 
-                UserRoleRepository roleRepository,
-                TokenStorageRepository tokenStorageRepository, 
-                PasswordEncoder encoder, 
-                MapperService mapper,
-                ImageService imageService, 
-                ActivityService activityService,
-                NotificationService notificationService) {
+        public UserService(UserRepository userRepository, UserRoleRepository roleRepository,
+                        TokenStorageRepository tokenStorageRepository, PasswordEncoder encoder, MapperService mapper,
+                        ImageService imageService, ActivityService activityService,
+                        NotificationService notificationService, AddressService addressService) {
                 this.userRepository = userRepository;
                 this.roleRepository = roleRepository;
                 this.tokenStorageRepository = tokenStorageRepository;
@@ -66,16 +64,20 @@ public class UserService {
                 this.imageService = imageService;
                 this.activityService = activityService;
                 this.notificationService = notificationService;
+                this.addressService = addressService;
         }
 
         public String registerUser(RegisterRequest request) {
                 Random rnd = new Random();
                 int code = rnd.nextInt(999999);
+                District userDistrict = addressService.findCity(request.getZipCode());
 
                 User newUser = new User(request.getUsername(), request.getEmail(),
                                 encoder.bCryptPasswordEncoder().encode(request.getPassword()), request.getFirstName(),
-                                request.getLastName(), request.getBirthdate(), request.getCity(), request.getAvatar(),
+                                request.getLastName(), request.getBirthdate(), request.getZipCode(), request.getCity(),
+                                userDistrict.getDistrictCode(), userDistrict.getRegionCode(), request.getAvatar(),
                                 request.getGender(), true, request.getIsSubscribed(), false, false);
+
                 Set<UserRole> roles = new HashSet<>();
                 Role role = (request.getRole().equals(Role.ROLE_OWNER)) ? Role.ROLE_OWNER : Role.ROLE_SITTER;
                 roles.add(roleRepository.findByRole(Role.ROLE_USER).orElseThrow());
@@ -97,10 +99,13 @@ public class UserService {
         public String registerAdmin(RegisterRequest request) {
                 Random rnd = new Random();
                 int code = rnd.nextInt(999999);
+                District userDistrict = addressService.findCity(request.getZipCode());
                 User newUser = new User(request.getUsername(), request.getEmail(),
                                 encoder.bCryptPasswordEncoder().encode(request.getPassword()), request.getFirstName(),
-                                request.getLastName(), request.getBirthdate(), request.getCity(), request.getAvatar(),
-                                request.getGender(), true, request.getIsSubscribed(), false, false);
+                                request.getLastName(), request.getBirthdate(), request.getZipCode(), request.getCity(),
+                                userDistrict.getDistrictCode(), userDistrict.getRegionCode(),
+                                request.getAvatar(), request.getGender(), true, request.getIsSubscribed(), false,
+                                false);
                 Set<UserRole> roles = new HashSet<>();
                 roles.add(roleRepository.findByRole(request.getRole()).orElseThrow());
                 roles.add(roleRepository.findByRole(Role.ROLE_ADMIN).orElseThrow());

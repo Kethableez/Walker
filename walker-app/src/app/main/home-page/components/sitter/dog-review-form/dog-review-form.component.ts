@@ -44,6 +44,8 @@ export class DogReviewFormComponent implements OnInit {
   }
 
   onSelectFile(e: any) {
+    console.log(this.dogReviewForm.valid)
+
     if (e.target.files.length > 0) {
       const f = e.target.files[0];
       this.selectedFile = e.target.files[0];

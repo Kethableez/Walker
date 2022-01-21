@@ -1,3 +1,4 @@
+import { NotificationService } from 'src/app/core/services/utility/notification.service';
 import { SitterStoreService } from './../../../../../core/services/store/sitter-store.service';
 import { CurrentUserStoreService } from './../../../../../core/services/store/current-user-store.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
@@ -12,84 +13,56 @@ import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 
 @Component({
   selector: 'ktbz-dog-card',
-  templateUrl: './dog-card.component.html'
+  templateUrl: './dog-card.component.html',
 })
 export class DogCardComponent implements OnInit {
-
   @Input()
   walkCard?: WalkCard;
 
   @Output()
   actionEmitter = new EventEmitter<void>();
 
-
-  response?: ActionResponse;
-  isMessageBoxVisible = false;
   userId: string = '';
 
   constructor(
     private userStore: CurrentUserStoreService,
     private walkService: WalkService,
-    private sitterStore: SitterStoreService
-    // private tokenStorage: TokenStorageService
-    ) { }
+    private sitterStore: SitterStoreService,
+    private notification: NotificationService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   action(walkCard: WalkCard) {
-    if (walkCard.walk.booked && walkCard.walk.sitterId === this.userStore.regularUser.id){
+    if (
+      walkCard.walk.booked &&
+      walkCard.walk.sitterId === this.userStore.regularUser.id
+    ) {
       this.disenroll(walkCard);
-    }
-    else if (!walkCard.walk.booked) {
+    } else if (!walkCard.walk.booked) {
       this.enroll(walkCard);
     }
   }
 
-
   enroll(walkCard: WalkCard) {
     this.walkService.enroll(walkCard.walk.id).subscribe(
-      (res: any) => {
+      (response) => {
+        this.notification.dispatchNotification(true, response.message, false);
         this.sitterStore.saveEnrollAction(walkCard);
         this.actionEmitter.emit();
-        this.response = {
-          message: res.message,
-          isSuccess: true,
-        };
-        this.isMessageBoxVisible = true;
       },
-      (err) => {
-        (this.response = {
-          message: err.error,
-          isSuccess: false,
-        }),
-          (this.isMessageBoxVisible = true);
-      }
+      (error) => this.notification.dispatchNotification(true, error.error, true)
     );
   }
 
   disenroll(walkCard: WalkCard) {
     this.walkService.disenroll(walkCard.walk.id).subscribe(
-      (res: any) => {
+      (response) => {
+        this.notification.dispatchNotification(true, response.message, false);
         this.sitterStore.saveDisenrollAction(walkCard);
         this.actionEmitter.emit();
-        this.response = {
-          message: res.message,
-          isSuccess: true,
-        };
-        this.isMessageBoxVisible = true;
       },
-      (err) => {
-        (this.response = {
-          message: err.error,
-          isSuccess: false,
-        }),
-          (this.isMessageBoxVisible = true);
-      }
+      (error) => this.notification.dispatchNotification(true, error.error, true)
     );
-  }
-
-  closeMessageBox(event: boolean) {
-    this.isMessageBoxVisible = false;
   }
 }

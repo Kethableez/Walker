@@ -1,8 +1,6 @@
+import { NotificationService } from 'src/app/core/services/utility/notification.service';
 import { SitterData } from './../../../models/users/sitter.model';
-import { PastWalkInfo } from './../../../models/walks/past-walk-info.model';
-import { PastWalkCard } from 'src/app/models/walks/past-walk-card.model';
 import { SitterStoreService } from './../../../core/services/store/sitter-store.service';
-import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 import { SitterService } from 'src/app/core/services/models/sitter.service';
 import { UserService } from 'src/app/core/services/models/user.service';
 import { CurrentUserStoreService } from './../../../core/services/store/current-user-store.service';
@@ -11,7 +9,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { TokenStorageService } from 'src/app/core/services/auth/token-storage.service';
-import { ActionResponse } from 'src/app/models/action-response.model';
 import { Role } from 'src/app/models/enums/role.model';
 import { WalkCard } from 'src/app/models/walks/walk-card.model';
 
@@ -24,8 +21,6 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   roles: Role[] = []
-  response?: ActionResponse;
-  isMessageBoxVisible = false;
 
   constructor(
     private authService: AuthService,
@@ -35,6 +30,7 @@ export class LoginComponent implements OnInit {
     private sitterService: SitterService,
     private sitterStore: SitterStoreService,
     private builder: FormBuilder,
+    private notification: NotificationService,
     private router: Router) { }
 
 
@@ -65,13 +61,7 @@ export class LoginComponent implements OnInit {
         this.setActionAfterSuccess();
         this.storeUserDataAfterSuccess();
       },
-      err => {
-        this.response = {
-          'message': err.error,
-          'isSuccess': false
-        }
-        this.isMessageBoxVisible = true;
-      }
+      err => this.notification.dispatchNotification(true, err.error, true)
     );
   }
 
@@ -119,9 +109,5 @@ export class LoginComponent implements OnInit {
     this.sitterService.getSitterData().subscribe(
       (response: SitterData) => this.sitterStore.saveSitterData(response)
     )
-  }
-
-  closeMessageBox(event: boolean) {
-    this.isMessageBoxVisible = false;
   }
 }

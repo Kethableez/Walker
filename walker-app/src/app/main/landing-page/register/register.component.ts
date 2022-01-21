@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { ImageService } from 'src/app/core/services/models/image.service';
 import { MustMatch } from './password.validator';
+import { NotificationService } from 'src/app/core/services/utility/notification.service';
 
 const ADMIN_TOKEN = '05da579b-cafe-4395-8eeb-88826dfd6cc9';
 
@@ -18,7 +19,8 @@ export class RegisterComponent implements OnInit {
     private builder: FormBuilder,
     private router: Router,
     private auth: AuthService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private notification: NotificationService
   ) {}
 
   registerForm = this.builder.group(
@@ -50,6 +52,7 @@ export class RegisterComponent implements OnInit {
       ],
       confirmPassword: ['', Validators.required],
       birthdate: ['', Validators.required],
+      zipCode: ['', Validators.required],
       city: ['', Validators.required],
       gender: ['', Validators.required],
       avatar: ['', Validators.required],
@@ -163,8 +166,6 @@ export class RegisterComponent implements OnInit {
   terms: boolean = false;
   subscription: boolean = false;
   isAdminRegistration: boolean = false;
-  isMessageBoxVisible = false;
-  response?: ActionResponse;
   selectedFile: string = ' ';
   tempImage?: string;
   token!: string | null;
@@ -203,40 +204,23 @@ export class RegisterComponent implements OnInit {
   registerUser(): void {
     this.auth.registerUser(this.registerForm.value, this.token).subscribe(
       (res) => {
-        this.response = {
-          message: 'Zarejestrowano pomyślnie',
-          isSuccess: true,
-        };
-
         let userId = res.message;
         let userPhoto = new FormData();
         userPhoto.append('imageFile', this.selectedFile);
         this.imageService.uploadUserPhoto(userPhoto, userId).subscribe(
-          (res) => {
-            this.isMessageBoxVisible = true;
+          () => {
+            this.notification.dispatchNotification(
+              true,
+              'Zarejestrowano pomyślnie',
+              false
+            );
             this.registerForm.reset();
           },
-          (err) => {
-            (this.response = {
-              message: err.error,
-              isSuccess: true,
-            }),
-              (this.isMessageBoxVisible = true);
-          }
+          (err) => this.notification.dispatchNotification(true, err.error, true)
         );
       },
-      (err) => {
-        this.response = {
-          message: err.error,
-          isSuccess: false,
-        };
-        this.isMessageBoxVisible = true;
-      }
+      (err) => this.notification.dispatchNotification(true, err.error, true)
     );
-  }
-
-  closeMessageBox(event: boolean) {
-    this.isMessageBoxVisible = false;
   }
 
   onSelectFile(e: any) {

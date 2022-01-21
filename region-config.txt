@@ -1,0 +1,380 @@
+DBL	V_DLSL	Bolesławiec	bolesławiecki	dolnośląskie
+DDZ	V_DLSL	Dzierżoniów	dzierżoniowski	dolnośląskie
+DGL	V_DLSL	Głogów	głogowski	dolnośląskie
+DGR	V_DLSL	Góra	górowski	dolnośląskie
+DJA	V_DLSL	Jawor	jaworski	dolnośląskie
+DJE	V_DLSL	Jelenia	Góra	Jelenia	Góra	dolnośląskie
+DJE	V_DLSL	Jelenia	Góra	karkonoski	dolnośląskie
+DKA	V_DLSL	Kamienna	Góra	kamiennogórski	dolnośląskie
+DKL	V_DLSL	Kłodzko	kłodzki	dolnośląskie
+DLE	V_DLSL	Legnica	Legnica	dolnośląskie
+DLE	V_DLSL	Legnica	legnicki	dolnośląskie
+DLB	V_DLSL	Lubań	lubański	dolnośląskie
+DLU	V_DLSL	Lubin	lubiński	dolnośląskie
+DLW	V_DLSL	Lwówek	Śląski	lwówecki	dolnośląskie
+DMI	V_DLSL	Milicz	milicki	dolnośląskie
+DOL	V_DLSL	Oleśnica	oleśnicki	dolnośląskie
+DOA	V_DLSL	Oława	oławski	dolnośląskie
+DPL	V_DLSL	Polkowice	polkowicki	dolnośląskie
+DST	V_DLSL	Strzelin	strzeliński	dolnośląskie
+DSR	V_DLSL	Środa	Śląska	średzki	dolnośląskie
+DSW	V_DLSL	Świdnica	świdnicki	dolnośląskie
+DTR	V_DLSL	Trzebnica	trzebnicki	dolnośląskie
+DBA	V_DLSL	Wałbrzych	Wałbrzych	dolnośląskie
+DBA	V_DLSL	Wałbrzych	wałbrzyski	dolnośląskie
+DWL	V_DLSL	Wołów	wołowski	dolnośląskie
+DWR	V_DLSL	Wrocław	Wrocław	dolnośląskie
+DWR	V_DLSL	Wrocław	wrocławski	dolnośląskie
+DZA	V_DLSL	Ząbkowice	Śląskie	ząbkowicki	dolnośląskie
+DZG	V_DLSL	Zgorzelec	zgorzelecki	dolnośląskie
+DZL	V_DLSL	Złotoryja	złotoryjski	dolnośląskie
+CAL	V_KJPM	Aleksandrów	Kujawski	aleksandrowski	kujawsko-pomorskie
+CBR	V_KJPM	Brodnica	brodnicki	kujawsko-pomorskie
+CBY	V_KJPM	Bydgoszcz	bydgoski	kujawsko-pomorskie
+CBB	V_KJPM	Bydgoszcz	Bydgoszcz	kujawsko-pomorskie
+CCH	V_KJPM	Chełmno	chełmiński	kujawsko-pomorskie
+CGD	V_KJPM	Golub-Dobrzyń	golubsko-dobrzyński	kujawsko-pomorskie
+CGR	V_KJPM	Grudziądz	Grudziądz	kujawsko-pomorskie
+CGR	V_KJPM	Grudziądz	grudziądzki	kujawsko-pomorskie
+CIN	V_KJPM	Inowrocław	inowrocławski	kujawsko-pomorskie
+CLI	V_KJPM	Lipno	lipnowski	kujawsko-pomorskie
+CMG	V_KJPM	Mogilno	mogileński	kujawsko-pomorskie
+CNA	V_KJPM	Nakło	nad	Notecią	nakielski	kujawsko-pomorskie
+CRA	V_KJPM	Radziejów	radziejowski	kujawsko-pomorskie
+CRY	V_KJPM	Rypin	rypiński	kujawsko-pomorskie
+CSE	V_KJPM	Sępolno	Krajeńskie	sępoleński	kujawsko-pomorskie
+CSW	V_KJPM	Świecie	świecki	kujawsko-pomorskie
+CTR	V_KJPM	Toruń	Toruń	kujawsko-pomorskie
+CTR	V_KJPM	Toruń	toruński	kujawsko-pomorskie
+CTU	V_KJPM	Tuchola	tucholski	kujawsko-pomorskie
+CWA	V_KJPM	Wąbrzeźno	wąbrzeski	kujawsko-pomorskie
+CWL	V_KJPM	Włocławek	Włocławek	kujawsko-pomorskie
+CWL	V_KJPM	Włocławek	włocławski	kujawsko-pomorskie
+CZN	V_KJPM	Żnin	żniński	kujawsko-pomorskie
+LBI	V_LBEL	Biała	Podlaska	bialski	lubelskie
+LBI	V_LBEL	Biała	Podlaska	Biała	Podlaska	lubelskie
+LBL	V_LBEL	Biłgoraj	biłgorajski	lubelskie
+LCH	V_LBEL	Chełm	Chełm	lubelskie
+LCH	V_LBEL	Chełm	chełmski	lubelskie
+LHR	V_LBEL	Hrubieszów	hrubieszowski	lubelskie
+LJA	V_LBEL	Janów	Lubelski	janowski	lubelskie
+LKS	V_LBEL	Krasnystaw	krasnostawski	lubelskie
+LKR	V_LBEL	Kraśnik	kraśnicki	lubelskie
+LLB	V_LBEL	Lubartów	lubartowski	lubelskie
+LUB	V_LBEL	Lublin	lubelski	lubelskie
+LU	V_LBEL	Lublin	Lublin	lubelskie
+LLE	V_LBEL	Łęczna	łęczyński	lubelskie
+LLU	V_LBEL	Łuków	łukowski	lubelskie
+LOP	V_LBEL	Opole	Lubelskie	opolski	lubelskie
+LPA	V_LBEL	Parczew	parczewski	lubelskie
+LPU	V_LBEL	Puławy	puławski	lubelskie
+LRA	V_LBEL	Radzyń	Podlaski	radzyński	lubelskie
+LRY	V_LBEL	Ryki	rycki	lubelskie
+LSW	V_LBEL	Świdnik	świdnicki	lubelskie
+LTM	V_LBEL	Tomaszów	Lubelski	tomaszowski	lubelskie
+LWL	V_LBEL	Włodawa	włodawski	lubelskie
+LZA	V_LBEL	Zamość	zamojski	lubelskie
+LZA	V_LBEL	Zamość	Zamość	lubelskie
+FGW	V_LBUS	Gorzów	Wielkopolski	gorzowski	lubuskie
+FGW	V_LBUS	Gorzów	Wielkopolski	Gorzów	Wielkopolski	lubuskie
+FKR	V_LBUS	Krosno	Odrzańskie	krośnieński	lubuskie
+FMI	V_LBUS	Międzyrzecz	międzyrzecki	lubuskie
+FNW	V_LBUS	Nowa	Sól	nowosolski	lubuskie
+FSL	V_LBUS	Słubice	słubicki	lubuskie
+FSD	V_LBUS	Strzelce	Krajeńskie	strzelecko-drezdenecki	lubuskie
+FSU	V_LBUS	Sulęcin	sulęciński	lubuskie
+FSW	V_LBUS	Świebodzin	świebodziński	lubuskie
+FWS	V_LBUS	Wschowa	wschowski	lubuskie
+FZI	V_LBUS	Zielona	Góra	Zielona	Góra	lubuskie
+FZI	V_LBUS	Zielona	Góra	zielonogórski	lubuskie
+FZG	V_LBUS	Żagań	żagański	lubuskie
+FZA	V_LBUS	Żary	żarski	lubuskie
+EBE	V_LDZK	Bełchatów	bełchatowski	łódzkie
+EBR	V_LDZK	Brzeziny	brzeziński	łódzkie
+EKU	V_LDZK	Kutno	kutnowski	łódzkie
+ELA	V_LDZK	Łask	łaski	łódzkie
+ELE	V_LDZK	Łęczyca	łęczycki	łódzkie
+ELC	V_LDZK	Łowicz	łowicki	łódzkie
+ELW	V_LDZK	Łódź	łódzki	wschodni	łódzkie
+ELW	V_LDZK	Łódź	Łódź	łódzkie
+EOP	V_LDZK	Opoczno	opoczyński	łódzkie
+EPA	V_LDZK	Pabianice	pabianicki	łódzkie
+EPJ	V_LDZK	Pajęczno	pajęczański	łódzkie
+EPI	V_LDZK	Piotrków	Trybunalski	piotrkowski	łódzkie
+EPI	V_LDZK	Piotrków	Trybunalski	Piotrków	Trybunalski	łódzkie
+EPD	V_LDZK	Poddębice	poddębicki	łódzkie
+ERA	V_LDZK	Radomsko	radomszczański	łódzkie
+ERW	V_LDZK	Rawa	Mazowiecka	rawski	łódzkie
+ESI	V_LDZK	Sieradz	sieradzki	łódzkie
+ESK	V_LDZK	Skierniewice	Skierniewice	łódzkie
+ESK	V_LDZK	Skierniewice	skierniewicki	łódzkie
+ETM	V_LDZK	Tomaszów	Mazowiecki	tomaszowski	łódzkie
+EWI	V_LDZK	Wieluń	wieluński	łódzkie
+EWE	V_LDZK	Wieruszów	wieruszowski	łódzkie
+EZD	V_LDZK	Zduńska	Wola	zduńskowolski	łódzkie
+EZG	V_LDZK	Zgierz	zgierski	łódzkie
+KBC	V_MLPS	Bochnia	bocheński	małopolskie
+KBR	V_MLPS	Brzesko	brzeski	małopolskie
+KCH	V_MLPS	Chrzanów	chrzanowski	małopolskie
+KDA	V_MLPS	Dąbrowa	Tarnowska	dąbrowski	małopolskie
+KGR	V_MLPS	Gorlice	gorlicki	małopolskie
+KRA	V_MLPS	Kraków	krakowski	małopolskie
+KRA	V_MLPS	Kraków	Kraków	małopolskie
+KLI	V_MLPS	Limanowa	limanowski	małopolskie
+KMI	V_MLPS	Miechów	miechowski	małopolskie
+KMY	V_MLPS	Myślenice	myślenicki	małopolskie
+KNS	V_MLPS	Nowy	Sącz	nowosądecki	małopolskie
+KNS	V_MLPS	Nowy	Sącz	Nowy	Sącz	małopolskie
+KNT	V_MLPS	Nowy	Targ	nowotarski	małopolskie
+KOL	V_MLPS	Olkusz	olkuski	małopolskie
+KOS	V_MLPS	Oświęcim	oświęcimski	małopolskie
+KPR	V_MLPS	Proszowice	proszowicki	małopolskie
+KSU	V_MLPS	Sucha	Beskidzka	suski	małopolskie
+KTA	V_MLPS	Tarnów	tarnowski	małopolskie
+KTA	V_MLPS	Tarnów	Tarnów	małopolskie
+KWA	V_MLPS	Wadowice	wadowicki	małopolskie
+KWI	V_MLPS	Wieliczka	wielicki	małopolskie
+KTT	V_MLPS	Zakopane	tatrzański	małopolskie
+WBR	V_MZCK	Białobrzegi	białobrzeski	mazowieckie
+WCI	V_MZCK	Ciechanów	ciechanowski	mazowieckie
+WG	V_MZCK	Garwolin	garwoliński	mazowieckie
+WGS	V_MZCK	Gostynin	gostyniński	mazowieckie
+WGM	V_MZCK	Grodzisk	Mazowiecki	grodziski	mazowieckie
+WGR	V_MZCK	Grójec	grójecki	mazowieckie
+WKZ	V_MZCK	Kozienice	kozienicki	mazowieckie
+WLL	V_MZCK	Legionowo	legionowski	mazowieckie
+WLI	V_MZCK	Lipsko	lipski	mazowieckie
+WLS	V_MZCK	Łosice	łosicki	mazowieckie
+WMA	V_MZCK	Maków	Mazowiecki	makowski	mazowieckie
+WM	V_MZCK	Mińsk	Mazowiecki	miński	mazowieckie
+WML	V_MZCK	Mława	mławski	mazowieckie
+WND	V_MZCK	Nowy	Dwór	Mazowiecki	nowodworski	mazowieckie
+WOS	V_MZCK	Ostrołęka	ostrołęcki	mazowieckie
+WOS	V_MZCK	Ostrołęka	Ostrołęka	mazowieckie
+WOR	V_MZCK	Ostrów	Mazowiecka	ostrowski	mazowieckie
+WOT	V_MZCK	Otwock	otwocki	mazowieckie
+WZ	V_MZCK	Ożarów	Mazowiecki	warszawski	zachodni	mazowieckie
+WPI	V_MZCK	Piaseczno	piaseczyński	mazowieckie
+WPL	V_MZCK	Płock	Płock	mazowieckie
+WPL	V_MZCK	Płock	płocki	mazowieckie
+WPN	V_MZCK	Płońsk	płoński	mazowieckie
+WPR	V_MZCK	Pruszków	pruszkowski	mazowieckie
+WPZ	V_MZCK	Przasnysz	przasnyski	mazowieckie
+WPY	V_MZCK	Przysucha	przysuski	mazowieckie
+WPU	V_MZCK	Pułtusk	pułtuski	mazowieckie
+WRA	V_MZCK	Radom	Radom	mazowieckie
+WRA	V_MZCK	Radom	radomski	mazowieckie
+WS	V_MZCK	Siedlce	Siedlce	mazowieckie
+WSI	V_MZCK	Siedlce	siedlecki	mazowieckie
+WSE	V_MZCK	Sierpc	sierpecki	mazowieckie
+WSC	V_MZCK	Sochaczew	sochaczewski	mazowieckie
+WSK	V_MZCK	Sokołów	Podlaski	sokołowski	mazowieckie
+WSZ	V_MZCK	Szydłowiec	szydłowiecki	mazowieckie
+WWA	V_MZCK	Warszawa	Warszawa	mazowieckie
+WWE	V_MZCK	Węgrów	węgrowski	mazowieckie
+WWL	V_MZCK	Wołomin	wołomiński	mazowieckie
+WWY	V_MZCK	Wyszków	wyszkowski	mazowieckie
+WZW	V_MZCK	Zwoleń	zwoleński	mazowieckie
+WZU	V_MZCK	Żuromin	żuromiński	mazowieckie
+WZY	V_MZCK	Żyrardów	żyrardowski	mazowieckie
+OBB	V_OPLS	Brzeg	brzeski	opolskie
+OGL	V_OPLS	Głubczyce	głubczycki	opolskie
+OK	V_OPLS	Kędzierzyn-Koźle	kędzierzyńsko-kozielski	opolskie
+OKL	V_OPLS	Kluczbork	kluczborski	opolskie
+OKR	V_OPLS	Krapkowice	krapkowicki	opolskie
+ONA	V_OPLS	Namysłów	namysłowski	opolskie
+ONY	V_OPLS	Nysa	nyski	opolskie
+OOL	V_OPLS	Olesno	oleski	opolskie
+OPO	V_OPLS	Opole	Opole	opolskie
+OPO	V_OPLS	Opole	opolski	opolskie
+OPR	V_OPLS	Prudnik	prudnicki	opolskie
+OST	V_OPLS	Strzelce	Opolskie	strzelecki	opolskie
+RBR	V_PDCK	Brzozów	brzozowski	podkarpackie
+RDE	V_PDCK	Dębica	dębicki	podkarpackie
+RJA	V_PDCK	Jarosław	jarosławski	podkarpackie
+RJS	V_PDCK	Jasło	jasielski	podkarpackie
+RKL	V_PDCK	Kolbuszowa	kolbuszowski	podkarpackie
+RKR	V_PDCK	Krosno	Krosno	podkarpackie
+RKR	V_PDCK	Krosno	krośnieński	podkarpackie
+RLS	V_PDCK	Lesko	leski	podkarpackie
+RLE	V_PDCK	Leżajsk	leżajski	podkarpackie
+RLU	V_PDCK	Lubaczów	lubaczowski	podkarpackie
+RLA	V_PDCK	Łańcut	łańcucki	podkarpackie
+RMI	V_PDCK	Mielec	mielecki	podkarpackie
+RNI	V_PDCK	Nisko	niżański	podkarpackie
+RPR	V_PDCK	Przemyśl	przemyski	podkarpackie
+RPR	V_PDCK	Przemyśl	Przemyśl	podkarpackie
+RPZ	V_PDCK	Przeworsk	przeworski	podkarpackie
+RRS	V_PDCK	Ropczyce	ropczycko-sędziszowski	podkarpackie
+RZE	V_PDCK	Rzeszów	rzeszowski	podkarpackie
+RZE	V_PDCK	Rzeszów	Rzeszów	podkarpackie
+RSA	V_PDCK	Sanok	sanocki	podkarpackie
+RST	V_PDCK	Stalowa	Wola	stalowowolski	podkarpackie
+RSR	V_PDCK	Strzyżów	strzyżowski	podkarpackie
+RT	V_PDCK	Tarnobrzeg	Tarnobrzeg	podkarpackie
+RTA	V_PDCK	Tarnobrzeg	tarnobrzeski	podkarpackie
+RBI	V_PDLS	Ustrzyki	Dolne	bieszczadzki	podkarpackie
+BAU	V_PDLS	Augustów	augustowski	podlaskie
+BIA	V_PDLS	Białystok	białostocki	podlaskie
+BIA	V_PDLS	Białystok	Białystok	podlaskie
+BBI	V_PDLS	Bielsk	Podlaski	bielski	podlaskie
+BGR	V_PDLS	Grajewo	grajewski	podlaskie
+BHA	V_PDLS	Hajnówka	hajnowski	podlaskie
+BKL	V_PDLS	Kolno	kolneński	podlaskie
+BLM	V_PDLS	Łomża	Łomża	podlaskie
+BLM	V_PDLS	Łomża	łomżyński	podlaskie
+BMN	V_PDLS	Mońki	moniecki	podlaskie
+BSE	V_PDLS	Sejny	sejneński	podlaskie
+BSI	V_PDLS	Siemiatycze	siemiatycki	podlaskie
+BSK	V_PDLS	Sokółka	sokólski	podlaskie
+BSU	V_PDLS	Suwałki	suwalski	podlaskie
+BS	V_PDLS	Suwałki	Suwałki	podlaskie
+BWM	V_PDLS	Wysokie	Mazowieckie	wysokomazowiecki	podlaskie
+BZA	V_PDLS	Zambrów	zambrowski	podlaskie
+GBY	V_POMS	Bytów	bytowski	pomorskie
+GCH	V_POMS	Chojnice	chojnicki	pomorskie
+GCZ	V_POMS	Człuchów	człuchowski	pomorskie
+GDD	V_POMS	Gdańsk	Gdańsk	pomorskie
+GAA	V_POMS	Gdynia	Gdynia	pomorskie
+GKA	V_POMS	Kartuzy	kartuski	pomorskie
+GKS	V_POMS	Kościerzyna	kościerski	pomorskie
+GKW	V_POMS	Kwidzyn	kwidzyński	pomorskie
+GLE	V_POMS	Lębork	lęborski	pomorskie
+GMB	V_POMS	Malbork	malborski	pomorskie
+GND	V_POMS	Nowy	Dwór	Gdański	nowodworski	pomorskie
+GDA	V_POMS	Pruszcz	Gdański	gdański	pomorskie
+GPU	V_POMS	Puck	pucki	pomorskie
+GSL	V_POMS	Słupsk	Słupsk	pomorskie
+GSL	V_POMS	Słupsk	słupski	pomorskie
+GSP	V_POMS	Sopot	Sopot	pomorskie
+GST	V_POMS	Starogard	Gdański	starogardzki	pomorskie
+GSZ	V_POMS	Sztum	sztumski	pomorskie
+GTC	V_POMS	Tczew	tczewski	pomorskie
+GWE	V_POMS	Wejherowo	wejherowski	pomorskie
+SBE	V_SLSK	Będzin	będziński	śląskie
+SBI	V_SLSK	Bielsko-Biała	bielski	śląskie
+SBI	V_SLSK	Bielsko-Biała	Bielsko-Biała	śląskie
+SBL	V_SLSK	Bieruń	bieruńsko-lędziński	śląskie
+SYY	V_SLSK	Bytom	Bytom	śląskie
+SHH	V_SLSK	Chorzów	Chorzów	śląskie
+SCI	V_SLSK	Cieszyn	cieszyński	śląskie
+SCZ	V_SLSK	Częstochowa	Częstochowa	śląskie
+SCZ	V_SLSK	Częstochowa	częstochowski	śląskie
+SDD	V_SLSK	Dąbrowa	Górnicza	Dąbrowa	Górnicza	śląskie
+SGL	V_SLSK	Gliwice	Gliwice	śląskie
+SGL	V_SLSK	Gliwice	gliwicki	śląskie
+SJZ	V_SLSK	Jastrzębie-Zdrój	Jastrzębie-Zdrój	śląskie
+SJJ	V_SLSK	Jaworzno	Jaworzno	śląskie
+SK	V_SLSK	Katowice	Katowice	śląskie
+SKL	V_SLSK	Kłobuck	kłobucki	śląskie
+SLU	V_SLSK	Lubliniec	lubliniecki	śląskie
+SMI	V_SLSK	Mikołów	mikołowski	śląskie
+SM	V_SLSK	Mysłowice	Mysłowice	śląskie
+SMY	V_SLSK	Myszków	myszkowski	śląskie
+SPI	V_SLSK	Piekary	Śląskie	Piekary	Śląskie	śląskie
+SPS	V_SLSK	Pszczyna	pszczyński	śląskie
+SRC	V_SLSK	Racibórz	raciborski	śląskie
+SRS	V_SLSK	Ruda	Śląska	Ruda	Śląska	śląskie
+SRB	V_SLSK	Rybnik	rybnicki	śląskie
+SRB	V_SLSK	Rybnik	Rybnik	śląskie
+SI	V_SLSK	Siemanowice	Śląskie	Siemianowice	Śląskie	śląskie
+SO	V_SLSK	Sosnowiec	Sosnowiec	śląskie
+SW	V_SLSK	Świętochłowice	Świętochłowice	śląskie
+STA	V_SLSK	Tarnowskie	Góry	tarnogórski	śląskie
+ST	V_SLSK	Tychy	Tychy	śląskie
+SWD	V_SLSK	Wodzisław	Śląski	wodzisławski	śląskie
+SZ	V_SLSK	Zabrze	Zabrze	śląskie
+SZA	V_SLSK	Zawiercie	zawierciański	śląskie
+SZO	V_SLSK	Żory	Żory	śląskie
+SZY	V_SLSK	Żywiec	żywiecki	śląskie
+TBU	V_SWTK	Busko-Zdrój	buski	świętokrzyskie
+TJE	V_SWTK	Jędrzejów	jędrzejowski	świętokrzyskie
+TKA	V_SWTK	Kazimierza	Wielka	kazimierski	świętokrzyskie
+TKI	V_SWTK	Kielce	Kielce	świętokrzyskie
+TKI	V_SWTK	Kielce	kielecki	świętokrzyskie
+TKN	V_SWTK	Końskie	konecki	świętokrzyskie
+TOP	V_SWTK	Opatów	opatowski	świętokrzyskie
+TOS	V_SWTK	Ostrowiec	Świętokrzyski	ostrowiecki	świętokrzyskie
+TPI	V_SWTK	Pińczów	pińczowski	świętokrzyskie
+TSA	V_SWTK	Sandomierz	sandomierski	świętokrzyskie
+TSK	V_SWTK	Skarżysko-Kamienna	skarżyski	świętokrzyskie
+TST	V_SWTK	Starachowice	starachowicki	świętokrzyskie
+TSZ	V_SWTK	Staszów	staszowski	świętokrzyskie
+TLW	V_SWTK	Włoszczowa	włoszczowski	świętokrzyskie
+NBA	V_WRMZ	Bartoszyce	bartoszycki	warmińsko-mazurskie
+NBR	V_WRMZ	Braniewo	braniewski	warmińsko-mazurskie
+NDZ	V_WRMZ	Działdowo	działdowski	warmińsko-mazurskie
+NEB	V_WRMZ	Elbląg	Elbląg	warmińsko-mazurskie
+NEB	V_WRMZ	Elbląg	elbląski	warmińsko-mazurskie
+NEL	V_WRMZ	Ełk	ełcki	warmińsko-mazurskie
+NGI	V_WRMZ	Giżycko	giżycki	warmińsko-mazurskie
+NGO	V_WRMZ	Gołdap	gołdapski	warmińsko-mazurskie
+NIL	V_WRMZ	Iława	iławski	warmińsko-mazurskie
+NKE	V_WRMZ	Kętrzyn	kętrzyński	warmińsko-mazurskie
+NLI	V_WRMZ	Lidzbark	Warmiński	lidzbarski	warmińsko-mazurskie
+NMR	V_WRMZ	Mrągowo	mrągowski	warmińsko-mazurskie
+NNI	V_WRMZ	Nidzica	nidzicki	warmińsko-mazurskie
+NNM	V_WRMZ	Nowe	Miasto	Lubawskie	nowomiejski	warmińsko-mazurskie
+NOE	V_WRMZ	Olecko	olecki	warmińsko-mazurskie
+NOL	V_WRMZ	Olsztyn	Olsztyn	warmińsko-mazurskie
+NOL	V_WRMZ	Olsztyn	olsztyński	warmińsko-mazurskie
+NOS	V_WRMZ	Ostróda	ostródzki	warmińsko-mazurskie
+NPI	V_WRMZ	Pisz	piski	warmińsko-mazurskie
+NSZ	V_WRMZ	Szczytno	szczycieński	warmińsko-mazurskie
+NWE	V_WRMZ	Węgorzewo	węgorzewski	warmińsko-mazurskie
+PCH	V_WLKP	Chodzież	chodzieski	wielkopolskie
+PCT	V_WLKP	Czarnków	czarnkowsko-trzcianecki	wielkopolskie
+PGN	V_WLKP	Gniezno	gnieźnieński	wielkopolskie
+PGS	V_WLKP	Gostyń	gostyński	wielkopolskie
+PGO	V_WLKP	Grodzisk	Wielkopolski	grodziski	wielkopolskie
+PJA	V_WLKP	Jarocin	jarociński	wielkopolskie
+PKA	V_WLKP	Kalisz	kaliski	wielkopolskie
+PKA	V_WLKP	Kalisz	Kalisz	wielkopolskie
+PKE	V_WLKP	Kępno	kępiński	wielkopolskie
+PKL	V_WLKP	Koło	kolski	wielkopolskie
+PKN	V_WLKP	Konin	Konin	wielkopolskie
+PKN	V_WLKP	Konin	koniński	wielkopolskie
+PKS	V_WLKP	Kościan	kościański	wielkopolskie
+PKR	V_WLKP	Krotoszyn	krotoszyński	wielkopolskie
+PLE	V_WLKP	Leszno	leszczyński	wielkopolskie
+PLE	V_WLKP	Leszno	Leszno	wielkopolskie
+PMI	V_WLKP	Międzychód	międzychodzki	wielkopolskie
+PNT	V_WLKP	Nowy	Tomyśl	nowotomyski	wielkopolskie
+POB	V_WLKP	Oborniki	obornicki	wielkopolskie
+POS	V_WLKP	Ostrów	Wielkopolski	ostrowski	wielkopolskie
+POT	V_WLKP	Ostrzeszów	ostrzeszowski	wielkopolskie
+PP	V_WLKP	Piła	pilski	wielkopolskie
+PPL	V_WLKP	Pleszew	pleszewski	wielkopolskie
+POZ	V_WLKP	Poznań	Poznań	wielkopolskie
+POZ	V_WLKP	Poznań	poznański	wielkopolskie
+PRA	V_WLKP	Rawicz	rawicki	wielkopolskie
+PSL	V_WLKP	Słupca	słupecki	wielkopolskie
+PSZ	V_WLKP	Szamotuły	szamotulski	wielkopolskie
+PSE	V_WLKP	Śrem	śremski	wielkopolskie
+PSR	V_WLKP	Środa	Wielkopolska	średzki	wielkopolskie
+PTU	V_WLKP	Turek	turecki	wielkopolskie
+PWA	V_WLKP	Wągrowiec	wągrowiecki	wielkopolskie
+PWL	V_WLKP	Wolsztyn	wolsztyński	wielkopolskie
+PWR	V_WLKP	Września	wrzesiński	wielkopolskie
+PZL	V_WLKP	Złotów	złotowski	wielkopolskie
+ZBI	V_ZHPM	Białogard	białogardzki	zachodniopomorskie
+ZCH	V_ZHPM	Choszczno	choszczeński	zachodniopomorskie
+ZDR	V_ZHPM	Drawsko	Pomorskie	drawski	zachodniopomorskie
+ZGL	V_ZHPM	Goleniów	goleniowski	zachodniopomorskie
+ZGY	V_ZHPM	Gryfice	gryficki	zachodniopomorskie
+ZGR	V_ZHPM	Gryfino	gryfiński	zachodniopomorskie
+ZKA	V_ZHPM	Kamień	Pomorski	kamieński	zachodniopomorskie
+ZKL	V_ZHPM	Kołobrzeg	kołobrzeski	zachodniopomorskie
+ZKO	V_ZHPM	Koszalin	Koszalin	zachodniopomorskie
+ZKO	V_ZHPM	Koszalin	koszaliński	zachodniopomorskie
+ZLO	V_ZHPM	Łobez	łobeski	zachodniopomorskie
+ZMY	V_ZHPM	Myślibórz	myśliborski	zachodniopomorskie
+ZPL	V_ZHPM	Police	policki	zachodniopomorskie
+ZPY	V_ZHPM	Pyrzyce	pyrzycki	zachodniopomorskie
+ZSL	V_ZHPM	Sławno	sławieński	zachodniopomorskie
+ZST	V_ZHPM	Stargard	stargardzki	zachodniopomorskie
+ZS	V_ZHPM	Szczecin	Szczecin	zachodniopomorskie
+ZSZ	V_ZHPM	Szczecinek	szczecinecki	zachodniopomorskie
+ZSD	V_ZHPM	Świdwin	świdwiński	zachodniopomorskie
+ZSW	V_ZHPM	Świnoujście	Świnoujście	zachodniopomorskie
+ZWA	V_ZHPM	Wałcz	wałecki	zachodniopomorskie

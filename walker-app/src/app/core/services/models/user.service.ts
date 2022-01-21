@@ -69,9 +69,9 @@ export class UserService {
     return this.http.put<any>(url, data);
   }
 
-  postReport(reportBody: any) {
+  postReport(reportBody: any): Observable<ActionResponse> {
     const url = this.setting.getUserUrl('postReport');
 
-    return this.http.post(url, reportBody);
+    return this.http.post<ActionResponse>(url, reportBody);
   }
 }

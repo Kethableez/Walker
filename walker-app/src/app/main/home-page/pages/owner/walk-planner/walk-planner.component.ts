@@ -1,7 +1,7 @@
+import { NotificationService } from 'src/app/core/services/utility/notification.service';
 import { WalkService } from './../../../../../core/services/models/walk.service';
-import { FormBuilder, Validator, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { ActionResponse } from 'src/app/models/action-response.model';
 import { OwnerService } from 'src/app/core/services/models/owner.service';
 import { DogCard } from 'src/app/models/dogs/dog-card.model';
 
@@ -13,20 +13,18 @@ export class WalkPlannerComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private walkService: WalkService,
-    private ownerService: OwnerService) { }
+    private ownerService: OwnerService,
+    private notification: NotificationService) { }
 
-  response?: ActionResponse;
-  isMessageBoxVisible = false;
   ownerDogs: DogCard[] = [];
 
   walkForm = this.builder.group({
-    address: ['', Validators.required],
+    zipCode: ['', Validators.required],
     city: ['', Validators.required],
+    address: ['', Validators.required],
     dogId: ['', Validators.required],
     walkDateTime: ['', Validators.required],
     walkDescription: ['', Validators.maxLength(255)],
-    walkLat: ['69.99', Validators.required],
-    walkLon: ['42.00', Validators.required],
   });
 
   get address() { return this.walkForm.get('address') };
@@ -61,28 +59,14 @@ export class WalkPlannerComponent implements OnInit {
   createWalk() {
     this.walkService.createWalk(this.walkForm.value).subscribe(
       (res) => {
-        this.response = {
-          message: res.message,
-          isSuccess: true,
-        };
-        this.isMessageBoxVisible = true;
         this.walkForm.get('address')?.reset()
         this.walkForm.get('city')?.reset()
         this.walkForm.get('dogId')?.reset()
         this.walkForm.get('walkDateTime')?.reset()
         this.walkForm.get('walkDescription')?.reset()
+        this.notification.dispatchNotification(true, res.message, false);
       },
-      (err) => {
-        (this.response = {
-          message: err.error,
-          isSuccess: true,
-        }),
-          (this.isMessageBoxVisible = true);
-      }
+      (err) => this.notification.dispatchNotification(true, err.error, true)
     );
-  }
-
-  closeMessageBox(event: boolean) {
-    this.isMessageBoxVisible = false;
   }
 }

@@ -1,3 +1,4 @@
+import { NotificationService } from 'src/app/core/services/utility/notification.service';
 import { ActionResponse } from 'src/app/models/action-response.model';
 import { UserWithInfo } from './../../../../../models/users/user-with-info.model';
 import { AdminService } from './../../../../../core/services/models/admin.service';
@@ -20,17 +21,17 @@ export enum AdminAction {
 })
 
 // TODO: Ikony, messageBox, scrollBar
-
 export class UsersComponent {
   constructor(
     private adminService: AdminService,
-    private userStore: CurrentUserStoreService
+    private userStore: CurrentUserStoreService,
+    private notification: NotificationService
   ) {}
 
   modalSetting = modalName.EMAIL_SENDER;
   users = this.adminService.usersList.pipe(
-    map(users => removeById(users, this.userStore.user.id))
-    );
+    map((users) => removeById(users, this.userStore.user.id))
+  );
   isModalOpened = false;
   selectedUserId!: string;
 
@@ -70,44 +71,54 @@ export class UsersComponent {
   private blockUser(user: UserWithInfo) {
     this.adminService.blockUser(user.id).subscribe(
       (response: ActionResponse) => {
+        this.notification.dispatchNotification(true, response.message, false);
         user.blocked = true;
-      }
+      },
+      (error) => this.notification.dispatchNotification(true, error.error, true)
     );
   }
 
   private banUser(user: UserWithInfo) {
     this.adminService.banUser(user.id).subscribe(
       (response: ActionResponse) => {
+        this.notification.dispatchNotification(true, response.message, false);
         user.banned = true;
       },
+      (error) => this.notification.dispatchNotification(true, error.error, true)
     );
   }
 
   private unblockUser(user: UserWithInfo) {
     this.adminService.unblockUser(user.id).subscribe(
       (response: ActionResponse) => {
+        this.notification.dispatchNotification(true, response.message, false);
         user.blocked = false;
       },
+      (error) => this.notification.dispatchNotification(true, error.error, true)
     );
   }
 
   private unbanUser(user: UserWithInfo) {
     this.adminService.unbanUser(user.id).subscribe(
       (response: ActionResponse) => {
+        this.notification.dispatchNotification(true, response.message, false);
         user.banned = false;
       },
+      (error) => this.notification.dispatchNotification(true, error.error, true)
     );
   }
 
   private deleteUser(user: UserWithInfo) {
     this.adminService.removeUser(user.id).subscribe(
       (response: ActionResponse) => {
+        this.notification.dispatchNotification(true, response.message, false);
         this.users = this.users.pipe(
           map((users: UserWithInfo[]) => {
             return removeById(users, user.id);
           })
         );
       },
+      (error) => this.notification.dispatchNotification(true, error.error, true)
     );
   }
 }

@@ -7,6 +7,8 @@ import { Role } from 'src/app/models/enums/role.model';
 const CURRENT_USER = 'current_user';
 const MAIN_ROLE = 'main_role';
 const ROLES = 'user_roles';
+const REGION_CODE ='region_code';
+const DISTRICT_CODE = 'district_code';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +20,12 @@ export class CurrentUserStoreService {
     this.saveUser(user);
     this.saveRoles(user);
     this.saveRole(user);
+    this.saveAddressCodes(user);
+  }
+
+  get districtCode() {
+    const districtCode = JSON.parse(sessionStorage.getItem(DISTRICT_CODE) as string) as string;
+    return districtCode;
   }
 
   update(user: any) {
@@ -61,6 +69,14 @@ export class CurrentUserStoreService {
     // const main_role = u.roles.filter(r => r.role != Role.ROLE_USER).map(this.getRoleNames)[0];
     window.sessionStorage.removeItem(MAIN_ROLE);
     window.sessionStorage.setItem(MAIN_ROLE, main_role);
+  }
+
+  private saveAddressCodes(user: RegularUser) {
+    const {districtCode, regionCode} = user;
+    window.sessionStorage.removeItem(REGION_CODE);
+    window.sessionStorage.removeItem(DISTRICT_CODE);
+    window.sessionStorage.setItem(REGION_CODE, JSON.stringify(regionCode));
+    window.sessionStorage.setItem(DISTRICT_CODE, JSON.stringify(districtCode));
   }
 
   // private getRoleNames(role: UserRole) {

@@ -1,3 +1,4 @@
+import { NotificationService } from 'src/app/core/services/utility/notification.service';
 import { DogCard } from './../../../../../models/dogs/dog-card.model';
 import { DogService } from './../../../../../core/services/models/dog.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,7 +30,8 @@ export class DogComponent implements OnInit {
     private router: Router,
     private dogService: DogService,
     private walkService: WalkService,
-    private userStore: CurrentUserStoreService
+    private userStore: CurrentUserStoreService,
+    private notification: NotificationService
   ) { }
 
 
@@ -96,12 +98,20 @@ export class DogComponent implements OnInit {
   dispatchAction() {
     if (this.buttonState === ButtonState.ENROLL) {
       this.walkService.enroll(this.walkId as string).subscribe(
-        () => this.prepareButton(true, 'wypisz się', this.buttonState = ButtonState.DISENROLL)
+        (response) => {
+          this.notification.dispatchNotification(true, response.message, false);
+          this.prepareButton(true, 'wypisz się', this.buttonState = ButtonState.DISENROLL);
+        },
+        (error) => this.notification.dispatchNotification(true, error.error, true)
       )
     }
     else if (this.buttonState === ButtonState.DISENROLL) {
       this.walkService.disenroll(this.walkId as string).subscribe(
-        () => this.prepareButton(true, 'zapisz się', this.buttonState = ButtonState.ENROLL)
+        (response) => {
+          this.notification.dispatchNotification(true, response.message, false);
+          this.prepareButton(true, 'zapisz się', this.buttonState = ButtonState.ENROLL);
+        },
+        (error) => this.notification.dispatchNotification(true, error.error, true)
       )
     }
   }

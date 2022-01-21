@@ -10,7 +10,10 @@
   <input type="text" formControlName="email" placeholder="Adres e-mail">
   <input type="password" formControlName="password" placeholder="Hasło">
   <input type="password" formControlName="confirmPassword" placeholder="Powtórz hasło">
-  <input type="text" formControlName="city" placeholder="Miasto">
+  <div class="ktbz-row">
+    <input type="text" formControlName="zipCode" placeholder="00-000">
+    <input type="text" formControlName="city" placeholder="Miasto">
+  </div>
   <input type="date" formControlName="birthdate">
   <div class="ktbz-row">
     <select formControlName="gender">
@@ -41,11 +44,6 @@
 
   <div [ngClass]="(terms && registerForm.valid)  ? 'button' : 'button-disabled'" (click)="registerUser()">Zarejestruj się</div>
 </form>
-
-<ktbz-box-message
-*ngIf="isMessageBoxVisible"
-[response]="response"
-(closeMessageBox)="closeMessageBox($event)"></ktbz-box-message>
 
 <div class="form-error" *ngIf="checkFieldValidation()">
   <div class="form-error-field">

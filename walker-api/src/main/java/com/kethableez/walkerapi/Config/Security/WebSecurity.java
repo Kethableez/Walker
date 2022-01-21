@@ -70,6 +70,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/image/dog/**").permitAll()
                 .antMatchers("/image/**").permitAll()
                 .antMatchers("/test/**").permitAll()
+                .antMatchers("/address/**").permitAll()
                 .antMatchers("/notification/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user").hasRole("USER")

@@ -1,9 +1,8 @@
-import { ActionResponse } from './../../../../../models/action-response.model';
+import { NotificationService } from 'src/app/core/services/utility/notification.service';
 import { DogService } from './../../../../../core/services/models/dog.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ImageService } from 'src/app/core/services/models/image.service';
-import { formatCurrency } from '@angular/common';
 
 @Component({
   selector: 'ktbz-dog-creator',
@@ -14,7 +13,8 @@ export class DogCreatorComponent implements OnInit {
     private builder: FormBuilder,
     private ref: ChangeDetectorRef,
     private dogService: DogService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private notification: NotificationService
   ) {}
 
   selectedFile: string = ' ';
@@ -25,9 +25,6 @@ export class DogCreatorComponent implements OnInit {
   cardDuration?: string;
   cardIntensity?: string;
   cardDescription?: string;
-
-  response?: ActionResponse;
-  isMessageBoxVisible = false;
 
   dogForm = this.builder.group({
     name: ['', Validators.required],
@@ -122,40 +119,20 @@ export class DogCreatorComponent implements OnInit {
   createDog() {
     this.dogService.createDog(this.dogForm.value).subscribe(
       (res) => {
-        this.response = {
-          message: 'Stworzono zwierzaka!',
-          isSuccess: true,
-        };
 
         let dogId = res.message;
         let dogPhoto = new FormData();
         dogPhoto.append('imageFile', this.selectedFile);
         this.imageService.uploadDogPhoto(dogPhoto, dogId).subscribe(
           (res) => {
-            this.isMessageBoxVisible = true;
+            this.notification.dispatchNotification(true, 'Dodano zwierzaka', false);
             this.dogForm.reset();
           },
-          (err) => {
-            (this.response = {
-              message: err.error,
-              isSuccess: true,
-            }),
-              (this.isMessageBoxVisible = true);
-          }
+          (err) => this.notification.dispatchNotification(true, err.error, true)
         );
       },
-      (err) => {
-        (this.response = {
-          message: err.error,
-          isSuccess: true,
-        }),
-          (this.isMessageBoxVisible = true);
-      }
+      (err) => this.notification.dispatchNotification(true, err.error, true)
     );
-  }
-
-  closeMessageBox(event: boolean) {
-    this.isMessageBoxVisible = false;
   }
 
   onSelectFile(e: any) {

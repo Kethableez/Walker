@@ -1915,7 +1915,18 @@ ktbz-walk-planner {
     }
   }
 
+  .ktbz-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
 
+    input[type="text"], select {
+      width: 48%;
+      margin-inline: 0;
+    }
+  }
 
   .main-container {
     width: 40%;

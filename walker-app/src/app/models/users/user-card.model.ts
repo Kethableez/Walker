@@ -6,7 +6,10 @@ export interface UserCard {
   firstName: string;
   lastName: string;
   birthdate: string;
+  zipCode: string;
   city: string;
+  districtCode: string;
+  regionCode: string;
   avatar: string;
   gender: string;
   description: string;

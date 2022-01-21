@@ -1,11 +1,11 @@
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { ActionResponse } from 'src/app/models/action-response.model';
 import { WalkCard } from 'src/app/models/walks/walk-card.model';
-import { SettingService } from '../utility/setting.service';
-import { WalkInfo } from 'src/app/models/walks/walk-info.model';
 import { WalkWithFilters } from 'src/app/models/walks/walk-with-filters.model';
+import { CurrentUserStoreService } from '../store/current-user-store.service';
+import { SettingService } from '../utility/setting.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,8 @@ import { WalkWithFilters } from 'src/app/models/walks/walk-with-filters.model';
 export class WalkService {
 
   constructor(private http: HttpClient,
-    private setting: SettingService) {}
+    private setting: SettingService,
+    private userStore: CurrentUserStoreService) {}
 
   getAll(): Observable<WalkCard[]> {
     const url = this.setting.getWalkUrl('getAllWalks');
@@ -22,7 +23,9 @@ export class WalkService {
   }
 
   getWalksWithFilters(): Observable<WalkWithFilters> {
-    return this.http.get<WalkWithFilters>('http://localhost:8080/walk/allWithFilters');
+    const headers = new HttpHeaders().set('districtCode', this.userStore.districtCode);
+
+    return this.http.get<WalkWithFilters>('http://localhost:8080/walk/allWithFilters', { headers: headers });
   }
 
   getWalk(walkId: string): Observable<WalkCard> {
@@ -37,15 +40,15 @@ export class WalkService {
     return this.http.post<any>(url, walkRequest);
   }
 
-  enroll(walkId: string) {
+  enroll(walkId: string):Observable<ActionResponse> {
     const url = this.setting.getWalkUrl('walkEnroll', { id: walkId });
 
-    return this.http.post(url, {});
+    return this.http.post<ActionResponse>(url, {});
   }
 
-  disenroll(walkId: string) {
+  disenroll(walkId: string): Observable<ActionResponse> {
     const url = this.setting.getWalkUrl('walkDisenroll', { id: walkId });
 
-    return this.http.post(url, {});
+    return this.http.post<ActionResponse>(url, {});
   }
 }

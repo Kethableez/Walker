@@ -21,7 +21,10 @@ public class UserCard {
     private String firstName;
     private String lastName;
     private LocalDate birthdate;
+    private String zipCode;
     private String city;
+    private String districtCode;
+    private String regionCode;
     private String avatar;
     private Gender gender;
     private String description;

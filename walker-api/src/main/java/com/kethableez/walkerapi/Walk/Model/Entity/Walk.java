@@ -28,11 +28,17 @@ public class Walk {
     
     private LocalDateTime walkDateTime;
     
+    private String zipCode;
+
     @NotBlank
     private String city;
 
     @NotBlank
     private String address;
+
+    private String districtCode;
+    
+    private String regionCode;
 
     @NotBlank
     private Float walkLat;
@@ -50,12 +56,15 @@ public class Walk {
 
     private boolean isDogReviewed;
 
-    public Walk(String dogId, String ownerId, LocalDateTime walkDateTime, String city, String address, Float walkLat, Float walkLon,
+    public Walk(String dogId, String ownerId, LocalDateTime walkDateTime, String zipCode, String city, String districtCode, String regionCode, String address, Float walkLat, Float walkLon,
             String walkDescription, boolean isBooked, boolean isSitterReviewed, boolean isDogReviewed) {
         this.dogId = dogId;
         this.ownerId = ownerId;
         this.walkDateTime = walkDateTime;
+        this.zipCode = zipCode;
         this.city = city;
+        this.districtCode = districtCode;
+        this.regionCode = regionCode;
         this.address = address;
         this.walkLat = walkLat;
         this.walkLon = walkLon;

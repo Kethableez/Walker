@@ -15,13 +15,11 @@
 
     <div class="page-header">Dodaj informacje</div>
     <input type="datetime-local" formControlName="walkDateTime">
-    <input type="text" formControlName="address" placeholder="Wpisz adres spotkania">
-    <input type="text" formControlName="city" placeholder="Wpisz miasto spotkania">
-
-    <div class="map">
-
+    <div class="ktbz-row">
+      <input type="text" formControlName="zipCode" placeholder="Wpisz miasto spotkania">
+      <input type="text" formControlName="city" placeholder="Wpisz miasto spotkania">
     </div>
-    * zaznacz na mapie miejsce spotkania
+    <input type="text" formControlName="address" placeholder="Wpisz adres spotkania">
 
     <textarea formControlName="walkDescription" placeholder="Dodaj opcjonalny opis"></textarea>
 
@@ -45,9 +43,3 @@
   </div>
 </div>
 </div>
-
-<ktbz-box-message
-  *ngIf="isMessageBoxVisible"
-  [response]="response"
-  (closeMessageBox)="closeMessageBox($event)">
-</ktbz-box-message>

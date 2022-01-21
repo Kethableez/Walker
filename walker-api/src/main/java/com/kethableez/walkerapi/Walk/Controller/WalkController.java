@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -94,9 +95,16 @@ public class WalkController {
             return ResponseEntity.badRequest().body(response.getMessage());
     }
 
+    // @GetMapping("/allWithFilters")
+    // public ResponseEntity<WalkWithFilters> getWalksWithFilters() {
+    //     WalkWithFilters walks = walkService.getWalkWithFilters();
+    //     return new ResponseEntity<>(walks, HttpStatus.OK);
+    // }
+
     @GetMapping("/allWithFilters")
-    public ResponseEntity<WalkWithFilters> getWalksWithFilters() {
-        WalkWithFilters walks = walkService.getWalkWithFilters();
+    public ResponseEntity<WalkWithFilters> getWalksWithFilters(@RequestHeader("districtCode") String districtCode) {
+        System.out.println(districtCode);
+        WalkWithFilters walks = walkService.getWalkWithFiltersByCity(districtCode);
         return new ResponseEntity<>(walks, HttpStatus.OK);
     }
 }
